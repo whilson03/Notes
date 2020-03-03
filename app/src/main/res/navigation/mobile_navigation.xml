@@ -12,24 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.olabode.wilson.daggernoteapp.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.olabode.wilson.daggernoteapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.olabode.wilson.daggernoteapp.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
-
-    <fragment
         android:id="@+id/nav_share"
         android:name="com.olabode.wilson.daggernoteapp.ui.share.ShareFragment"
         android:label="@string/menu_share"
@@ -40,4 +22,19 @@
         android:name="com.olabode.wilson.daggernoteapp.ui.send.SendFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
+    <fragment
+        android:id="@+id/trashFragment"
+        android:name="com.olabode.wilson.daggernoteapp.ui.trash.TrashFragment"
+        android:label="trash_fragment"
+        tools:layout="@layout/trash_fragment" />
+    <fragment
+        android:id="@+id/favourites"
+        android:name="com.olabode.wilson.daggernoteapp.ui.favourite.Favourites"
+        android:label="favourites_fragment"
+        tools:layout="@layout/favourites_fragment" />
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.olabode.wilson.daggernoteapp.ui.settings.Settings"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
