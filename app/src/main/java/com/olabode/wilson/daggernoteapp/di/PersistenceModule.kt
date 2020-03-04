@@ -31,4 +31,5 @@ class PersistenceModule {
     fun provideNotesDao(@NonNull notesDatabase: NotesDatabase): NotesDao {
         return notesDatabase.noteDao()
     }
+
 }

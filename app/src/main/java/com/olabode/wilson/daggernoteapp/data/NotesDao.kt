@@ -16,7 +16,7 @@ interface NotesDao {
 
 
     @Query("SELECT * FROM notes_table WHERE favourite == 1")
-    fun getfavouriteNotes(): LiveData<List<Note>>
+    fun getFavouriteNotes(): LiveData<List<Note>>
 
 
     @Query("SELECT * FROM notes_table WHERE trash == 1")

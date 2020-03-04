@@ -8,5 +8,5 @@ import com.olabode.wilson.daggernoteapp.models.Note
  */
 
 interface NoteRepo {
-    suspend fun getAllNotes(): LiveData<List<Note>>
+    fun getAllNotes(): LiveData<List<Note>>
 }
