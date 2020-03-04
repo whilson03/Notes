@@ -1,6 +1,5 @@
 package com.olabode.wilson.daggernoteapp.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.olabode.wilson.daggernoteapp.data.NotesDao
 import com.olabode.wilson.daggernoteapp.models.Note
@@ -22,11 +21,28 @@ class NotesRepository @Inject constructor(
         return notesDao.getAllNotes()
     }
 
-    suspend fun insert(note: Note) {
-        Log.i("Note ", note.toString())
-        notesDao.insertNote(note)
-
+    override fun getAllNotesCount(): LiveData<Int> {
+        return notesDao.countNoteTable()
     }
 
+    override fun getAllFavouriteNotesCount(): LiveData<Int> {
+        return notesDao.countFavouriteNotes()
+    }
+
+    override fun getAllTrashItemsCount(): LiveData<Int> {
+        return notesDao.countTrashNotes()
+    }
+
+    override suspend fun insertNote(note: Note) {
+        notesDao.insertNote(note)
+    }
+
+    override suspend fun updateNote(note: Note) {
+        notesDao.upDateNote(note)
+    }
+
+    override suspend fun deleteNote(note: Note) {
+        notesDao.deleteNote(note)
+    }
 
 }
