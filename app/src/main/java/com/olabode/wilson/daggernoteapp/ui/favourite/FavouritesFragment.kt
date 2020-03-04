@@ -1,4 +1,4 @@
-package com.olabode.wilson.daggernoteapp.ui.trash
+package com.olabode.wilson.daggernoteapp.ui.favourite
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,40 +7,39 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
-import com.olabode.wilson.daggernoteapp.databinding.TrashFragmentBinding
+import com.olabode.wilson.daggernoteapp.databinding.FavouritesFragmentBinding
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class TrashFragment : DaggerFragment() {
+class FavouritesFragment : DaggerFragment() {
 
     companion object {
-        fun newInstance() = TrashFragment()
+        fun newInstance() =
+            FavouritesFragment()
     }
-
-    private lateinit var viewModel: TrashViewModel
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
+    lateinit var binding: FavouritesFragmentBinding
 
-    private lateinit var binding: TrashFragmentBinding
+    private lateinit var viewModel: FavouritesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = TrashFragmentBinding.inflate(inflater, container, false)
+        binding = FavouritesFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, factory).get(TrashViewModel::class.java)
-
+        viewModel = ViewModelProviders.of(this, factory).get(FavouritesViewModel::class.java)
         val adapter = NoteListAdapter()
         binding.recyclerView.adapter = adapter
 
-        viewModel.trashList.observe(viewLifecycleOwner, Observer {
+        viewModel.favouritesList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }

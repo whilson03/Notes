@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val repository: NotesRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(repository: NotesRepository) : ViewModel() {
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 

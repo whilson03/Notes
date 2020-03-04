@@ -16,9 +16,16 @@ class NotesRepository @Inject constructor(
     private val notesDao: NotesDao
 ) : NoteRepo {
 
-
     override fun getAllNotes(): LiveData<List<Note>> {
         return notesDao.getAllNotes()
+    }
+
+    override fun getAllFavouriteNotes(): LiveData<List<Note>> {
+        return notesDao.getFavouriteNotes()
+    }
+
+    override fun getAllTrashNotes(): LiveData<List<Note>> {
+        return notesDao.getTrashedNotes()
     }
 
     override fun getAllNotesCount(): LiveData<Int> {

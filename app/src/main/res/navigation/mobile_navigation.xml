@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.olabode.wilson.daggernoteapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_home_to_noteFragment"
+            app:destination="@id/noteFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_share"
@@ -25,16 +29,27 @@
     <fragment
         android:id="@+id/trashFragment"
         android:name="com.olabode.wilson.daggernoteapp.ui.trash.TrashFragment"
-        android:label="trash_fragment"
+        android:label="Trash"
         tools:layout="@layout/trash_fragment" />
     <fragment
         android:id="@+id/favourites"
-        android:name="com.olabode.wilson.daggernoteapp.ui.favourite.Favourites"
-        android:label="favourites_fragment"
+        android:name="com.olabode.wilson.daggernoteapp.ui.favourite.FavouritesFragment"
+        android:label="Favourites"
         tools:layout="@layout/favourites_fragment" />
     <fragment
         android:id="@+id/settings"
         android:name="com.olabode.wilson.daggernoteapp.ui.settings.Settings"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.olabode.wilson.daggernoteapp.ui.notes.NoteFragment"
+        android:label="note_fragment"
+        tools:layout="@layout/note_fragment">
+        <argument
+            android:name="note"
+            android:defaultValue="@null"
+            app:argType="com.olabode.wilson.daggernoteapp.models.Note"
+            app:nullable="true" />
+    </fragment>
 </navigation>

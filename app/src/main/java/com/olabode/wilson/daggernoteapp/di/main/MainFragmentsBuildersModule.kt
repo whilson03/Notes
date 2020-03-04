@@ -1,6 +1,6 @@
 package com.olabode.wilson.daggernoteapp.di.main
 
-import com.olabode.wilson.daggernoteapp.ui.favourite.Favourites
+import com.olabode.wilson.daggernoteapp.ui.favourite.FavouritesFragment
 import com.olabode.wilson.daggernoteapp.ui.home.HomeFragment
 import com.olabode.wilson.daggernoteapp.ui.trash.TrashFragment
 import dagger.Module
@@ -17,7 +17,7 @@ abstract class MainFragmentsBuildersModule {
     abstract fun contributeHomeFragment(): HomeFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeFavouriteFragment(): Favourites
+    abstract fun contributeFavouriteFragment(): FavouritesFragment
 
 
     @ContributesAndroidInjector
