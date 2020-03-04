@@ -44,12 +44,14 @@
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.olabode.wilson.daggernoteapp.ui.notes.NoteFragment"
-        android:label="note_fragment"
+        android:label="{title}"
         tools:layout="@layout/note_fragment">
         <argument
             android:name="note"
-            android:defaultValue="@null"
             app:argType="com.olabode.wilson.daggernoteapp.models.Note"
             app:nullable="true" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
 </navigation>

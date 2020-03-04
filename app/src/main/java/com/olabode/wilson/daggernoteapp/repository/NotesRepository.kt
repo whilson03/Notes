@@ -3,6 +3,8 @@ package com.olabode.wilson.daggernoteapp.repository
 import androidx.lifecycle.LiveData
 import com.olabode.wilson.daggernoteapp.data.NotesDao
 import com.olabode.wilson.daggernoteapp.models.Note
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,15 +43,21 @@ class NotesRepository @Inject constructor(
     }
 
     override suspend fun insertNote(note: Note) {
-        notesDao.insertNote(note)
+        withContext(Dispatchers.IO) {
+            notesDao.insertNote(note)
+        }
     }
 
     override suspend fun updateNote(note: Note) {
-        notesDao.upDateNote(note)
+        withContext(Dispatchers.IO) {
+            notesDao.upDateNote(note)
+        }
     }
 
     override suspend fun deleteNote(note: Note) {
-        notesDao.deleteNote(note)
+        withContext(Dispatchers.IO) {
+            notesDao.deleteNote(note)
+        }
     }
 
 }

@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.notes.NoteFragment">
+<layout>
 
-    <TextView
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:fillViewport="true"
+        android:orientation="vertical">
 
-</FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.olabode.wilson.daggernoteapp.utils.LinedEditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@null"
+                android:hint="@string/title"
+                android:inputType="text"
+                android:maxLines="2"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+
+            <com.olabode.wilson.daggernoteapp.utils.LinedEditText
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="@string/note"
+                android:inputType="textMultiLine" />
+
+        </LinearLayout>
+    </ScrollView>
+</layout>
