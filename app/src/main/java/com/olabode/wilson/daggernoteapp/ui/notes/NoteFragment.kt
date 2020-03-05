@@ -10,7 +10,6 @@ import com.olabode.wilson.daggernoteapp.databinding.NoteFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.item_note.*
 import java.util.*
 import javax.inject.Inject
 
@@ -74,7 +73,7 @@ class NoteFragment : DaggerFragment() {
             return
         } else {
             note.title =
-                if (binding.title.text.toString().isEmpty()) "No title" else title.text.toString()
+                if (binding.title.text.toString().isEmpty()) "No title" else binding.title.text.toString()
             note.body = binding.note.text.toString()
             note.dateLastUpdated = Date()
 
@@ -91,7 +90,7 @@ class NoteFragment : DaggerFragment() {
             return
         } else {
             val note = Note(
-                title = if (binding.title.text.toString().isEmpty()) "No title" else title.text.toString(),
+                title = if (binding.title.text.toString().isEmpty()) "No title" else binding.title.text.toString(),
                 body = binding.note.text.toString(), dateCreated = Date(), dateLastUpdated = Date()
             )
             viewModel.saveNewNote(note)

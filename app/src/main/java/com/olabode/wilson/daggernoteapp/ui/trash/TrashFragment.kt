@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.TrashFragmentBinding
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
@@ -36,15 +34,15 @@ class TrashFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, factory).get(TrashViewModel::class.java)
-
-        val adapter = NoteListAdapter()
-        binding.recyclerView.adapter = adapter
-
-        viewModel.trashList.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.submitList(it)
-            }
-        })
+//
+//        val adapter = NoteListAdapter()
+//        binding.recyclerView.adapter = adapter
+//
+//        viewModel.trashList.observe(viewLifecycleOwner, Observer {
+//            it?.let {
+//                adapter.submitList(it)
+//            }
+//        })
     }
 
 }

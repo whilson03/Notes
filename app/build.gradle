@@ -72,4 +72,13 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
 
 
+
+    // Material Navigation View Library
+    implementation 'com.shreyaspatil:MaterialNavigationView:1.2'
+
+    // Material design components
+    implementation "com.google.android.material:material:$version_material"
+
+    implementation 'io.github.manneohlund:smart-recycler-adapter:4.1.0'
+
 }

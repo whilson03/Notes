@@ -35,7 +35,11 @@
         android:id="@+id/favourites"
         android:name="com.olabode.wilson.daggernoteapp.ui.favourite.FavouritesFragment"
         android:label="Favourites"
-        tools:layout="@layout/favourites_fragment" />
+        tools:layout="@layout/favourites_fragment">
+        <action
+            android:id="@+id/action_favourites_to_noteFragment"
+            app:destination="@id/noteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settings"
         android:name="com.olabode.wilson.daggernoteapp.ui.settings.Settings"

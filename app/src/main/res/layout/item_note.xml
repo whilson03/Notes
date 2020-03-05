@@ -3,81 +3,83 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="position"
-            type="Integer" />
-
-        <variable
-            name="note"
-            type="com.olabode.wilson.daggernoteapp.models.Note" />
-    </data>
-
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/notes_card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_height="85dp"
         android:elevation="8dp"
-        android:orientation="vertical">
+        android:layout_margin="4dp"
+        android:foreground="?selectableItemBackground"
+        app:cardBackgroundColor="@color/lightYellow">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:fontFamily="sans-serif"
-                android:text="@{note.title}"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Title" />
+            <View
+                android:id="@+id/view"
+                android:layout_width="8dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:background="@color/mediumYellow" />
 
             <TextView
-                android:id="@+id/short_body"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@{note.body}"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/switch1"
-                app:layout_constraintStart_toStartOf="@+id/title"
-                app:layout_constraintTop_toBottomOf="@+id/title"
-                tools:text="@string/nav_header_subtitle" />
-
-            <ImageView
-                android:id="@+id/switch1"
+                android:id="@+id/text_view_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:padding="12dp"
-                android:src="@drawable/ic_star_filled"
-                app:layout_constraintBottom_toTopOf="@+id/textView4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title" />
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/view"
+                android:ellipsize="end"
+                android:maxLength="25"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="24sp"
+                android:textStyle="italic"
+                tools:text="@string/title" />
 
             <TextView
-                android:id="@+id/textView4"
-                android:layout_width="0dp"
+                android:id="@+id/text_view_description"
+                android:layout_below="@id/text_view_title"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="@{note.dateCreated.toString()}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/switch1"
-                app:layout_constraintStart_toStartOf="@+id/short_body"
-                app:layout_constraintTop_toBottomOf="@+id/short_body" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:maxLines="2"
+                android:paddingBottom="1dp"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/note_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="6dp"
+                android:fontFamily="sans-serif-light"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                tools:text="Date" />
+
+            <ImageView
+                android:id="@+id/favButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/ic_star_border"
+                android:padding="1dp"
+                android:textOff=""
+                android:textOn="" />
+
+        </RelativeLayout>
+
     </com.google.android.material.card.MaterialCardView>
+
 </layout>
