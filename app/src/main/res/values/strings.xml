@@ -28,4 +28,6 @@
     <string name="trash_dialog_title">Empty Trash</string>
     <string name="deleting_note_text">Deleting notes…</string>
     <string name="trash_dialog_message">Are you sure want to empty trash ? All notes will be deleted permanently.</string>
+    <string name="undo">UND0</string>
+    <string name="undo_snackbar_message">Undo Move To Trash</string>
 </resources>

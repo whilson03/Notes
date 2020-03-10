@@ -76,12 +76,15 @@ class NotesRepository @Inject constructor(
 
     override suspend fun addToTrash(note: Note) {
         withContext(Dispatchers.IO) {
+            note.isTrashItem = 1
+
             notesDao.upDateNote(note)
         }
     }
 
     override suspend fun removeFromTrash(note: Note) {
         withContext(Dispatchers.IO) {
+            note.isTrashItem = 0
             notesDao.upDateNote(note)
         }
     }

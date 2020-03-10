@@ -29,10 +29,17 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
 
     fun moveToTrash(note: Note) {
         uiScope.launch {
+            note.isFavourite = 0
             repository.addToTrash(note)
         }
     }
 
+    fun undoMoveToTrash(note: Note) {
+        uiScope.launch {
+            note.isFavourite = 1
+            repository.removeFromTrash(note)
+        }
+    }
     override fun onCleared() {
         super.onCleared()
         job.cancel()
