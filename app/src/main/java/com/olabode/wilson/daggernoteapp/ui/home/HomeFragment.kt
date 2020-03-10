@@ -18,6 +18,7 @@ import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.FragmentHomeBinding
 import com.olabode.wilson.daggernoteapp.models.Note
+import com.olabode.wilson.daggernoteapp.utils.NoteItemDecoration
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import java.util.*
@@ -48,7 +49,9 @@ class HomeFragment : DaggerFragment() {
         background = ColorDrawable(Color.RED)
 
         adapter = NoteListAdapter(context!!)
+        binding.recyclerView.addItemDecoration(NoteItemDecoration(2))
         binding.recyclerView.adapter = adapter
+
 
         adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
             override fun onItemClick(note: Note) {

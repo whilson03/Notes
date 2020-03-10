@@ -20,6 +20,7 @@ import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.FavouritesFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
+import com.olabode.wilson.daggernoteapp.utils.NoteItemDecoration
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import java.util.*
@@ -57,6 +58,7 @@ class FavouritesFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, factory).get(FavouritesViewModel::class.java)
         adapter = NoteListAdapter(context!!)
+        binding.recyclerView.addItemDecoration(NoteItemDecoration(2))
         binding.recyclerView.adapter = adapter
 
         adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {

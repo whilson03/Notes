@@ -26,7 +26,6 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
         }
     }
 
-
     fun moveToTrash(note: Note) {
         uiScope.launch {
             note.isFavourite = 0

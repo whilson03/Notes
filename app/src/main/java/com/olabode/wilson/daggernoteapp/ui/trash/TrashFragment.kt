@@ -9,6 +9,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.TrashFragmentBinding
+import com.olabode.wilson.daggernoteapp.utils.NoteItemDecoration
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -40,6 +41,7 @@ class TrashFragment : DaggerFragment() {
         viewModel = ViewModelProviders.of(this, factory).get(TrashViewModel::class.java)
 
         val adapter = NoteListAdapter(context!!)
+        binding.recyclerView.addItemDecoration(NoteItemDecoration(2))
         binding.recyclerView.adapter = adapter
 
         viewModel.trashList.observe(viewLifecycleOwner, Observer {
