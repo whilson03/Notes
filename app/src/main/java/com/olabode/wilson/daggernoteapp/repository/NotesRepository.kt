@@ -60,4 +60,34 @@ class NotesRepository @Inject constructor(
         }
     }
 
+    override suspend fun addToFavourite(note: Note) {
+        withContext(Dispatchers.IO) {
+            note.isFavourite = 1
+            notesDao.upDateNote(note)
+        }
+    }
+
+    override suspend fun removeFromFavourite(note: Note) {
+        withContext(Dispatchers.IO) {
+            note.isFavourite = 0
+            notesDao.upDateNote(note)
+        }
+    }
+
+    override suspend fun addToTrash(note: Note) {
+        withContext(Dispatchers.IO) {
+            notesDao.upDateNote(note)
+        }
+    }
+
+    override suspend fun removeFromTrash(note: Note) {
+        withContext(Dispatchers.IO) {
+            notesDao.upDateNote(note)
+        }
+    }
+
+    override suspend fun deleteAllFromTrash() {
+        notesDao.emptyTrash()
+    }
+
 }

@@ -1,30 +1,23 @@
 package com.olabode.wilson.daggernoteapp.ui.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.olabode.wilson.daggernoteapp.R
-import com.olabode.wilson.daggernoteapp.adapters.callbacks.NoteDiffCallBack
-import com.olabode.wilson.daggernoteapp.adapters.viewholders.NoteViewHolder
+import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.FragmentHomeBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
-import smartadapter.SmartRecyclerAdapter
-import smartadapter.widget.DiffUtilExtension
-import smartadapter.widget.DiffUtilExtensionBuilder
 import javax.inject.Inject
+
 
 class HomeFragment : DaggerFragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var diffUtilExtension: DiffUtilExtension
-
     @Inject
     lateinit var factory: ViewModelProviderFactory
 
@@ -34,36 +27,74 @@ class HomeFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater)
-        homeViewModel =
-            ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
-        binding.fab.setOnClickListener {
-            this.findNavController().navigate(
-                HomeFragmentDirections.actionNavHomeToNoteFragment(
-                    null, getString(
-                        R.string.add_note_title
-                    )
-                )
-            )
-        }
+        homeViewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
 
-        val smartAdapter: SmartRecyclerAdapter = SmartRecyclerAdapter
-            .items(listOf<Note>())
-            .map(Note::class, NoteViewHolder::class)
-            .into(binding.recyclerView)
+        val adapter = NoteListAdapter(context!!)
+        binding.recyclerView.adapter = adapter
 
+        adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
+            override fun onItemClick(note: Note) {
+                navigateToEditNote(note)
+            }
+        })
 
-        diffUtilExtension = DiffUtilExtensionBuilder().apply {
-            smartRecyclerAdapter = smartAdapter
-            diffPredicate = NoteDiffCallBack()
-        }.build()
+        adapter.setOnToggleListener(object : NoteListAdapter.OnToggleListener {
+            override fun onItemToggle(note: Note, isChecked: Boolean) {
+                favouriteAction(note)
+            }
+        })
 
+        binding.fab.setOnClickListener { navigateToAddNewNote() }
 
+        //observe list of note from the view model
         homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
             it?.let {
-                smartAdapter.setItems(it.toMutableList())
+                adapter.submitList(it)
             }
         })
 
         return binding.root
     }
+
+    private fun favouriteAction(note: Note) {
+        homeViewModel.addRemoveFavourite(note)
+    }
+
+    private fun navigateToAddNewNote() {
+        this.findNavController().navigate(
+            HomeFragmentDirections.actionNavHomeToNoteFragment(
+                null, getString(
+                    R.string.add_note_title
+                )
+            )
+        )
+    }
+
+    private fun navigateToEditNote(note: Note) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionNavHomeToNoteFragment(
+                note, getString(
+                    R.string.edit_note
+                )
+            )
+        )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.trash_menu, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.delete -> {
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }

@@ -25,4 +25,14 @@ interface NoteRepo {
     suspend fun updateNote(note: Note)
 
     suspend fun deleteNote(note: Note)
+
+    suspend fun addToFavourite(note: Note)
+
+    suspend fun removeFromFavourite(note: Note)
+
+    suspend fun addToTrash(note: Note)
+
+    suspend fun removeFromTrash(note: Note)
+
+    suspend fun deleteAllFromTrash()
 }

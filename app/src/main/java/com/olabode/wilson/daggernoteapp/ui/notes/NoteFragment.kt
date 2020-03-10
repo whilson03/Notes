@@ -41,6 +41,11 @@ class NoteFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, factory).get(NoteViewModel::class.java)
 
+        note?.let {
+            binding.title.setText(it.title)
+            binding.note.setText(it.body)
+        }
+
 
     }
 

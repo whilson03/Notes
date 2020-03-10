@@ -1,10 +1,9 @@
 package com.olabode.wilson.daggernoteapp.adapters.callbacks
 
+import androidx.recyclerview.widget.DiffUtil
 import com.olabode.wilson.daggernoteapp.models.Note
-import smartadapter.widget.DiffUtilExtension
 
-
-class NoteDiffCallBack : DiffUtilExtension.DiffPredicate<Note> {
+class NoteDiffCallBack : DiffUtil.ItemCallback<Note>() {
     override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
         return oldItem.id == newItem.id
     }
@@ -13,4 +12,3 @@ class NoteDiffCallBack : DiffUtilExtension.DiffPredicate<Note> {
         return oldItem == newItem
     }
 }
-
