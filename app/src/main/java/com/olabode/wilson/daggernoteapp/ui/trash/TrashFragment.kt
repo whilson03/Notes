@@ -68,6 +68,12 @@ class TrashFragment : DaggerFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.trash_menu, menu)
+        val deleteMenu = menu.findItem(R.id.delete)
+        viewModel.trashList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                deleteMenu.isVisible = it.isNotEmpty()
+            }
+        })
 
         super.onCreateOptionsMenu(menu, inflater)
     }
