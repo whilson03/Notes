@@ -81,4 +81,8 @@ dependencies {
 
     implementation 'io.github.manneohlund:smart-recycler-adapter:4.1.0'
 
+
+    //preference
+    implementation 'androidx.preference:preference:1.1.0-alpha05'
+
 }

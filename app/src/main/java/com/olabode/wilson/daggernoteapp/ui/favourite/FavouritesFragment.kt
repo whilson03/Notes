@@ -41,16 +41,17 @@ class FavouritesFragment : DaggerFragment() {
     private lateinit var adapter: NoteListAdapter
     private lateinit var viewModel: FavouritesViewModel
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FavouritesFragmentBinding.inflate(inflater, container, false)
         icon = ContextCompat.getDrawable(
-            Objects.requireNonNull<FragmentActivity>(activity), R.drawable.ic_delete
+            Objects.requireNonNull<FragmentActivity>(activity),
+            R.drawable.ic_delete
         )!!
         background = ColorDrawable(Color.RED)
-
         return binding.root
     }
 

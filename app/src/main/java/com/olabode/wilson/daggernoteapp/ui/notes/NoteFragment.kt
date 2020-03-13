@@ -1,5 +1,9 @@
 package com.olabode.wilson.daggernoteapp.ui.notes
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -40,13 +44,10 @@ class NoteFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, factory).get(NoteViewModel::class.java)
-
         note?.let {
             binding.title.setText(it.title)
             binding.note.setText(it.body)
         }
-
-
     }
 
 
@@ -64,26 +65,45 @@ class NoteFragment : DaggerFragment() {
                 } else {
                     updateNote(note!!)
                 }
-
                 return true
             }
+            R.id.share_note -> {
+                if (validate()) {
+                    shareNote(
+                        binding.title.text.toString().trim(),
+                        binding.note.text.toString().trim()
+                    )
+                    return true
+                }
+            }
         }
-
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun validate(): Boolean {
+        if (binding.note.text.toString().trim().isNotEmpty()) {
+            if (binding.title.text.toString().trim().isEmpty()) {
+                binding.title.setText(getString(R.string.no_title))
+            }
+            return true
+        } else {
+            showToastMessage(getString(R.string.empty_note_prompt))
+        }
+        return false
     }
 
     private fun updateNote(note: Note) {
         if (binding.note.text.toString().trim().isEmpty()) {
-            showToastMessage("Note Cannot be Blank")
+            showToastMessage(getString(R.string.blank_note_prompt))
             return
         } else {
             note.title =
-                if (binding.title.text.toString().isEmpty()) "No title" else binding.title.text.toString()
+                if (binding.title.text.toString().isEmpty()) getString(R.string.no_title) else binding.title.text.toString()
             note.body = binding.note.text.toString()
             note.dateLastUpdated = Date()
 
             viewModel.updateNote(note)
-            showToastMessage("updating...")
+            showToastMessage(getString(R.string.updating))
             this.findNavController().navigateUp()
         }
 
@@ -91,15 +111,15 @@ class NoteFragment : DaggerFragment() {
 
     private fun performSave() {
         if (binding.note.text.toString().trim().isEmpty()) {
-            showToastMessage("Note Cannot be Blank")
+            showToastMessage(getString(R.string.blank_note_prompt))
             return
         } else {
             val note = Note(
-                title = if (binding.title.text.toString().isEmpty()) "No title" else binding.title.text.toString(),
+                title = if (binding.title.text.toString().isEmpty()) getString(R.string.no_title) else binding.title.text.toString(),
                 body = binding.note.text.toString(), dateCreated = Date(), dateLastUpdated = Date()
             )
             viewModel.saveNewNote(note)
-            showToastMessage("Saving...")
+            showToastMessage(getString(R.string.saving))
             this.findNavController().navigateUp()
         }
     }
@@ -108,4 +128,24 @@ class NoteFragment : DaggerFragment() {
     private fun showToastMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+
+
+    private fun shareNote(title: String, body: String) {
+        val message = title + "\n" + body
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, title)
+        intent.putExtra(Intent.EXTRA_TEXT, message)
+        startActivity(Intent.createChooser(intent, getString(R.string.share_chooser_text)))
+
+    }
+
+
+    private fun copyToClipBoard(title: String, body: String) {
+        val copy = title + "\n" + body
+        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText(title, copy)
+        clipboard.setPrimaryClip(clip)
+    }
+
 }

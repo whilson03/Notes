@@ -16,17 +16,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="com.olabode.wilson.daggernoteapp.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.olabode.wilson.daggernoteapp.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
-    <fragment
         android:id="@+id/trashFragment"
         android:name="com.olabode.wilson.daggernoteapp.ui.trash.TrashFragment"
         android:label="Trash"
@@ -43,7 +32,7 @@
     <fragment
         android:id="@+id/settings"
         android:name="com.olabode.wilson.daggernoteapp.ui.settings.Settings"
-        android:label="fragment_settings"
+        android:label="Settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/noteFragment"

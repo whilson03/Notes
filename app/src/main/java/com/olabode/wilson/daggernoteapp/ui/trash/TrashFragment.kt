@@ -82,4 +82,9 @@ class TrashFragment : DaggerFragment() {
         return super.onOptionsItemSelected(item)
     }
 
+
+    private fun hideShowOptionsMenu() {
+
+    }
+
 }

@@ -1,6 +1,11 @@
 package com.olabode.wilson.daggernoteapp
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -29,7 +34,7 @@ class MainActivity : DaggerAppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.favourites, R.id.trashFragment,
-                R.id.settings, R.id.nav_share, R.id.nav_send
+                R.id.settings
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -39,5 +44,40 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+
     }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.sort_action -> {
+                showPopup(findViewById(R.id.sort_action))
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    private fun showPopup(view: View) {
+        val popUp = PopupMenu(this, view)
+        val inflater: MenuInflater = popUp.menuInflater
+        inflater.inflate(R.menu.menu_sort_order, popUp.menu)
+        popUp.show()
+        popUp.setOnMenuItemClickListener {
+            when (it?.itemId) {
+                //todo setup sort orders for the notes
+
+            }
+        }
+    }
+
+
 }
+
+

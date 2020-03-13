@@ -15,8 +15,7 @@
     <string name="trash">Trash</string>
     <string name="settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="save">save</string>
     <string name="add_note_title">Add Note</string>
     <string name="title">Title</string>
@@ -30,4 +29,18 @@
     <string name="trash_dialog_message">Are you sure want to empty trash ? All notes will be deleted permanently.</string>
     <string name="undo">UND0</string>
     <string name="undo_snackbar_message">Undo Move To Trash</string>
+    <string name="font_size">Font size</string>
+    <string name="rate_text">Rate Us</string>
+    <string name="policy">Privacy Policy</string>
+    <string name="feedback">Send Feedback</string>
+    <string name="sort">Sort</string>
+    <string name="order_by_name">Order by name</string>
+    <string name="order_by_date_created">Order by date created</string>
+    <string name="order_by_last_modified">Order by last modified</string>
+    <string name="share_chooser_text">Share using</string>
+    <string name="no_title">No title</string>
+    <string name="empty_note_prompt">Cannot share empty note</string>
+    <string name="blank_note_prompt">Note Cannot be Blank</string>
+    <string name="updating">updating…</string>
+    <string name="saving">Saving...</string>
 </resources>
