@@ -6,6 +6,7 @@ import com.olabode.wilson.daggernoteapp.ui.favourite.FavouritesViewModel
 import com.olabode.wilson.daggernoteapp.ui.home.HomeViewModel
 import com.olabode.wilson.daggernoteapp.ui.notes.NoteViewModel
 import com.olabode.wilson.daggernoteapp.ui.trash.TrashViewModel
+import com.olabode.wilson.daggernoteapp.ui.trash.ViewTrashNoteViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -38,5 +39,10 @@ abstract class MainViewModelsModule {
     @Binds
     @ViewModelKey(NoteViewModel::class)
     abstract fun bindNoteViewModel(viewModel: NoteViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(ViewTrashNoteViewModel::class)
+    abstract fun bindViewTrashNoteViewModel(viewModel: ViewTrashNoteViewModel): ViewModel
 
 }

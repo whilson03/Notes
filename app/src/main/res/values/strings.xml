@@ -42,5 +42,6 @@
     <string name="empty_note_prompt">Cannot share empty note</string>
     <string name="blank_note_prompt">Note Cannot be Blank</string>
     <string name="updating">updating…</string>
-    <string name="saving">Saving...</string>
+    <string name="saving">Saving…</string>
+    <string name="restore">Restore</string>
 </resources>

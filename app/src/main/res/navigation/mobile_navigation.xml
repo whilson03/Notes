@@ -19,7 +19,11 @@
         android:id="@+id/trashFragment"
         android:name="com.olabode.wilson.daggernoteapp.ui.trash.TrashFragment"
         android:label="Trash"
-        tools:layout="@layout/trash_fragment" />
+        tools:layout="@layout/trash_fragment">
+        <action
+            android:id="@+id/action_trashFragment_to_viewTrashNoteFragment"
+            app:destination="@id/viewTrashNoteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favourites"
         android:name="com.olabode.wilson.daggernoteapp.ui.favourite.FavouritesFragment"
@@ -46,5 +50,13 @@
         <argument
             android:name="title"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewTrashNoteFragment"
+        android:name="com.olabode.wilson.daggernoteapp.ui.trash.ViewTrashNoteFragment"
+        android:label="ViewTrashNoteFragment">
+        <argument
+            android:name="note"
+            app:argType="com.olabode.wilson.daggernoteapp.models.Note" />
     </fragment>
 </navigation>

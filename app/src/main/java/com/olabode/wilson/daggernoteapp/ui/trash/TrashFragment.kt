@@ -5,10 +5,12 @@ import android.view.*
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.TrashFragmentBinding
+import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.utils.NoteItemDecoration
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
@@ -47,6 +49,17 @@ class TrashFragment : DaggerFragment() {
         viewModel.trashList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+            }
+        })
+
+
+        adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
+            override fun onItemClick(note: Note) {
+                findNavController().navigate(
+                    TrashFragmentDirections.actionTrashFragmentToViewTrashNoteFragment(
+                        note
+                    )
+                )
             }
         })
     }
