@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/viewTrashNoteFragment"
         android:name="com.olabode.wilson.daggernoteapp.ui.trash.ViewTrashNoteFragment"
-        android:label="ViewTrashNoteFragment">
+        android:label="Trash">
         <argument
             android:name="note"
             app:argType="com.olabode.wilson.daggernoteapp.models.Note" />

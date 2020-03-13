@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import java.util.*
 import javax.inject.Inject
+
 
 class NoteFragment : DaggerFragment() {
 
@@ -61,13 +63,16 @@ class NoteFragment : DaggerFragment() {
         when (item.itemId) {
             R.id.save -> {
                 if (note == null) {
+                    hidekeyboard()
                     performSave()
                 } else {
+                    hidekeyboard()
                     updateNote(note!!)
                 }
                 return true
             }
             R.id.share_note -> {
+                hidekeyboard()
                 if (validate()) {
                     shareNote(
                         binding.title.text.toString().trim(),
@@ -146,6 +151,13 @@ class NoteFragment : DaggerFragment() {
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText(title, copy)
         clipboard.setPrimaryClip(clip)
+    }
+
+
+    private fun hidekeyboard() {
+        val imm: InputMethodManager =
+            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
     }
 
 }
