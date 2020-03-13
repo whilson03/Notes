@@ -160,4 +160,5 @@ class NoteFragment : DaggerFragment() {
         imm.hideSoftInputFromWindow(view!!.windowToken, 0)
     }
 
+
 }
