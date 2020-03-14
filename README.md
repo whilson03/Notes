@@ -1,5 +1,5 @@
 # Notes
-Android NotePad Application
+Android Basic NotePad Application
 * Dependency Injection (Dagger android)
 * MVVM Architecture
 * Android JetPack
