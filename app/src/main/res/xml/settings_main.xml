@@ -2,31 +2,34 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="Theme &amp; UI">
+    <PreferenceCategory android:title="@string/theme_text">
 
         <ListPreference
 
             android:dialogTitle="@string/font_size"
             android:entries="@array/font_size_entries"
             android:entryValues="@array/font_size_values"
-            android:key="font_size"
+            android:key="@string/key_font_size"
             android:title="@string/font_size"
             app:defaultValue="20"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="About">
-        <Preference android:title="Disclaimer" />
+    <PreferenceCategory android:title="@string/about_text">
+        <!--        <Preference android:title="Disclaimer" />-->
 
         <Preference
+            android:key="@string/key_rate"
             android:icon="@drawable/ic_star_filled"
             android:title="@string/rate_text" />
 
         <Preference
-            android:icon="@drawable/ic_security"
-            android:title="@string/policy" />
+            android:icon="@drawable/ic_bug_report"
+            android:key="@string/key_bug_report"
+            android:title="@string/bug_report" />
 
         <Preference
+            android:key="@string/key_send_feedback"
             android:icon="@drawable/ic_feedback"
             android:title="@string/feedback" />
 

@@ -45,4 +45,14 @@
     <string name="saving">Saving…</string>
     <string name="restore">Restore</string>
     <string name="trash_note_edit_prompt">Cannot Edit Note in Trash</string>
+    <string name="key_send_feedback">SEND_FEEDBACK</string>
+    <string name="key_rate">RATE</string>
+    <string name="bug_report">Bug Report</string>
+    <string name="key_bug_report">BUG_REPORT</string>
+    <string name="subject_email">Feedback From NotesKeep</string>
+    <string name="text_feedback">Send Feedback:</string>
+    <string name="dear">Dear …,</string>
+    <string name="about_text">About</string>
+    <string name="theme_text"><![CDATA[Theme & UI]]></string>
+    <string name="key_font_size">FONT_SIZE</string>
 </resources>
