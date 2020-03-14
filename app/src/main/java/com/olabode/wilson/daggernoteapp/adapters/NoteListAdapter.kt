@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.olabode.wilson.daggernoteapp.adapters.callbacks.NoteDiffCallBack
 import com.olabode.wilson.daggernoteapp.databinding.ItemNoteBinding
 import com.olabode.wilson.daggernoteapp.models.Note
+import com.olabode.wilson.daggernoteapp.utils.Util
 
 /**
  *   Created by OLABODE WILSON on 2020-03-03.
@@ -48,6 +49,7 @@ class NoteListAdapter(val context: Context) :
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item!!)
+        holder.binding.noteDate.text = Util.formatDate(item.dateCreated)
     }
 
     fun getNoteAt(position: Int): Note {
