@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.databinding.NoteFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
@@ -40,6 +41,7 @@ class NoteFragment : DaggerFragment() {
         binding = NoteFragmentBinding.inflate(inflater, container, false)
         note = NoteFragmentArgs.fromBundle(arguments!!).note
         setHasOptionsMenu(true)
+        setFont()
         return binding.root
     }
 
@@ -158,6 +160,29 @@ class NoteFragment : DaggerFragment() {
         val imm: InputMethodManager =
             activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view!!.windowToken, 0)
+    }
+
+
+    private fun setFont() {
+        val preferences =
+            PreferenceManager.getDefaultSharedPreferences(context)
+        when (val fontSize =
+            preferences.getString(getString(R.string.key_font_size), "0")!!.toInt()) {
+            14 -> setEditTextSize(fontSize.toFloat())
+            20 -> setEditTextSize(fontSize.toFloat())
+            28 -> setEditTextSize(fontSize.toFloat())
+//            28 -> setEditTextSize(fontSize.toFloat())
+        }
+    }
+
+    /**
+     * increase edit text size dynamically based on the specified size.
+     *
+     * @param size
+     */
+    private fun setEditTextSize(size: Float) {
+        binding.note.textSize = size
+        binding.title.textSize = size + 2
     }
 
 

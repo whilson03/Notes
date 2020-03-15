@@ -11,7 +11,7 @@
             android:entryValues="@array/font_size_values"
             android:key="@string/key_font_size"
             android:title="@string/font_size"
-            app:defaultValue="20"
+            app:defaultValue="0"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
