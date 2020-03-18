@@ -5,8 +5,8 @@
     <PreferenceCategory android:title="@string/theme_text">
 
         <SwitchPreferenceCompat
-            android:enabled="false"
-            android:key="KEY_MODE_DARK"
+
+            android:key="@string/key_mode_dark"
             android:title="@string/theme_dark" />
 
         <ListPreference

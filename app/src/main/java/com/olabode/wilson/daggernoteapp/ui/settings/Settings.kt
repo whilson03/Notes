@@ -7,9 +7,11 @@ import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import com.olabode.wilson.daggernoteapp.R
 
 
@@ -20,6 +22,7 @@ class Settings : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings_main, rootKey)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +52,23 @@ class Settings : PreferenceFragmentCompat() {
         feedback?.let {
             it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 sendFeedback()
+                true
+            }
+        }
+
+
+        val darkMode = findPreference<SwitchPreferenceCompat>(getString(R.string.key_mode_dark))
+        darkMode?.let {
+            it.setOnPreferenceChangeListener { _, _ ->
+                if (!it.isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    activity?.recreate()
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    activity?.recreate()
+                }
+
+
                 true
             }
         }
@@ -126,5 +146,6 @@ class Settings : PreferenceFragmentCompat() {
             context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
         }
     }
+
 
 }

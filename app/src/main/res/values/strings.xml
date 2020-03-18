@@ -60,4 +60,5 @@
     <string name="nothing_in_trash">Nothing In Trash</string>
     <string name="note_icon">note icon</string>
     <string name="theme_dark">Dark Mode</string>
+    <string name="key_mode_dark">KEY_MODE_DARK</string>
 </resources>
