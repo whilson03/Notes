@@ -21,7 +21,7 @@
         android:layout_height="90dp"
         android:elevation="8dp"
         android:foreground="?selectableItemBackground"
-        app:cardBackgroundColor="@color/lightYellow">
+        app:cardBackgroundColor="@color/note_background_colour">
 
         <androidx.constraintlayout.widget.ConstraintLayout
 

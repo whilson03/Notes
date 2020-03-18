@@ -22,6 +22,7 @@
             app:srcCompat="@drawable/empty_state_favourite" />
 
         <TextView
+
             android:id="@+id/empty_note_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

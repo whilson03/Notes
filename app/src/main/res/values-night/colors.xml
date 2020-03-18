@@ -13,7 +13,7 @@
     <color name="dividerColor">#BDBDBD</color>
 
 
-    <color name="note_background_colour">#ffffb3</color>
+    <color name="note_background_colour">#474747</color>
     <color name="mediumYellow">#ffdf80</color>
     <color name="darkYellow">#ffd24d</color>
     <color name="lightGrey">#d9d9d9</color>
@@ -21,7 +21,8 @@
     <color name="black">#000</color>
     <color name="white">#ffffff</color>
 
-    <color name="note_text_line">#8B8A8A</color>
 
     <color name="icon_color">@color/colorPrimary</color>
+    <color name="note_text_line">#474747</color>
+
 </resources>

@@ -59,4 +59,5 @@
     <string name="add_new_favourite">Add New Favourite</string>
     <string name="nothing_in_trash">Nothing In Trash</string>
     <string name="note_icon">note icon</string>
+    <string name="theme_dark">Dark Mode</string>
 </resources>

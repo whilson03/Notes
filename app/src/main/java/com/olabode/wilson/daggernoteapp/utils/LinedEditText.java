@@ -9,6 +9,8 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.olabode.wilson.daggernoteapp.R;
+
 /**
  * Created by OLABODE WILSON on 2019-06-27.
  */
@@ -27,7 +29,9 @@ public class LinedEditText extends AppCompatEditText {
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(2);
-        mPaint.setColor(0xFFFFD966);
+        mPaint.setColor(getResources().getColor(R.color.note_text_line));
+
+
     }
 
 
@@ -52,4 +56,5 @@ public class LinedEditText extends AppCompatEditText {
         super.onDraw(canvas);
 
     }
+
 }

@@ -4,6 +4,11 @@
 
     <PreferenceCategory android:title="@string/theme_text">
 
+        <SwitchPreferenceCompat
+            android:enabled="false"
+            android:key="KEY_MODE_DARK"
+            android:title="@string/theme_dark" />
+
         <ListPreference
             android:icon="@drawable/ic_text_size"
             android:dialogTitle="@string/font_size"
@@ -13,10 +18,10 @@
             android:title="@string/font_size"
             app:defaultValue="0"
             app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/about_text">
-        <!--        <Preference android:title="Disclaimer" />-->
 
         <Preference
             android:key="@string/key_rate"
