@@ -58,4 +58,5 @@
     <string name="add_new_note">Add New Note</string>
     <string name="add_new_favourite">Add New Favourite</string>
     <string name="nothing_in_trash">Nothing In Trash</string>
+    <string name="note_icon">note icon</string>
 </resources>

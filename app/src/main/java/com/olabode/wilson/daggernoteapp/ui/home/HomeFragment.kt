@@ -79,10 +79,10 @@ class HomeFragment : DaggerFragment() {
                 }
 
                 adapter.submitList(it)
-
-
             }
         })
+
+
 
         setupSwipeDelete()
 
@@ -102,6 +102,7 @@ class HomeFragment : DaggerFragment() {
             )
         )
     }
+
 
     private fun navigateToEditNote(note: Note) {
         findNavController().navigate(
@@ -124,6 +125,7 @@ class HomeFragment : DaggerFragment() {
             R.id.delete -> {
 
             }
+
         }
 
         return super.onOptionsItemSelected(item)

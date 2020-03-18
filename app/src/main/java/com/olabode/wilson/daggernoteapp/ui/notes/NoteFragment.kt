@@ -83,6 +83,9 @@ class NoteFragment : DaggerFragment() {
                     return true
                 }
             }
+            android.R.id.home -> {
+                hidekeyboard()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
