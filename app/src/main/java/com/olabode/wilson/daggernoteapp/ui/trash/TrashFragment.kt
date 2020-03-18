@@ -48,6 +48,13 @@ class TrashFragment : DaggerFragment() {
 
         viewModel.trashList.observe(viewLifecycleOwner, Observer {
             it?.let {
+                if (it.isEmpty()) {
+                    binding.emptyTrashIcon.visibility = View.VISIBLE
+                    binding.emptyNoteText.visibility = View.VISIBLE
+                } else {
+                    binding.emptyTrashIcon.visibility = View.GONE
+                    binding.emptyNoteText.visibility = View.GONE
+                }
                 adapter.submitList(it)
             }
         })

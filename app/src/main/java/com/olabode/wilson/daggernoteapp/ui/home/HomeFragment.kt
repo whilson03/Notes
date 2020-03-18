@@ -70,7 +70,17 @@ class HomeFragment : DaggerFragment() {
         //observe list of note from the view model
         homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
             it?.let {
+                if (it.isEmpty()) {
+                    binding.emptyNoteIcon.visibility = View.VISIBLE
+                    binding.emptyNoteText.visibility = View.VISIBLE
+                } else {
+                    binding.emptyNoteIcon.visibility = View.GONE
+                    binding.emptyNoteText.visibility = View.GONE
+                }
+
                 adapter.submitList(it)
+
+
             }
         })
 

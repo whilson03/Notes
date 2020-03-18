@@ -5,7 +5,7 @@
     <PreferenceCategory android:title="@string/theme_text">
 
         <ListPreference
-
+            android:icon="@drawable/ic_text_size"
             android:dialogTitle="@string/font_size"
             android:entries="@array/font_size_entries"
             android:entryValues="@array/font_size_values"

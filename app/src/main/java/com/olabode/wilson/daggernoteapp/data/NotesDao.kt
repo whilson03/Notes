@@ -16,13 +16,14 @@ interface NotesDao {
     @Query("SELECT * FROM notes_table WHERE trash == 0 ORDER BY created_date DESC")
     fun getAllNotes(): LiveData<List<Note>>
 
-    @Query("SELECT * FROM notes_table WHERE favourite == 1")
+
+    @Query("SELECT * FROM notes_table WHERE favourite == 1 AND trash == 0")
     fun getFavouriteNotes(): LiveData<List<Note>>
 
     @Query("SELECT * FROM notes_table WHERE trash == 1")
     fun getTrashedNotes(): LiveData<List<Note>>
 
-    //CREATE
+    // CREATE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: Note)
 

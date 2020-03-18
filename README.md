@@ -2,7 +2,7 @@
 Android Basic NotePad Application
 * Dependency Injection (Dagger android)
 * MVVM Architecture
-* Android JetPack(ROOM,LiveData,Navigation Component etc...)
+* Android JetPack(ROOM,LiveData,Navigation Component,Databinding etc...)
 * DataBinding
 * Coroutine
 * SafeArgs

@@ -76,6 +76,13 @@ class FavouritesFragment : DaggerFragment() {
 
         viewModel.favouritesList.observe(viewLifecycleOwner, Observer {
             it?.let {
+                if (it.isEmpty()) {
+                    binding.emptyFavIcon.visibility = View.VISIBLE
+                    binding.emptyNoteText.visibility = View.VISIBLE
+                } else {
+                    binding.emptyFavIcon.visibility = View.GONE
+                    binding.emptyNoteText.visibility = View.GONE
+                }
                 adapter.submitList(it)
             }
         })
