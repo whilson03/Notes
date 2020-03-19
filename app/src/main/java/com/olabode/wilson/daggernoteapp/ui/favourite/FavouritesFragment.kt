@@ -5,9 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -76,17 +74,22 @@ class FavouritesFragment : DaggerFragment() {
 
         viewModel.favouritesList.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (it.isEmpty()) {
-                    binding.emptyFavIcon.visibility = View.VISIBLE
-                    binding.emptyNoteText.visibility = View.VISIBLE
-                } else {
-                    binding.emptyFavIcon.visibility = View.GONE
-                    binding.emptyNoteText.visibility = View.GONE
-                }
+                emptyState(it)
                 adapter.submitList(it)
             }
         })
+        setHasOptionsMenu(true)
         setupSwipeDelete()
+    }
+
+    private fun emptyState(it: List<Note>) {
+        if (it.isEmpty()) {
+            binding.emptyFavIcon.visibility = View.VISIBLE
+            binding.emptyNoteText.visibility = View.VISIBLE
+        } else {
+            binding.emptyFavIcon.visibility = View.GONE
+            binding.emptyNoteText.visibility = View.GONE
+        }
     }
 
     private fun favouriteAction(note: Note) {
@@ -204,6 +207,44 @@ class FavouritesFragment : DaggerFragment() {
                 }
             }
         }).attachToRecyclerView(binding.recyclerView)
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.sort_date_created -> {
+                viewModel.favouritesList.observe(viewLifecycleOwner, Observer {
+                    adapter.submitList(it.sortedBy { note ->
+                        note.dateCreated
+                    })
+                    binding.recyclerView.smoothScrollToPosition(0)
+                })
+            }
+            R.id.sort_last_modified -> {
+                viewModel.favouritesList.observe(viewLifecycleOwner, Observer {
+                    adapter.submitList(it.sortedByDescending { note ->
+                        note.dateLastUpdated
+                    })
+                    binding.recyclerView.smoothScrollToPosition(0)
+                })
+            }
+
+            R.id.sort_name -> {
+                viewModel.favouritesList.observe(viewLifecycleOwner, Observer {
+                    adapter.submitList(it.sortedBy { note ->
+                        note.title.toLowerCase()
+                    })
+                    binding.recyclerView.smoothScrollToPosition(0)
+                })
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

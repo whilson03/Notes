@@ -16,6 +16,7 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
 
     val notesList: LiveData<List<Note>> = repository.getAllNotes()
 
+
     fun addRemoveFavourite(note: Note) {
         uiScope.launch {
             if (note.isFavourite == 1) {
@@ -28,15 +29,11 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
 
 
     fun moveToTrash(note: Note) {
-        uiScope.launch {
-            repository.addToTrash(note)
-        }
+        uiScope.launch { repository.addToTrash(note) }
     }
 
     fun undoMoveToTrash(note: Note) {
-        uiScope.launch {
-            repository.removeFromTrash(note)
-        }
+        uiScope.launch { repository.removeFromTrash(note) }
     }
 
     override fun onCleared() {

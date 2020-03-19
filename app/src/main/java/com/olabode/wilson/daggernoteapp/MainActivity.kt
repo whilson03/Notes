@@ -1,9 +1,6 @@
 package com.olabode.wilson.daggernoteapp
 
 import android.os.Bundle
-import android.view.MenuInflater
-import android.view.View
-import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -43,20 +40,6 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-
-    private fun showPopup(view: View) {
-        val popUp = PopupMenu(this, view)
-        val inflater: MenuInflater = popUp.menuInflater
-        inflater.inflate(R.menu.menu_sort_order, popUp.menu)
-        popUp.show()
-        popUp.setOnMenuItemClickListener {
-            when (it?.itemId) {
-                //todo setup sort orders for the notes
-
-            }
-        }
     }
 
 

@@ -70,23 +70,25 @@ class HomeFragment : DaggerFragment() {
         //observe list of note from the view model
         homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (it.isEmpty()) {
-                    binding.emptyNoteIcon.visibility = View.VISIBLE
-                    binding.emptyNoteText.visibility = View.VISIBLE
-                } else {
-                    binding.emptyNoteIcon.visibility = View.GONE
-                    binding.emptyNoteText.visibility = View.GONE
-                }
-
+                emptyState(it)
                 adapter.submitList(it)
             }
         })
 
 
-
+        setHasOptionsMenu(true)
         setupSwipeDelete()
-
         return binding.root
+    }
+
+    private fun emptyState(it: List<Note>) {
+        if (it.isEmpty()) {
+            binding.emptyNoteIcon.visibility = View.VISIBLE
+            binding.emptyNoteText.visibility = View.VISIBLE
+        } else {
+            binding.emptyNoteIcon.visibility = View.GONE
+            binding.emptyNoteText.visibility = View.GONE
+        }
     }
 
     private fun favouriteAction(note: Note) {
@@ -95,39 +97,61 @@ class HomeFragment : DaggerFragment() {
 
     private fun navigateToAddNewNote() {
         this.findNavController().navigate(
-            HomeFragmentDirections.actionNavHomeToNoteFragment(
-                null, getString(
+            HomeFragmentDirections
+                .actionNavHomeToNoteFragment(
+                    null, getString(
                     R.string.add_note_title
+                    )
                 )
-            )
         )
     }
 
 
     private fun navigateToEditNote(note: Note) {
         findNavController().navigate(
-            HomeFragmentDirections.actionNavHomeToNoteFragment(
-                note, getString(
+            HomeFragmentDirections
+                .actionNavHomeToNoteFragment(
+                    note, getString(
                     R.string.edit_note
+                    )
                 )
-            )
         )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.trash_menu, menu)
+        inflater.inflate(R.menu.main, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.delete -> {
-
+            R.id.sort_date_created -> {
+                homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
+                    adapter.submitList(it.sortedBy { note ->
+                        note.dateCreated
+                    })
+                    binding.recyclerView.smoothScrollToPosition(0)
+                })
+            }
+            R.id.sort_last_modified -> {
+                homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
+                    adapter.submitList(it.sortedByDescending { note ->
+                        note.dateLastUpdated
+                    })
+                    binding.recyclerView.smoothScrollToPosition(0)
+                })
             }
 
+            R.id.sort_name -> {
+                homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
+                    adapter.submitList(it.sortedBy { note ->
+                        note.title.toLowerCase()
+                    })
+                    binding.recyclerView.smoothScrollToPosition(0)
+                })
+            }
         }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -233,6 +257,4 @@ class HomeFragment : DaggerFragment() {
             }
         }).attachToRecyclerView(binding.recyclerView)
     }
-
-
 }
