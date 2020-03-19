@@ -12,12 +12,15 @@ import com.olabode.wilson.daggernoteapp.databinding.ItemNoteBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.utils.Util
 
+
 /**
  *   Created by OLABODE WILSON on 2020-03-03.
  */
 class NoteListAdapter(val context: Context) :
     ListAdapter<Note, NoteListAdapter.NoteViewHolder>(NoteDiffCallBack()) {
 
+    var mListRef: List<Note>? = null
+    var mFilteredList: List<Note>? = null
     private var clickListener: OnItemClickListener? = null
     private var toggleListener: OnToggleListener? = null
     private var longListener: OnItemLongClickListener? = null
@@ -68,7 +71,7 @@ class NoteListAdapter(val context: Context) :
     }
 
     interface OnItemLongClickListener {
-        fun onItemLongClick(note: Note)
+        fun onItemLongClick(note: Note, view: View)
     }
 
 
@@ -122,7 +125,7 @@ class NoteListAdapter(val context: Context) :
             binding.root.setOnLongClickListener {
                 val position = adapterPosition
                 if (longListener != null && position != RecyclerView.NO_POSITION) {
-                    longListener!!.onItemLongClick(getItem(position))
+                    longListener!!.onItemLongClick(getItem(position), it)
                     return@setOnLongClickListener true
                 }
                 false

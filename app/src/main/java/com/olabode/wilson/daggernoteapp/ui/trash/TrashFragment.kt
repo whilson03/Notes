@@ -1,5 +1,9 @@
 package com.olabode.wilson.daggernoteapp.ui.trash
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -11,6 +15,7 @@ import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.TrashFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
+import com.olabode.wilson.daggernoteapp.ui.favourite.NoteDialog
 import com.olabode.wilson.daggernoteapp.utils.NoteItemDecoration
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
@@ -69,8 +74,48 @@ class TrashFragment : DaggerFragment() {
                 )
             }
         })
+
+        adapter.setLongListener(object : NoteListAdapter.OnItemLongClickListener {
+            override fun onItemLongClick(note: Note, view: View) {
+                val dialog = NoteDialog(note)
+                fragmentManager?.let { it1 -> dialog.show(it1, "NoteDialogFragment") }
+                dialog.setNoteDialogClickListener(object : NoteDialog.NoteDialogListener {
+                    override fun onNoteOptionClick(note: Note, position: Int) {
+                        when (position) {
+                            0 -> {
+                                shareNote(note.title, note.body)
+                            }
+                            1 -> {
+                                viewModel.deleteNote(note)
+                            }
+                            2 -> {
+                                copyToClipBoard(note.title, note.body)
+                            }
+                        }
+                    }
+                })
+            }
+        })
     }
 
+    private fun shareNote(title: String, body: String) {
+        val message = title + "\n" + body
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, title)
+        intent.putExtra(Intent.EXTRA_TEXT, message)
+        startActivity(Intent.createChooser(intent, getString(R.string.share_chooser_text)))
+
+    }
+
+
+    private fun copyToClipBoard(title: String, body: String) {
+        val copy = title + "\n" + body
+        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText(title, copy)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(context, getString(R.string.text_copied), Toast.LENGTH_SHORT).show()
+    }
 
     private fun confirmDeleteDialog() {
         MaterialAlertDialogBuilder(context)

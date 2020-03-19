@@ -25,6 +25,7 @@
     <string name="confirm_yes">YES</string>
     <string name="confirm_no">NO</string>
     <string name="trash_dialog_title">Empty Trash</string>
+
     <string name="deleting_note_text">Deleting notes…</string>
     <string name="trash_dialog_message">Are you sure want to empty trash ? All notes will be deleted permanently.</string>
     <string name="undo">UND0</string>
@@ -34,12 +35,15 @@
     <string name="policy">Privacy Policy</string>
     <string name="feedback">Send Feedback</string>
     <string name="sort">Sort</string>
+
     <string name="order_by_name">Order by name</string>
     <string name="order_by_date_created">Order by date created</string>
     <string name="order_by_last_modified">Order by last modified</string>
     <string name="share_chooser_text">Share using</string>
+
     <string name="no_title">No title</string>
     <string name="empty_note_prompt">Cannot share empty note</string>
+
     <string name="blank_note_prompt">Note Cannot be Blank</string>
     <string name="updating">updating…</string>
     <string name="saving">Saving…</string>
@@ -50,15 +54,25 @@
     <string name="bug_report">Bug Report</string>
     <string name="key_bug_report">BUG_REPORT</string>
     <string name="subject_email">Feedback From NotesKeep</string>
+
     <string name="text_feedback">Send Feedback:</string>
     <string name="dear">Dear …,</string>
     <string name="about_text">About</string>
     <string name="theme_text"><![CDATA[Theme & UI]]></string>
     <string name="key_font_size">FONT_SIZE</string>
     <string name="add_new_note">Add New Note</string>
-    <string name="add_new_favourite">Add New Favourite</string>
+    <string name="add_new_favourite">Favourite Notes</string>
     <string name="nothing_in_trash">Nothing In Trash</string>
     <string name="note_icon">note icon</string>
     <string name="theme_dark">Dark Mode</string>
     <string name="key_mode_dark">KEY_MODE_DARK</string>
+    <string name="search">Search</string>
+    <string name="copy_text">Copy</string>
+    <string name="more">More Options</string>
+
+    <string name="default_text">Default</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+    <string name="text_copied">Copied</string>
 </resources>

@@ -156,6 +156,7 @@ class NoteFragment : DaggerFragment() {
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText(title, copy)
         clipboard.setPrimaryClip(clip)
+        Toast.makeText(context, getString(R.string.text_copied), Toast.LENGTH_SHORT).show()
     }
 
 

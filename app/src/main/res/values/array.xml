@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="font_size_entries">
-        <item>Default</item>
-        <item>Small</item>
-        <item>Medium</item>
-        <item>Large</item>
+        <item>@string/default_text</item>
+        <item>@string/small</item>
+        <item>@string/medium</item>
+        <item>@string/large</item>
     </string-array>
     <string-array name="font_size_values">
         <item>0</item>
@@ -12,4 +12,13 @@
         <item>20</item>
         <item>28</item>
     </string-array>
+
+
+    <string-array name="more_options">
+        <item>@string/menu_share</item>
+        <item>@string/delete</item>
+        <item>@string/copy_text</item>
+    </string-array>
+
+
 </resources>
