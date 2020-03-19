@@ -7,6 +7,7 @@ Android Basic NotePad Application
 * Coroutine
 * SafeArgs
 * Material Component
+* Dark Mode
 
 <div class="row">
 <img src="screenshot/device-2020-03-13-233852.png" height="400" alt="screenshot"/>
