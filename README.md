@@ -21,3 +21,14 @@ Android Basic NotePad Application
 
 </div>
 
+
+<div class="row">
+  
+<img src="screenshot/dark_home.png" height="400" alt="screenshot"/>
+<img src="screenshot/dark_nav.png" height="400" alt="screenshot"/>
+
+<img src="screenshot/dark-pref.png" height="400" alt="screenshot"/>
+<img src="screenshot/swipe.png" height="400" alt="screenshot"/>
+
+</div>
+
