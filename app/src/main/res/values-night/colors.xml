@@ -8,8 +8,8 @@
     <color name="secondaryLightColor">#fffd6d</color>
     <color name="secondaryDarkColor">#c89a00</color>
 
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#000000</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>
     <color name="dividerColor">#BDBDBD</color>
 
 
@@ -20,7 +20,7 @@
     <color name="darkGrey">#a2a2a2</color>
     <color name="black">#000</color>
     <color name="white">#ffffff</color>
-
+    <color name="menu_color">@android:color/white</color>
 
     <color name="icon_color">@color/colorPrimary</color>
     <color name="note_text_line">#474747</color>
