@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.olabode.wilson.daggernoteapp.R
 
@@ -63,12 +64,12 @@ class Settings : PreferenceFragmentCompat() {
                 if (!it.isChecked) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     activity?.recreate()
+                    setMode(true)
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     activity?.recreate()
+                    setMode(false)
                 }
-
-
                 true
             }
         }
@@ -111,7 +112,6 @@ class Settings : PreferenceFragmentCompat() {
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject_email))
         intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.dear) + "")
         startActivity(Intent.createChooser(intent, getString(R.string.text_feedback)))
-
     }
 
 
@@ -147,5 +147,12 @@ class Settings : PreferenceFragmentCompat() {
         }
     }
 
+
+    private fun setMode(isDark: Boolean) {
+        val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = preferences.edit()
+        editor.putBoolean("mode", isDark)
+        editor.apply()
+    }
 
 }
