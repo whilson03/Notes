@@ -75,4 +75,5 @@
     <string name="medium">Medium</string>
     <string name="large">Large</string>
     <string name="text_copied">Copied</string>
+    <string name="ad_unit_id" translatable="false">ca-app-pub-3647278513203920/5764849187</string>
 </resources>

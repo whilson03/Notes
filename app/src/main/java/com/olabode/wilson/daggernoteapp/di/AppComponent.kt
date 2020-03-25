@@ -34,5 +34,6 @@ interface AppComponent : AndroidInjector<BaseApp> {
         fun application(application: Application): Builder
 
         fun build(): AppComponent
+
     }
 }

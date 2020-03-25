@@ -1,5 +1,6 @@
 package com.olabode.wilson.daggernoteapp.adapters
 
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -19,8 +20,6 @@ import com.olabode.wilson.daggernoteapp.utils.Util
 class NoteListAdapter(val context: Context) :
     ListAdapter<Note, NoteListAdapter.NoteViewHolder>(NoteDiffCallBack()) {
 
-    var mListRef: List<Note>? = null
-    var mFilteredList: List<Note>? = null
     private var clickListener: OnItemClickListener? = null
     private var toggleListener: OnToggleListener? = null
     private var longListener: OnItemLongClickListener? = null
@@ -136,6 +135,4 @@ class NoteListAdapter(val context: Context) :
 
     }
 }
-
-
 
