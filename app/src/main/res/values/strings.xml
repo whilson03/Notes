@@ -76,4 +76,7 @@
     <string name="large">Large</string>
     <string name="text_copied">Copied</string>
     <string name="ad_unit_id" translatable="false">ca-app-pub-3647278513203920/5764849187</string>
+    <string name="order">Order</string>
+    <string name="SHARED_PREF_DARK_MODE_KEY">mode</string>
+    <string name="SHARED_PREF_VIEW_MODE_RV">note_mode_view</string>
 </resources>

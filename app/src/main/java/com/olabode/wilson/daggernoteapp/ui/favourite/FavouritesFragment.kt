@@ -17,13 +17,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.FavouritesFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
+import com.olabode.wilson.daggernoteapp.ui.dialogs.NoteDialog
 import com.olabode.wilson.daggernoteapp.utils.NoteItemDecoration
+import com.olabode.wilson.daggernoteapp.utils.Util
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import java.util.*
@@ -44,24 +48,35 @@ class FavouritesFragment : DaggerFragment() {
     private lateinit var adapter: NoteListAdapter
     private lateinit var viewModel: FavouritesViewModel
 
+    private lateinit var layoutManager: StaggeredGridLayoutManager
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FavouritesFragmentBinding.inflate(inflater, container, false)
         icon = ContextCompat.getDrawable(
             Objects.requireNonNull<FragmentActivity>(activity),
             R.drawable.ic_delete
         )!!
-        background = ColorDrawable(Color.RED)
+
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val viewModeSpan = Util.getViewModeSpanCount(context!!)
+
+        background = ColorDrawable(Color.TRANSPARENT)
+
         viewModel = ViewModelProviders.of(this, factory).get(FavouritesViewModel::class.java)
-        adapter = NoteListAdapter(context!!)
+
+
+        layoutManager = StaggeredGridLayoutManager(viewModeSpan, LinearLayoutManager.VERTICAL)
+        binding.recyclerView.layoutManager = layoutManager
+        adapter = NoteListAdapter(context!!, layoutManager)
         binding.recyclerView.addItemDecoration(NoteItemDecoration(2))
         binding.recyclerView.adapter = adapter
 
@@ -86,7 +101,8 @@ class FavouritesFragment : DaggerFragment() {
 
         adapter.setLongListener(object : NoteListAdapter.OnItemLongClickListener {
             override fun onItemLongClick(note: Note, view: View) {
-                val dialog = NoteDialog(note)
+                val dialog =
+                    NoteDialog(note)
                 fragmentManager?.let { it1 -> dialog.show(it1, "NoteDialogFragment") }
                 dialog.setNoteDialogClickListener(object : NoteDialog.NoteDialogListener {
                     override fun onNoteOptionClick(note: Note, position: Int) {
@@ -272,7 +288,7 @@ class FavouritesFragment : DaggerFragment() {
                     adapter.submitList(it.sortedBy { note ->
                         note.dateCreated
                     })
-                    binding.recyclerView.smoothScrollToPosition(0)
+                    scrollToTop()
                 })
             }
             R.id.sort_last_modified -> {
@@ -280,7 +296,7 @@ class FavouritesFragment : DaggerFragment() {
                     adapter.submitList(it.sortedByDescending { note ->
                         note.dateLastUpdated
                     })
-                    binding.recyclerView.smoothScrollToPosition(0)
+                    scrollToTop()
                 })
             }
 
@@ -289,11 +305,27 @@ class FavouritesFragment : DaggerFragment() {
                     adapter.submitList(it.sortedBy { note ->
                         note.title.toLowerCase()
                     })
-                    binding.recyclerView.smoothScrollToPosition(0)
+                    scrollToTop()
                 })
+            }
+
+            R.id.note_view_mode -> {
+                if (layoutManager.spanCount == 1) {
+                    Util.setGridMode(context!!, true)
+                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
+                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_list)
+                } else {
+                    Util.setGridMode(context!!, false)
+                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
+                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_grid)
+                }
+
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun scrollToTop() {
+        binding.recyclerView.post { binding.recyclerView.smoothScrollToPosition(0) }
+    }
 }

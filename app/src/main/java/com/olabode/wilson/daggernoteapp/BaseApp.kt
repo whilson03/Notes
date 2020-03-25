@@ -27,7 +27,7 @@ class BaseApp : DaggerApplication() {
 
     private fun isDarkMode(): Boolean {
         val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        return preferences.getBoolean("mode", false)
+        return preferences.getBoolean(getString(R.string.SHARED_PREF_DARK_MODE_KEY), false)
     }
 
 }

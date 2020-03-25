@@ -27,4 +27,11 @@ class TrashViewModel @Inject constructor(private val repository: NotesRepository
             repository.deleteNote(note)
         }
     }
+
+    fun removeFromTrash(note: Note) {
+        uiScope.launch {
+            repository.removeFromTrash(note)
+        }
+    }
+
 }

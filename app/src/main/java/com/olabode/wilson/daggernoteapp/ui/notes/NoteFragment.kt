@@ -85,9 +85,35 @@ class NoteFragment : DaggerFragment() {
             }
             android.R.id.home -> {
                 hidekeyboard()
+                if (binding.note.text.toString().trim().isNotEmpty()) {
+                    if (note == null) {
+                        saveDraft()
+                    } else {
+                        updateAsDraft(note!!)
+                    }
+
+                }
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun saveDraft() {
+        val note = Note(
+            title = if (binding.title.text.toString().isEmpty()) getString(R.string.no_title) else binding.title.text.toString(),
+            body = binding.note.text.toString(), dateCreated = Date(), dateLastUpdated = Date()
+        )
+        viewModel.saveNewNote(note)
+    }
+
+    private fun updateAsDraft(note: Note) {
+        note.title =
+            if (binding.title.text.toString().isEmpty()) getString(R.string.no_title) else binding.title.text.toString()
+        note.body = binding.note.text.toString()
+        note.dateLastUpdated = Date()
+
+        viewModel.updateNote(note)
+        showToastMessage(getString(R.string.updating))
     }
 
     private fun validate(): Boolean {
@@ -129,7 +155,7 @@ class NoteFragment : DaggerFragment() {
                 body = binding.note.text.toString(), dateCreated = Date(), dateLastUpdated = Date()
             )
             viewModel.saveNewNote(note)
-            showToastMessage(getString(R.string.saving))
+
             this.findNavController().navigateUp()
         }
     }
@@ -175,7 +201,7 @@ class NoteFragment : DaggerFragment() {
             14 -> setEditTextSize(fontSize.toFloat())
             20 -> setEditTextSize(fontSize.toFloat())
             28 -> setEditTextSize(fontSize.toFloat())
-//            28 -> setEditTextSize(fontSize.toFloat())
+
         }
     }
 

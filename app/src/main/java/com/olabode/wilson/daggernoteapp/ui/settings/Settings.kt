@@ -151,7 +151,7 @@ class Settings : PreferenceFragmentCompat() {
     private fun setMode(isDark: Boolean) {
         val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = preferences.edit()
-        editor.putBoolean("mode", isDark)
+        editor.putBoolean(getString(R.string.SHARED_PREF_DARK_MODE_KEY), isDark)
         editor.apply()
     }
 

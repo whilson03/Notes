@@ -1,4 +1,4 @@
-package com.olabode.wilson.daggernoteapp.ui.favourite
+package com.olabode.wilson.daggernoteapp.ui.dialogs
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -9,9 +9,9 @@ import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.models.Note
 
 /**
- *   Created by OLABODE WILSON on 2020-03-19.
+ *   Created by OLABODE WILSON on 2020-03-25.
  */
-class NoteDialog(val note: Note) : AppCompatDialogFragment() {
+class TrashDialog(val note: Note) : AppCompatDialogFragment() {
 
     // Use this instance of the interface to deliver action events
     private lateinit var listener: NoteDialogListener
@@ -29,7 +29,8 @@ class NoteDialog(val note: Note) : AppCompatDialogFragment() {
             // Use the Builder class for convenient dialog construction
             val builder = MaterialAlertDialogBuilder(it)
             builder.setTitle(getString(R.string.more))
-                .setItems(R.array.more_options,
+                .setItems(
+                    R.array.trash_options,
                     DialogInterface.OnClickListener { _, which ->
                         listener.onNoteOptionClick(note, which)
                         dismiss()
@@ -37,4 +38,6 @@ class NoteDialog(val note: Note) : AppCompatDialogFragment() {
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
+
 }

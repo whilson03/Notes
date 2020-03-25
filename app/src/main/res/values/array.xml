@@ -21,4 +21,8 @@
     </string-array>
 
 
+    <string-array name="trash_options">
+        <item>@string/delete</item>
+        <item>@string/restore</item>
+    </string-array>
 </resources>

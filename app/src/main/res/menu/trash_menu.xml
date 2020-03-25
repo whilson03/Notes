@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/note_view_mode"
+        android:icon="@drawable/ic_view_list"
+        android:title="@string/order"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:visible="false"
         android:id="@+id/delete"
         android:icon="@drawable/ic_delete"

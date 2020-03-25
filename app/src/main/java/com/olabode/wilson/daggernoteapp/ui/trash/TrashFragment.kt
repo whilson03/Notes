@@ -7,16 +7,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.TrashFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
-import com.olabode.wilson.daggernoteapp.ui.favourite.NoteDialog
+import com.olabode.wilson.daggernoteapp.ui.dialogs.TrashDialog
 import com.olabode.wilson.daggernoteapp.utils.NoteItemDecoration
+import com.olabode.wilson.daggernoteapp.utils.Util
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -34,6 +38,10 @@ class TrashFragment : DaggerFragment() {
 
     private lateinit var binding: TrashFragmentBinding
 
+    private lateinit var layoutManager: StaggeredGridLayoutManager
+
+    private lateinit var adapter: NoteListAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,9 +53,12 @@ class TrashFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val viewModeSpan = Util.getViewModeSpanCount(context!!)
         viewModel = ViewModelProviders.of(this, factory).get(TrashViewModel::class.java)
 
-        val adapter = NoteListAdapter(context!!)
+        layoutManager = StaggeredGridLayoutManager(viewModeSpan, LinearLayoutManager.VERTICAL)
+        binding.recyclerView.layoutManager = layoutManager
+        adapter = NoteListAdapter(context!!, layoutManager)
         binding.recyclerView.addItemDecoration(NoteItemDecoration(2))
         binding.recyclerView.adapter = adapter
 
@@ -77,19 +88,17 @@ class TrashFragment : DaggerFragment() {
 
         adapter.setLongListener(object : NoteListAdapter.OnItemLongClickListener {
             override fun onItemLongClick(note: Note, view: View) {
-                val dialog = NoteDialog(note)
-                fragmentManager?.let { it1 -> dialog.show(it1, "NoteDialogFragment") }
-                dialog.setNoteDialogClickListener(object : NoteDialog.NoteDialogListener {
+                val dialog =
+                    TrashDialog(note)
+                fragmentManager?.let { it1 -> dialog.show(it1, "TrashDialogFragment") }
+                dialog.setNoteDialogClickListener(object : TrashDialog.NoteDialogListener {
                     override fun onNoteOptionClick(note: Note, position: Int) {
                         when (position) {
                             0 -> {
-                                shareNote(note.title, note.body)
-                            }
-                            1 -> {
                                 viewModel.deleteNote(note)
                             }
-                            2 -> {
-                                copyToClipBoard(note.title, note.body)
+                            1 -> {
+                                viewModel.removeFromTrash(note)
                             }
                         }
                     }
@@ -105,7 +114,6 @@ class TrashFragment : DaggerFragment() {
         intent.putExtra(Intent.EXTRA_SUBJECT, title)
         intent.putExtra(Intent.EXTRA_TEXT, message)
         startActivity(Intent.createChooser(intent, getString(R.string.share_chooser_text)))
-
     }
 
 
@@ -148,11 +156,22 @@ class TrashFragment : DaggerFragment() {
             R.id.delete -> {
                 confirmDeleteDialog()
             }
-        }
 
+            R.id.note_view_mode -> {
+                if (layoutManager.spanCount == 1) {
+                    Util.setGridMode(context!!, true)
+                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
+                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_list)
+                } else {
+                    Util.setGridMode(context!!, false)
+                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
+                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_grid)
+                }
+
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
-
 
     private fun hideShowOptionsMenu() {
 
