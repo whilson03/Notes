@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
+import androidx.transition.TransitionInflater
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.databinding.NoteFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
@@ -31,8 +32,15 @@ class NoteFragment : DaggerFragment() {
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
-
     private var note: Note? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = TransitionInflater
+            .from(context).inflateTransition(
+                android.R.transition.move
+            )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -111,9 +119,7 @@ class NoteFragment : DaggerFragment() {
             if (binding.title.text.toString().isEmpty()) getString(R.string.no_title) else binding.title.text.toString()
         note.body = binding.note.text.toString()
         note.dateLastUpdated = Date()
-
         viewModel.updateNote(note)
-        showToastMessage(getString(R.string.updating))
     }
 
     private fun validate(): Boolean {

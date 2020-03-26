@@ -15,7 +15,7 @@
 
             <com.olabode.wilson.daggernoteapp.utils.LinedEditText
                 android:id="@+id/title"
-
+                android:transitionName="titleView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -33,6 +33,7 @@
                 android:id="@+id/note"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:transitionName="bodyView"
                 android:layout_margin="4dp"
                 android:layout_marginTop="8dp"
                 android:background="@null"

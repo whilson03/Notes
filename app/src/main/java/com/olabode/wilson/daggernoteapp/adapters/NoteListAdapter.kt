@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -96,7 +97,7 @@ class NoteListAdapter(
      * interfaces
      */
     interface OnItemClickListener {
-        fun onItemClick(note: Note)
+        fun onItemClick(note: Note, titleView: TextView, bodyView: TextView)
     }
 
     interface OnToggleListener {
@@ -117,7 +118,11 @@ class NoteListAdapter(
             binding.root.setOnClickListener {
                 val position = adapterPosition
                 if (clickListener != null && position != RecyclerView.NO_POSITION) {
-                    clickListener!!.onItemClick(getItem(position))
+                    clickListener!!.onItemClick(
+                        getItem(position),
+                        binding.textViewTitle,
+                        binding.textViewDescription
+                    )
                 }
             }
 
@@ -178,7 +183,11 @@ class NoteListAdapter(
             binding.root.setOnClickListener {
                 val position = adapterPosition
                 if (clickListener != null && position != RecyclerView.NO_POSITION) {
-                    clickListener!!.onItemClick(getItem(position))
+                    clickListener!!.onItemClick(
+                        getItem(position),
+                        binding.textViewTitle,
+                        binding.textViewDescription
+                    )
                 }
             }
 

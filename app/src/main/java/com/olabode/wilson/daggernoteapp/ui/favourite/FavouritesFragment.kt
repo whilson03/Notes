@@ -10,11 +10,13 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -80,9 +82,18 @@ class FavouritesFragment : DaggerFragment() {
         binding.recyclerView.addItemDecoration(NoteItemDecoration(2))
         binding.recyclerView.adapter = adapter
 
+
         adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
-            override fun onItemClick(note: Note) {
-                navigateToEditNote(note)
+            override fun onItemClick(note: Note, titleView: TextView, bodyView: TextView) {
+                val extras = FragmentNavigatorExtras(
+                    titleView to "titleView", bodyView to "bodyView"
+                )
+                val action =
+                    FavouritesFragmentDirections.actionFavouritesToNoteFragment(
+                        note,
+                        getString(R.string.edit_note)
+                    )
+                findNavController().navigate(action, extras)
             }
         })
 
@@ -142,15 +153,6 @@ class FavouritesFragment : DaggerFragment() {
         viewModel.addRemoveFavourite(note)
     }
 
-
-    private fun navigateToEditNote(note: Note) {
-        findNavController().navigate(
-            FavouritesFragmentDirections.actionFavouritesToNoteFragment(
-                note,
-                getString(R.string.edit_note)
-            )
-        )
-    }
 
     private fun shareNote(title: String, body: String) {
         val message = title + "\n" + body

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -77,7 +78,7 @@ class TrashFragment : DaggerFragment() {
 
 
         adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
-            override fun onItemClick(note: Note) {
+            override fun onItemClick(note: Note, titleView: TextView, bodyView: TextView) {
                 findNavController().navigate(
                     TrashFragmentDirections.actionTrashFragmentToViewTrashNoteFragment(
                         note
