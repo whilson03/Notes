@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -85,15 +84,13 @@ class FavouritesFragment : DaggerFragment() {
 
         adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
             override fun onItemClick(note: Note, titleView: TextView, bodyView: TextView) {
-                val extras = FragmentNavigatorExtras(
-                    titleView to "titleView", bodyView to "bodyView"
-                )
+
                 val action =
                     FavouritesFragmentDirections.actionFavouritesToNoteFragment(
                         note,
                         getString(R.string.edit_note)
                     )
-                findNavController().navigate(action, extras)
+                findNavController().navigate(action)
             }
         })
 
@@ -107,6 +104,7 @@ class FavouritesFragment : DaggerFragment() {
             it?.let {
                 emptyState(it)
                 adapter.submitList(it)
+                scrollToTop()
             }
         })
 

@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -71,15 +70,12 @@ class HomeFragment : DaggerFragment() {
 
         adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
             override fun onItemClick(note: Note, titleView: TextView, bodyView: TextView) {
-                val extras = FragmentNavigatorExtras(
-                    titleView to "titleView", bodyView to "bodyView"
-                )
                 val action =
                     HomeFragmentDirections.actionNavHomeToNoteFragment(
                         note,
                         getString(R.string.edit_note)
                     )
-                findNavController().navigate(action, extras)
+                findNavController().navigate(action)
             }
         })
 
@@ -124,8 +120,6 @@ class HomeFragment : DaggerFragment() {
         })
 
 
-
-
         setHasOptionsMenu(true)
         setupSwipeDelete()
         return binding.root
@@ -157,17 +151,6 @@ class HomeFragment : DaggerFragment() {
         )
     }
 
-
-    private fun navigateToEditNote(note: Note) {
-        findNavController().navigate(
-            HomeFragmentDirections
-                .actionNavHomeToNoteFragment(
-                    note, getString(
-                    R.string.edit_note
-                    )
-                )
-        )
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main, menu)

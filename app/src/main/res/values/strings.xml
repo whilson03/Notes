@@ -79,4 +79,5 @@
     <string name="order">Order</string>
     <string name="SHARED_PREF_DARK_MODE_KEY">mode</string>
     <string name="SHARED_PREF_VIEW_MODE_RV">note_mode_view</string>
+    <string name="note_is_blank">Cannot Copy Blank Note</string>
 </resources>

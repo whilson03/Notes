@@ -9,15 +9,15 @@
             android:icon="@drawable/ic_note"
             android:title="@string/all_notes" />
         <item
-            android:id="@+id/favourites"
+            android:id="@+id/nav_favourites"
             android:icon="@drawable/ic_favorite"
             android:title="@string/favourites" />
         <item
-            android:id="@+id/trashFragment"
+            android:id="@+id/nav_trash"
             android:icon="@drawable/ic_delete"
             android:title="@string/trash" />
         <item
-            android:id="@+id/settings"
+            android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
     </group>

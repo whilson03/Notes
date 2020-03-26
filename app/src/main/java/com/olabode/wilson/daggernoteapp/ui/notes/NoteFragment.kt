@@ -8,15 +8,16 @@ import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
-import androidx.transition.TransitionInflater
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.databinding.NoteFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
+
 import java.util.*
 import javax.inject.Inject
 
@@ -33,14 +34,6 @@ class NoteFragment : DaggerFragment() {
     @Inject
     lateinit var factory: ViewModelProviderFactory
     private var note: Note? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater
-            .from(context).inflateTransition(
-                android.R.transition.move
-            )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,8 +53,34 @@ class NoteFragment : DaggerFragment() {
             binding.title.setText(it.title)
             binding.note.setText(it.body)
         }
+
+
     }
 
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(
+            true // default to enabled
+        ) {
+            override fun handleOnBackPressed() {
+                if (binding.note.text.toString().trim().isNotEmpty()) {
+                    if (note == null) {
+                        saveDraft()
+                    } else {
+                        updateAsDraft(note!!)
+                    }
+
+                }
+
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,  // LifecycleOwner
+            callback
+        )
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -102,6 +121,22 @@ class NoteFragment : DaggerFragment() {
 
                 }
             }
+
+            R.id.copy_note -> {
+                if (binding.note.text.toString().trim().isNotEmpty()) {
+                    if (binding.title.text.toString().trim().isEmpty()) {
+                        binding.title.setText("")
+                    }
+                    copyToClipBoard(
+                        binding.title.text.toString().trim(),
+                        binding.note.text.toString().trim()
+                    )
+
+                } else {
+                    showToastMessage(getString(R.string.note_is_blank))
+                }
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }
