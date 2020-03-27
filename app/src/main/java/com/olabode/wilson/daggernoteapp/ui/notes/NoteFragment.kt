@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -17,7 +18,6 @@ import com.olabode.wilson.daggernoteapp.databinding.NoteFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
-
 import java.util.*
 import javax.inject.Inject
 
@@ -52,9 +52,9 @@ class NoteFragment : DaggerFragment() {
         note?.let {
             binding.title.setText(it.title)
             binding.note.setText(it.body)
+            viewModel.oldBody = it.body
+            viewModel.oldTitle = it.title
         }
-
-
     }
 
 
@@ -68,10 +68,18 @@ class NoteFragment : DaggerFragment() {
                     if (note == null) {
                         saveDraft()
                     } else {
-                        updateAsDraft(note!!)
+                        if (viewModel.oldTitle.isNotEmpty() && viewModel.oldBody.isNotEmpty()) {
+                            if (viewModel.oldTitle.trim() != binding.title.text.toString().trim()
+                                || viewModel.oldBody != binding.note.text.toString().trim()
+                            ) {
+                                updateAsDraft(note!!)
+                            }
+                        }
+
                     }
 
                 }
+                viewModel.resetFields()
 
                 findNavController().popBackStack()
             }
@@ -116,9 +124,15 @@ class NoteFragment : DaggerFragment() {
                     if (note == null) {
                         saveDraft()
                     } else {
-                        updateAsDraft(note!!)
+                        if (viewModel.oldTitle.isNotEmpty() && viewModel.oldBody.isNotEmpty()) {
+                            if (viewModel.oldTitle.trim() != binding.title.text.toString().trim()
+                                || viewModel.oldBody != binding.note.text.toString().trim()
+                            ) {
+                                updateAsDraft(note!!)
+                                Log.i("UP", "UPDATING")
+                            }
+                        }
                     }
-
                 }
             }
 

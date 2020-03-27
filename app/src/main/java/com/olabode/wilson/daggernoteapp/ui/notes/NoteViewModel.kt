@@ -13,6 +13,8 @@ class NoteViewModel @Inject constructor(private val repository: NotesRepository)
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
+    var oldTitle: String = ""
+    var oldBody: String = ""
 
     fun saveNewNote(note: Note) {
         uiScope.launch {
@@ -25,5 +27,15 @@ class NoteViewModel @Inject constructor(private val repository: NotesRepository)
         uiScope.launch {
             repository.updateNote(note)
         }
+    }
+
+    fun resetFields() {
+        oldTitle = ""
+        oldBody = ""
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        resetFields()
     }
 }
