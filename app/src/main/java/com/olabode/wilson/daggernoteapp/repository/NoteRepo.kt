@@ -10,7 +10,20 @@ import com.olabode.wilson.daggernoteapp.models.Note
 interface NoteRepo {
     fun getAllNotes(): LiveData<List<Note>>
 
+    fun getNotesByName(): LiveData<List<Note>>
+
+    fun getNotesByLastModified(): LiveData<List<Note>>
+
+    fun getNotesByDateCreated(): LiveData<List<Note>>
+
     fun getAllFavouriteNotes(): LiveData<List<Note>>
+
+
+    fun getFavNotesByName(): LiveData<List<Note>>
+
+    fun getFavNotesByLastModified(): LiveData<List<Note>>
+
+    fun getFavNotesByDateCreated(): LiveData<List<Note>>
 
     fun getAllTrashNotes(): LiveData<List<Note>>
 

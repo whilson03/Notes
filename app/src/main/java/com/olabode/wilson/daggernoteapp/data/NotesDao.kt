@@ -12,13 +12,32 @@ import com.olabode.wilson.daggernoteapp.models.Note
 @Dao
 interface NotesDao {
 
-    //READ
+    //READ Notes
     @Query("SELECT * FROM notes_table WHERE trash == 0 ORDER BY created_date DESC")
     fun getAllNotes(): LiveData<List<Note>>
 
+    @Query("SELECT * FROM notes_table WHERE trash == 0 ORDER BY LOWER(title)  ASC")
+    fun getNotesByName(): LiveData<List<Note>>
 
+    @Query("SELECT * FROM notes_table WHERE trash == 0 ORDER BY date_last_modified  DESC")
+    fun getNotesByLastModified(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM notes_table WHERE trash == 0 ORDER BY created_date  ASC")
+    fun getNotesByDateCreated(): LiveData<List<Note>>
+
+    //READ FAVOURITE
     @Query("SELECT * FROM notes_table WHERE favourite == 1 AND trash == 0")
     fun getFavouriteNotes(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM notes_table WHERE favourite == 1 AND  trash == 0 ORDER BY LOWER(title)  ASC")
+    fun getFavNotesByName(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM notes_table WHERE favourite == 1 AND  trash == 0 ORDER BY date_last_modified  DESC")
+    fun getFavNotesByLastModified(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM notes_table WHERE favourite == 1 AND trash == 0 ORDER BY created_date  ASC")
+    fun getFavNotesByDateCreated(): LiveData<List<Note>>
+
 
     @Query("SELECT * FROM notes_table WHERE trash == 1")
     fun getTrashedNotes(): LiveData<List<Note>>

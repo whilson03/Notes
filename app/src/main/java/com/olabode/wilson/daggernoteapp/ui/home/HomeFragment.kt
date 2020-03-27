@@ -111,7 +111,7 @@ class HomeFragment : DaggerFragment() {
         binding.fab.setOnClickListener { navigateToAddNewNote() }
 
         //observe list of note from the view model
-        homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
+        homeViewModel.getNotes().observe(viewLifecycleOwner, Observer {
             it?.let {
                 emptyState(it)
                 adapter.submitList(it)
@@ -160,29 +160,14 @@ class HomeFragment : DaggerFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort_date_created -> {
-                homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
-                    adapter.submitList(it.sortedBy { note ->
-                        note.dateCreated
-                    })
-                    scrollToTop()
-                })
+                homeViewModel.filter(Util.SORT.DATE_CREATED)
             }
             R.id.sort_last_modified -> {
-                homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
-                    adapter.submitList(it.sortedByDescending { note ->
-                        note.dateLastUpdated
-                    })
-                    scrollToTop()
-                })
+                homeViewModel.filter(Util.SORT.DATE_LAST_MODIFIED)
             }
 
             R.id.sort_name -> {
-                homeViewModel.notesList.observe(viewLifecycleOwner, Observer {
-                    adapter.submitList(it.sortedBy { note ->
-                        note.title.toLowerCase()
-                    })
-                    scrollToTop()
-                })
+                homeViewModel.filter(Util.SORT.NAME)
             }
 
             R.id.note_view_mode -> {
@@ -190,10 +175,12 @@ class HomeFragment : DaggerFragment() {
                     Util.setGridMode(context!!, true)
                     layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
                     item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_list)
+                    adapter.notifyDataSetChanged()
                 } else {
                     Util.setGridMode(context!!, false)
                     layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
                     item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_grid)
+                    adapter.notifyDataSetChanged()
                 }
 
             }

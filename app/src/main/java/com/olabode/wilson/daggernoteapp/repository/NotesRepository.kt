@@ -22,8 +22,32 @@ class NotesRepository @Inject constructor(
         return notesDao.getAllNotes()
     }
 
+    override fun getNotesByName(): LiveData<List<Note>> {
+        return notesDao.getNotesByName()
+    }
+
+    override fun getNotesByLastModified(): LiveData<List<Note>> {
+        return notesDao.getNotesByLastModified()
+    }
+
+    override fun getNotesByDateCreated(): LiveData<List<Note>> {
+        return notesDao.getNotesByDateCreated()
+    }
+
     override fun getAllFavouriteNotes(): LiveData<List<Note>> {
         return notesDao.getFavouriteNotes()
+    }
+
+    override fun getFavNotesByName(): LiveData<List<Note>> {
+        return notesDao.getFavNotesByName()
+    }
+
+    override fun getFavNotesByLastModified(): LiveData<List<Note>> {
+        return notesDao.getFavNotesByLastModified()
+    }
+
+    override fun getFavNotesByDateCreated(): LiveData<List<Note>> {
+        return notesDao.getFavNotesByDateCreated()
     }
 
     override fun getAllTrashNotes(): LiveData<List<Note>> {
