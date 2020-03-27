@@ -93,6 +93,18 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             }
         }
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.noteFragment -> {
+                    mAdView.visibility = View.GONE
+                }
+                else -> {
+                    mAdView.visibility = View.VISIBLE
+                }
+            }
+
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
