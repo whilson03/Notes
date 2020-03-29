@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.models.Note
+import com.olabode.wilson.daggernoteapp.utils.Util
 
 /**
  *   Created by OLABODE WILSON on 2020-03-19.
@@ -17,7 +18,7 @@ class NoteDialog(val note: Note) : AppCompatDialogFragment() {
     private lateinit var listener: NoteDialogListener
 
     interface NoteDialogListener {
-        fun onNoteOptionClick(note: Note, position: Int)
+        fun onNoteOptionClick(note: Note, action: Util.ACTION)
     }
 
     fun setNoteDialogClickListener(listener: NoteDialogListener) {
@@ -31,10 +32,17 @@ class NoteDialog(val note: Note) : AppCompatDialogFragment() {
             builder.setTitle(getString(R.string.more))
                 .setItems(R.array.more_options,
                     DialogInterface.OnClickListener { _, which ->
-                        listener.onNoteOptionClick(note, which)
+                        listener.onNoteOptionClick(note, getAction(which))
                         dismiss()
                     })
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
+    private fun getAction(index: Int) = when (index) {
+        0 -> Util.ACTION.SHARE
+        1 -> Util.ACTION.DELETE
+        else -> Util.ACTION.COPY
+    }
+
 }

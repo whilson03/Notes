@@ -30,7 +30,7 @@ class TrashFragment : DaggerFragment() {
     }
 
     private lateinit var viewModel: TrashViewModel
-    private lateinit var deleteMenu: MenuItem
+    private var deleteMenu: MenuItem? = null
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
@@ -96,14 +96,10 @@ class TrashFragment : DaggerFragment() {
                     TrashDialog(note)
                 fragmentManager?.let { it1 -> dialog.show(it1, "TrashDialogFragment") }
                 dialog.setNoteDialogClickListener(object : TrashDialog.NoteDialogListener {
-                    override fun onNoteOptionClick(note: Note, position: Int) {
-                        when (position) {
-                            0 -> {
-                                viewModel.deleteNote(note)
-                            }
-                            1 -> {
-                                viewModel.removeFromTrash(note)
-                            }
+                    override fun onNoteOptionClick(note: Note, action: Util.ACTION) {
+                        when (action) {
+                            Util.ACTION.DELETE -> viewModel.deleteNote(note)
+                            Util.ACTION.RESTORE -> viewModel.removeFromTrash(note)
                         }
                     }
                 })
@@ -119,13 +115,13 @@ class TrashFragment : DaggerFragment() {
     private fun showEmptyState() {
         binding.emptyTrashIcon.visibility = View.VISIBLE
         binding.emptyNoteText.visibility = View.VISIBLE
-        deleteMenu.isVisible = false
+        deleteMenu?.isVisible = false
     }
 
     private fun hideEmptyState() {
         binding.emptyTrashIcon.visibility = View.GONE
         binding.emptyNoteText.visibility = View.GONE
-        deleteMenu.isVisible = true
+        deleteMenu?.isVisible = true
     }
 
 

@@ -9,13 +9,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:visible="false"
-        android:id="@+id/delete"
-        android:icon="@drawable/ic_delete"
-        android:title="@string/delete"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/sort_action"
         android:icon="@drawable/ic_sort"
         android:title="@string/sort"
@@ -31,5 +24,12 @@
         </menu>
     </item>
 
+
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/empty_trash"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
 
 </menu>

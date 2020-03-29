@@ -92,17 +92,11 @@ class HomeFragment : DaggerFragment() {
                     NoteDialog(note)
                 fragmentManager?.let { it1 -> dialog.show(it1, "NoteDialogFragment") }
                 dialog.setNoteDialogClickListener(object : NoteDialog.NoteDialogListener {
-                    override fun onNoteOptionClick(note: Note, position: Int) {
-                        when (position) {
-                            0 -> {
-                                shareNote(note.title, note.body)
-                            }
-                            1 -> {
-                                homeViewModel.moveToTrash(note)
-                            }
-                            2 -> {
-                                copyToClipBoard(note.title, note.body)
-                            }
+                    override fun onNoteOptionClick(note: Note, action: Util.ACTION) {
+                        when (action) {
+                            Util.ACTION.SHARE -> shareNote(note.title, note.body)
+                            Util.ACTION.DELETE -> homeViewModel.moveToTrash(note)
+                            Util.ACTION.COPY -> copyToClipBoard(note.title, note.body)
                         }
                     }
                 })

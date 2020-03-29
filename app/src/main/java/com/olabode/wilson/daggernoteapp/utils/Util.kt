@@ -63,4 +63,12 @@ object Util {
         DATE_ADDED_TO_TRASH_RECENT_OLDER
     }
 
+
+    enum class ACTION {
+        DELETE,
+        SHARE,
+        COPY,
+        RESTORE
+    }
+
 }

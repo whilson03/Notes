@@ -21,7 +21,7 @@
     <string name="title">Title</string>
     <string name="note">Note</string>
     <string name="edit_note">Edit Note</string>
-    <string name="delete">Delete All</string>
+    <string name="delete">Delete</string>
     <string name="confirm_yes">YES</string>
     <string name="confirm_no">NO</string>
     <string name="trash_dialog_title">Empty Trash</string>
@@ -85,4 +85,5 @@
     <string name="older">Older</string>
     <string name="removed_fav">Removed From Favourite</string>
     <string name="added_fav">Added To Favourite</string>
+    <string name="empty_trash">Empty Trash</string>
 </resources>
