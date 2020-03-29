@@ -16,7 +16,7 @@ buildscript {
         coroutinesVersion = '1.2.1'
         fragmentVersion = '1.1.0-alpha07'
         fragmentKtxVersion = '1.1.0-rc01'
-        roomVersion = '2.1.0'
+        roomVersion = '2.2.5'
         navigationVersion = "2.1.0-alpha06"
     }
     repositories {
