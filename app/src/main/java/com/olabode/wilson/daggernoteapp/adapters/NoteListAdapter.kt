@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.callbacks.NoteDiffCallBack
 import com.olabode.wilson.daggernoteapp.databinding.ItemNoteBinding
 import com.olabode.wilson.daggernoteapp.databinding.ItemNoteGridBinding
@@ -138,9 +139,18 @@ class NoteListAdapter(
 
             binding.favButton.setOnClickListener {
                 if (getNoteAt(adapterPosition).isFavourite) {
-                    Toast.makeText(context, "Added To Favourite", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.removed_fav),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(context, "Removed From Favourite", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.added_fav),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    
                 }
             }
 
@@ -199,11 +209,21 @@ class NoteListAdapter(
 
             binding.favButton.isChecked = item.isFavourite
 
+
             binding.favButton.setOnClickListener {
-                if (!getNoteAt(adapterPosition).isFavourite) {
-                    Toast.makeText(context, "Added To Favourite", Toast.LENGTH_SHORT).show()
+                if (getNoteAt(adapterPosition).isFavourite) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.removed_fav),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(context, "Removed From Favourite", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.added_fav),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
             }
 
@@ -221,8 +241,7 @@ class NoteListAdapter(
                 }
             }
 
-            // get the position that was long clicked
-            // get the position that was long clicked
+
             binding.root.setOnLongClickListener {
                 val position = adapterPosition
                 if (longListener != null && position != RecyclerView.NO_POSITION) {

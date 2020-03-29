@@ -83,4 +83,6 @@
     <string name="date_added">Date Added</string>
     <string name="recent">Recent</string>
     <string name="older">Older</string>
+    <string name="removed_fav">Removed From Favourite</string>
+    <string name="added_fav">Added To Favourite</string>
 </resources>
