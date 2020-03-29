@@ -1,6 +1,7 @@
 package com.olabode.wilson.daggernoteapp.repository
 
 import androidx.lifecycle.LiveData
+import com.olabode.wilson.daggernoteapp.data.Result
 import com.olabode.wilson.daggernoteapp.models.Note
 
 /**
@@ -8,30 +9,32 @@ import com.olabode.wilson.daggernoteapp.models.Note
  */
 
 interface NoteRepo {
-    fun getAllNotes(): LiveData<List<Note>>
+    fun getAllNotes(): LiveData<Result<List<Note>>>
 
-    fun getNotesByName(): LiveData<List<Note>>
+    fun getNotesByName(): LiveData<Result<List<Note>>>
 
-    fun getNotesByLastModified(): LiveData<List<Note>>
+    fun getNotesByLastModified(): LiveData<Result<List<Note>>>
 
-    fun getNotesByDateCreated(): LiveData<List<Note>>
+    fun getNotesByDateCreated(): LiveData<Result<List<Note>>>
 
-    fun getAllFavouriteNotes(): LiveData<List<Note>>
+    fun getAllFavouriteNotes(): LiveData<Result<List<Note>>>
 
 
-    fun getFavNotesByName(): LiveData<List<Note>>
+    fun getFavNotesByName(): LiveData<Result<List<Note>>>
 
-    fun getFavNotesByLastModified(): LiveData<List<Note>>
+    fun getFavNotesByLastModified(): LiveData<Result<List<Note>>>
 
-    fun getFavNotesByDateCreated(): LiveData<List<Note>>
+    fun getFavNotesByDateCreated(): LiveData<Result<List<Note>>>
 
-    fun getAllTrashNotes(): LiveData<List<Note>>
+    fun getAllTrashNotes(): LiveData<Result<List<Note>>>
 
     fun getAllNotesCount(): LiveData<Int>
 
     fun getAllFavouriteNotesCount(): LiveData<Int>
 
     fun getAllTrashItemsCount(): LiveData<Int>
+
+    fun getAllTrashedNotesByDateAdded(): LiveData<Result<List<Note>>>
 
     suspend fun insertNote(note: Note)
 

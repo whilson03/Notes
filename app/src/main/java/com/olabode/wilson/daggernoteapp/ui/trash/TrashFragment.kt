@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
+import com.olabode.wilson.daggernoteapp.data.Result
 import com.olabode.wilson.daggernoteapp.databinding.TrashFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.ui.dialogs.TrashDialog
@@ -33,6 +34,7 @@ class TrashFragment : DaggerFragment() {
     }
 
     private lateinit var viewModel: TrashViewModel
+    private lateinit var deleteMenu: MenuItem
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
@@ -63,18 +65,26 @@ class TrashFragment : DaggerFragment() {
         binding.recyclerView.addItemDecoration(NoteItemDecoration(2))
         binding.recyclerView.adapter = adapter
 
+
+
+
         viewModel.trashList.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (it.isEmpty()) {
-                    binding.emptyTrashIcon.visibility = View.VISIBLE
-                    binding.emptyNoteText.visibility = View.VISIBLE
-                } else {
-                    binding.emptyTrashIcon.visibility = View.GONE
-                    binding.emptyNoteText.visibility = View.GONE
+                when (it) {
+                    is Result.Success -> {
+                        hideEmptyState()
+                        adapter.submitList(it.data)
+                        scrollToTop()
+                    }
+                    is Result.Empty -> {
+                        showEmptyState()
+                    }
+
                 }
-                adapter.submitList(it)
             }
         })
+
+
 
 
         adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
@@ -106,6 +116,23 @@ class TrashFragment : DaggerFragment() {
                 })
             }
         })
+    }
+
+    private fun scrollToTop() {
+        binding.recyclerView.post { binding.recyclerView.smoothScrollToPosition(0) }
+    }
+
+
+    private fun showEmptyState() {
+        binding.emptyTrashIcon.visibility = View.VISIBLE
+        binding.emptyNoteText.visibility = View.VISIBLE
+        deleteMenu.isVisible = false
+    }
+
+    private fun hideEmptyState() {
+        binding.emptyTrashIcon.visibility = View.GONE
+        binding.emptyNoteText.visibility = View.GONE
+        deleteMenu.isVisible = true
     }
 
     private fun shareNote(title: String, body: String) {
@@ -142,13 +169,7 @@ class TrashFragment : DaggerFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.trash_menu, menu)
-        val deleteMenu = menu.findItem(R.id.delete)
-        viewModel.trashList.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                deleteMenu.isVisible = it.isNotEmpty()
-            }
-        })
-
+        deleteMenu = menu.findItem(R.id.delete)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

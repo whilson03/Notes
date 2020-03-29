@@ -24,15 +24,18 @@ data class Note(
     var body: String,
 
     @ColumnInfo(name = "favourite")
-    var isFavourite: Int = 0,
+    var isFavourite: Boolean = false,
 
     @ColumnInfo(name = "trash")
-    var isTrashItem: Int = 0,
+    var isTrashItem: Boolean = false,
 
     @ColumnInfo(name = "created_date")
     var dateCreated: Date,
 
     @ColumnInfo(name = "date_last_modified")
-    var dateLastUpdated: Date
+    var dateLastUpdated: Date,
+
+    @ColumnInfo(name = "date_trashed")
+    var trashedDate: Date? = null
 
 ) : Parcelable

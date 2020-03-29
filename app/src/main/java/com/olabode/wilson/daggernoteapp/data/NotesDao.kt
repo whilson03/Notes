@@ -42,6 +42,11 @@ interface NotesDao {
     @Query("SELECT * FROM notes_table WHERE trash == 1")
     fun getTrashedNotes(): LiveData<List<Note>>
 
+
+    @Query("SELECT * FROM notes_table WHERE trash == 1 ORDER BY date_trashed ASC")
+    fun getTrashedNotesByDateAdded(): LiveData<List<Note>>
+
+
     // CREATE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: Note)

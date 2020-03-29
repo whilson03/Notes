@@ -126,18 +126,18 @@ class NoteListAdapter(
                 }
             }
 
-            if (item.isTrashItem == 1) {
+            if (item.isTrashItem) {
                 binding.favButton.visibility = View.GONE
             } else {
                 binding.favButton.visibility = View.VISIBLE
             }
 
-            binding.favButton.isChecked = item.isFavourite == 1
+            binding.favButton.isChecked = item.isFavourite
 
 
 
             binding.favButton.setOnClickListener {
-                if (getNoteAt(adapterPosition).isFavourite == 0) {
+                if (getNoteAt(adapterPosition).isFavourite) {
                     Toast.makeText(context, "Added To Favourite", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "Removed From Favourite", Toast.LENGTH_SHORT).show()
@@ -191,16 +191,16 @@ class NoteListAdapter(
                 }
             }
 
-            if (item.isTrashItem == 1) {
+            if (item.isTrashItem) {
                 binding.favButton.visibility = View.GONE
             } else {
                 binding.favButton.visibility = View.VISIBLE
             }
 
-            binding.favButton.isChecked = item.isFavourite == 1
+            binding.favButton.isChecked = item.isFavourite
 
             binding.favButton.setOnClickListener {
-                if (getNoteAt(adapterPosition).isFavourite == 0) {
+                if (!getNoteAt(adapterPosition).isFavourite) {
                     Toast.makeText(context, "Added To Favourite", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "Removed From Favourite", Toast.LENGTH_SHORT).show()

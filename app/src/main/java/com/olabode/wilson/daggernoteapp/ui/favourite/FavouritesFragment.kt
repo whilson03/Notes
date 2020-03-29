@@ -14,7 +14,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -24,6 +23,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
+import com.olabode.wilson.daggernoteapp.data.Result
 import com.olabode.wilson.daggernoteapp.databinding.FavouritesFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.ui.dialogs.NoteDialog
@@ -84,7 +84,6 @@ class FavouritesFragment : DaggerFragment() {
 
         adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
             override fun onItemClick(note: Note, titleView: TextView, bodyView: TextView) {
-
                 val action =
                     FavouritesFragmentDirections.actionFavouritesToNoteFragment(
                         note,
@@ -100,11 +99,19 @@ class FavouritesFragment : DaggerFragment() {
             }
         })
 
-        viewModel.getAllFAvouriteNotes().observe(viewLifecycleOwner, Observer {
+        viewModel.getAllFAvouriteNotes().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.let {
-                emptyState(it)
-                adapter.submitList(it)
-                scrollToTop()
+                when (it) {
+                    is Result.Success -> {
+                        hideEmptyState()
+                        adapter.submitList(it.data)
+                        scrollToTop()
+                    }
+                    is Result.Empty -> {
+                        showEmptyState()
+                    }
+
+                }
             }
         })
 
@@ -137,15 +144,16 @@ class FavouritesFragment : DaggerFragment() {
         setupSwipeDelete()
     }
 
-    private fun emptyState(it: List<Note>) {
-        if (it.isEmpty()) {
-            binding.emptyFavIcon.visibility = View.VISIBLE
-            binding.emptyNoteText.visibility = View.VISIBLE
-        } else {
-            binding.emptyFavIcon.visibility = View.GONE
-            binding.emptyNoteText.visibility = View.GONE
-        }
+    private fun showEmptyState() {
+        binding.emptyFavIcon.visibility = View.VISIBLE
+        binding.emptyNoteText.visibility = View.VISIBLE
     }
+
+    private fun hideEmptyState() {
+        binding.emptyFavIcon.visibility = View.GONE
+        binding.emptyNoteText.visibility = View.GONE
+    }
+
 
     private fun favouriteAction(note: Note) {
         viewModel.addRemoveFavourite(note)

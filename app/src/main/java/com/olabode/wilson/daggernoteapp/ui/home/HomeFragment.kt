@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.NoteListAdapter
+import com.olabode.wilson.daggernoteapp.data.Result
 import com.olabode.wilson.daggernoteapp.databinding.FragmentHomeBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.ui.dialogs.NoteDialog
@@ -113,9 +114,16 @@ class HomeFragment : DaggerFragment() {
         //observe list of note from the view model
         homeViewModel.getNotes().observe(viewLifecycleOwner, Observer {
             it?.let {
-                emptyState(it)
-                adapter.submitList(it)
-                scrollToTop()
+                when (it) {
+                    is Result.Success -> {
+                        hideEmptyState()
+                        adapter.submitList(it.data)
+                        scrollToTop()
+                    }
+                    is Result.Empty -> {
+                        showEmptyState()
+                    }
+                }
             }
         })
 
@@ -125,14 +133,14 @@ class HomeFragment : DaggerFragment() {
         return binding.root
     }
 
-    private fun emptyState(it: List<Note>) {
-        if (it.isEmpty()) {
-            binding.emptyNoteIcon.visibility = View.VISIBLE
-            binding.emptyNoteText.visibility = View.VISIBLE
-        } else {
-            binding.emptyNoteIcon.visibility = View.GONE
-            binding.emptyNoteText.visibility = View.GONE
-        }
+    private fun showEmptyState() {
+        binding.emptyNoteIcon.visibility = View.VISIBLE
+        binding.emptyNoteText.visibility = View.VISIBLE
+    }
+
+    private fun hideEmptyState() {
+        binding.emptyNoteIcon.visibility = View.GONE
+        binding.emptyNoteText.visibility = View.GONE
     }
 
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.olabode.wilson.daggernoteapp.data.Result
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.repository.NotesRepository
 import com.olabode.wilson.daggernoteapp.utils.Util.SORT
@@ -18,7 +19,7 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
-    private val defaultNotesList: LiveData<List<Note>> = repository.getAllNotes()
+    private val defaultNotesList: LiveData<Result<List<Note>>> = repository.getAllNotes()
 
     private val notesOrderByName = repository.getNotesByName()
 
@@ -36,14 +37,14 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
     }
 
 
-    fun getNotes(): LiveData<List<Note>> {
+    fun getNotes(): LiveData<Result<List<Note>>> {
         return Transformations.switchMap(sortOrder) {
             sortNotes(it)
         }
     }
 
 
-    private fun sortNotes(sort: SORT): LiveData<List<Note>> {
+    private fun sortNotes(sort: SORT): LiveData<Result<List<Note>>> {
         return when (sort) {
             SORT.DATE_LAST_MODIFIED -> {
                 noteByLastModified
@@ -62,7 +63,7 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
 
     fun addRemoveFavourite(note: Note) {
         uiScope.launch {
-            if (note.isFavourite == 1) {
+            if (note.isFavourite) {
                 repository.removeFromFavourite(note)
             } else {
                 repository.addToFavourite(note)
