@@ -20,8 +20,6 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
-    private val defaultNotesList: LiveData<Result<List<Note>>> = repository.getAllNotes()
-
     private val notesOrderByName = repository.getNotesByName()
 
     private val noteByLastModified = repository.getNotesByLastModified()
@@ -34,7 +32,7 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
         get() = _sortOrder
 
     init {
-        _sortOrder.value = SORT.DEFAULT
+        _sortOrder.value = SORT.DATE_CREATED
     }
 
 
@@ -53,11 +51,8 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
             SORT.NAME -> {
                 notesOrderByName
             }
-            SORT.DATE_CREATED -> {
-                notesByDateCreated
-            }
             else -> {
-                defaultNotesList
+                notesByDateCreated
             }
         }
     }

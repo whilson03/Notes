@@ -9,16 +9,13 @@ import com.olabode.wilson.daggernoteapp.models.Note
  */
 
 interface NoteRepo {
-    fun getAllNotes(): LiveData<Result<List<Note>>>
+
 
     fun getNotesByName(): LiveData<Result<List<Note>>>
 
     fun getNotesByLastModified(): LiveData<Result<List<Note>>>
 
     fun getNotesByDateCreated(): LiveData<Result<List<Note>>>
-
-    fun getAllFavouriteNotes(): LiveData<Result<List<Note>>>
-
 
     fun getFavNotesByName(): LiveData<Result<List<Note>>>
 

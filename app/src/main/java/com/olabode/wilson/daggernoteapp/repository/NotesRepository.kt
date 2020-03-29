@@ -20,69 +20,58 @@ import javax.inject.Singleton
 class NotesRepository @Inject constructor(
     private val notesDao: NotesDao
 ) : NoteRepo {
-    override fun getAllNotes(): LiveData<Result<List<Note>>> {
-        return notesDao.getAllNotes().map {
-            checkStatus(it)
-        }
-    }
 
     override fun getNotesByName(): LiveData<Result<List<Note>>> {
         return notesDao.getNotesByName().map {
-            checkStatus(it)
+            checkEmptyStatus(it)
         }
     }
 
     override fun getNotesByLastModified(): LiveData<Result<List<Note>>> {
         return notesDao.getNotesByLastModified().map {
-            checkStatus(it)
+            checkEmptyStatus(it)
         }
     }
 
     override fun getNotesByDateCreated(): LiveData<Result<List<Note>>> {
         return notesDao.getNotesByDateCreated().map {
-            checkStatus(it)
-        }
-    }
-
-    override fun getAllFavouriteNotes(): LiveData<Result<List<Note>>> {
-        return notesDao.getFavouriteNotes().map {
-            checkStatus(it)
+            checkEmptyStatus(it)
         }
     }
 
     override fun getFavNotesByName(): LiveData<Result<List<Note>>> {
         return notesDao.getFavNotesByName().map {
-            checkStatus(it)
+            checkEmptyStatus(it)
         }
     }
 
     override fun getFavNotesByLastModified(): LiveData<Result<List<Note>>> {
         return notesDao.getFavNotesByLastModified().map {
-            checkStatus(it)
+            checkEmptyStatus(it)
         }
     }
 
     override fun getFavNotesByDateCreated(): LiveData<Result<List<Note>>> {
         return notesDao.getFavNotesByDateCreated().map {
-            checkStatus(it)
+            checkEmptyStatus(it)
         }
     }
 
     override fun getAllTrashNotes(): LiveData<Result<List<Note>>> {
         return notesDao.getTrashedNotes().map {
-            checkStatus(it)
+            checkEmptyStatus(it)
         }
     }
 
     override fun getAllTrashedNotesByDateAddedRecent(): LiveData<Result<List<Note>>> {
         return notesDao.getTrashedNotesByDateAddedRecent().map {
-            checkStatus(it)
+            checkEmptyStatus(it)
         }
     }
 
     override fun getTrashedNotesByDateAddedOlder(): LiveData<Result<List<Note>>> {
         return notesDao.getTrashedNotesByDateAddedOlder().map {
-            checkStatus(it)
+            checkEmptyStatus(it)
         }
     }
 
@@ -150,7 +139,7 @@ class NotesRepository @Inject constructor(
     }
 
 
-    private fun checkStatus(it: List<Note>): Result<List<Note>> {
+    private fun checkEmptyStatus(it: List<Note>): Result<List<Note>> {
         return when (it.isNotEmpty()) {
             true -> Success(it)
             false -> Result.Empty

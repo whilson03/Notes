@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 class FavouritesViewModel @Inject constructor(private val repository: NotesRepository) :
     ViewModel() {
-    private val favouritesList: LiveData<Result<List<Note>>> = repository.getAllFavouriteNotes()
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
@@ -34,7 +33,7 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
         get() = _sortOrder
 
     init {
-        _sortOrder.value = Util.SORT.DEFAULT
+        _sortOrder.value = Util.SORT.DATE_CREATED
     }
 
 
@@ -57,7 +56,7 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
                 favNotesByDateCreated
             }
             else -> {
-                favouritesList
+                favNotesByDateCreated
             }
         }
     }
