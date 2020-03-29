@@ -13,6 +13,19 @@
         android:id="@+id/delete"
         android:icon="@drawable/ic_delete"
         android:title="@string/delete"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/sort_action"
+        android:icon="@drawable/ic_sort"
+        android:title="@string/sort"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/sort_date_added"
+                android:title="@string/date_added" />
+        </menu>
+    </item>
+
 
 </menu>

@@ -66,8 +66,6 @@ class TrashFragment : DaggerFragment() {
         binding.recyclerView.adapter = adapter
 
 
-
-
         viewModel.trashList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 when (it) {
@@ -79,7 +77,6 @@ class TrashFragment : DaggerFragment() {
                     is Result.Empty -> {
                         showEmptyState()
                     }
-
                 }
             }
         })
