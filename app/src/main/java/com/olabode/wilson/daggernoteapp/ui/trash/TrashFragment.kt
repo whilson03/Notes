@@ -72,6 +72,8 @@ class TrashFragment : DaggerFragment() {
                     }
                     is Result.Empty -> {
                         showEmptyState()
+                        // submit empty list to the adapter
+                        adapter.submitList(emptyList<Note>())
                     }
                 }
             }
