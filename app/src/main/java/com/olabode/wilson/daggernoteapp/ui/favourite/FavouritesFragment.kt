@@ -99,7 +99,7 @@ class FavouritesFragment : DaggerFragment() {
             }
         })
 
-        viewModel.getAllFAvouriteNotes().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getAllFavouriteNotes().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.let {
                 when (it) {
                     is Result.Success -> {

@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class FavouritesViewModel @Inject constructor(private val repository: NotesRepository) :
@@ -37,7 +38,7 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
     }
 
 
-    fun getAllFAvouriteNotes(): LiveData<Result<List<Note>>> {
+    fun getAllFavouriteNotes(): LiveData<Result<List<Note>>> {
         return Transformations.switchMap(sortOrder) {
             sortNotes(it)
         }
@@ -79,6 +80,7 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
     fun moveToTrash(note: Note) {
         uiScope.launch {
             note.isFavourite = false
+            note.trashedDate = Date()
             repository.addToTrash(note)
         }
     }
@@ -86,6 +88,7 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
     fun undoMoveToTrash(note: Note) {
         uiScope.launch {
             note.isFavourite = true
+            note.trashedDate = null
             repository.removeFromTrash(note)
         }
     }

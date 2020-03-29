@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 
@@ -73,11 +74,17 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
 
 
     fun moveToTrash(note: Note) {
-        uiScope.launch { repository.addToTrash(note) }
+        uiScope.launch {
+            note.trashedDate = Date()
+            repository.addToTrash(note)
+        }
     }
 
     fun undoMoveToTrash(note: Note) {
-        uiScope.launch { repository.removeFromTrash(note) }
+        uiScope.launch {
+            note.trashedDate = null
+            repository.removeFromTrash(note)
+        }
     }
 
     override fun onCleared() {

@@ -22,8 +22,12 @@
         app:showAsAction="ifRoom">
         <menu>
             <item
-                android:id="@+id/sort_date_added"
-                android:title="@string/date_added" />
+                android:id="@+id/sort_recent"
+                android:title="@string/recent" />
+
+            <item
+                android:id="@+id/sort_older"
+                android:title="@string/older" />
         </menu>
     </item>
 

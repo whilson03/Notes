@@ -34,7 +34,9 @@ interface NoteRepo {
 
     fun getAllTrashItemsCount(): LiveData<Int>
 
-    fun getAllTrashedNotesByDateAdded(): LiveData<Result<List<Note>>>
+    fun getAllTrashedNotesByDateAddedRecent(): LiveData<Result<List<Note>>>
+
+    fun getTrashedNotesByDateAddedOlder(): LiveData<Result<List<Note>>>
 
     suspend fun insertNote(note: Note)
 

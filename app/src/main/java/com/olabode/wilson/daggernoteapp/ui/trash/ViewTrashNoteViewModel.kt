@@ -17,6 +17,7 @@ class ViewTrashNoteViewModel @Inject constructor(private val repository: NotesRe
 
     fun removeFromTrash(note: Note) {
         uiScope.launch {
+            note.trashedDate = null
             repository.removeFromTrash(note)
         }
     }

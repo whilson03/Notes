@@ -56,7 +56,11 @@ object Util {
 
 
     enum class SORT {
-        NAME, DATE_CREATED, DATE_LAST_MODIFIED, DEFAULT
+        NAME, DATE_CREATED,
+        DATE_LAST_MODIFIED,
+        DEFAULT,
+        DATE_ADDED_TO_TRASH_RECENT,
+        DATE_ADDED_TO_TRASH_RECENT_OLDER
     }
 
 }

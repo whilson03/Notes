@@ -81,4 +81,6 @@
     <string name="SHARED_PREF_VIEW_MODE_RV">note_mode_view</string>
     <string name="note_is_blank">Cannot Copy Blank Note</string>
     <string name="date_added">Date Added</string>
+    <string name="recent">Recent</string>
+    <string name="older">Older</string>
 </resources>

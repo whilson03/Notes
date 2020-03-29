@@ -1,9 +1,5 @@
 package com.olabode.wilson.daggernoteapp.ui.trash
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
@@ -66,7 +62,7 @@ class TrashFragment : DaggerFragment() {
         binding.recyclerView.adapter = adapter
 
 
-        viewModel.trashList.observe(viewLifecycleOwner, Observer {
+        viewModel.getTrashedNotes().observe(viewLifecycleOwner, Observer {
             it?.let {
                 when (it) {
                     is Result.Success -> {
@@ -132,23 +128,6 @@ class TrashFragment : DaggerFragment() {
         deleteMenu.isVisible = true
     }
 
-    private fun shareNote(title: String, body: String) {
-        val message = title + "\n" + body
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_SUBJECT, title)
-        intent.putExtra(Intent.EXTRA_TEXT, message)
-        startActivity(Intent.createChooser(intent, getString(R.string.share_chooser_text)))
-    }
-
-
-    private fun copyToClipBoard(title: String, body: String) {
-        val copy = title + "\n" + body
-        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText(title, copy)
-        clipboard.setPrimaryClip(clip)
-        Toast.makeText(context, getString(R.string.text_copied), Toast.LENGTH_SHORT).show()
-    }
 
     private fun confirmDeleteDialog() {
         MaterialAlertDialogBuilder(context)
@@ -176,6 +155,14 @@ class TrashFragment : DaggerFragment() {
                 confirmDeleteDialog()
             }
 
+            R.id.sort_recent -> {
+                viewModel.filter(Util.SORT.DATE_ADDED_TO_TRASH_RECENT)
+            }
+
+            R.id.sort_older -> {
+                viewModel.filter(Util.SORT.DATE_ADDED_TO_TRASH_RECENT_OLDER)
+            }
+
             R.id.note_view_mode -> {
                 if (layoutManager.spanCount == 1) {
                     Util.setGridMode(context!!, true)
@@ -191,9 +178,4 @@ class TrashFragment : DaggerFragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    private fun hideShowOptionsMenu() {
-
-    }
-
 }

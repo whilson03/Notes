@@ -74,8 +74,14 @@ class NotesRepository @Inject constructor(
         }
     }
 
-    override fun getAllTrashedNotesByDateAdded(): LiveData<Result<List<Note>>> {
-        return notesDao.getTrashedNotesByDateAdded().map {
+    override fun getAllTrashedNotesByDateAddedRecent(): LiveData<Result<List<Note>>> {
+        return notesDao.getTrashedNotesByDateAddedRecent().map {
+            checkEmptyStatus(it)
+        }
+    }
+
+    override fun getTrashedNotesByDateAddedOlder(): LiveData<Result<List<Note>>> {
+        return notesDao.getTrashedNotesByDateAddedOlder().map {
             checkEmptyStatus(it)
         }
     }
