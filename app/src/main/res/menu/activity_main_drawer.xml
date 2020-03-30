@@ -21,4 +21,15 @@
             android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
     </group>
+
+    <item android:title="@string/labels">
+        <menu>
+            <item
+                android:id="@+id/label"
+                android:icon="@drawable/ic_label"
+                android:title="@string/labels" />
+        </menu>
+    </item>
+
+
 </menu>

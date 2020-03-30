@@ -86,4 +86,8 @@
     <string name="removed_fav">Removed From Favourite</string>
     <string name="added_fav">Added To Favourite</string>
     <string name="empty_trash">Empty Trash</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_new_label">Create New Label</string>
+    <string name="labels">Labels</string>
 </resources>

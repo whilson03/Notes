@@ -53,7 +53,6 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
 
-
     // Architecture Components
     implementation "androidx.room:room-runtime:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"

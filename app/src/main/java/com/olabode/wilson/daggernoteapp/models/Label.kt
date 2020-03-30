@@ -37,6 +37,7 @@ data class NotesWithLabel(
     val labels: List<Label>
 )
 
+
 data class LabelsWithNote(
     @Embedded val label: Label,
     @Relation(

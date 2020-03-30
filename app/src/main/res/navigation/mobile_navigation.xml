@@ -71,4 +71,8 @@
             android:name="note"
             app:argType="com.olabode.wilson.daggernoteapp.models.Note" />
     </fragment>
+    <fragment
+        android:id="@+id/labelFragment"
+        android:name="com.olabode.wilson.daggernoteapp.labels.LabelFragment"
+        android:label="Label" />
 </navigation>

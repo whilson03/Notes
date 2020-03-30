@@ -136,56 +136,46 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                     .setPopUpTo(R.id.mobile_navigation, true)
                     .build()
                 if (isValidDestination(R.id.nav_home)) {
-
                     Handler().postDelayed({
-
                         Navigation.findNavController(this, R.id.nav_host_fragment).navigate(
-                            R.id.nav_home,
-                            null,
-                            navOptions
+                            R.id.nav_home, null, navOptions
                         )
                     }, 305)
                 }
 
             }
             R.id.nav_settings -> {
-
                 if (isValidDestination(R.id.settings)) {
-
-                    Handler().postDelayed({
-                        Navigation.findNavController(this, R.id.nav_host_fragment)
-                            .navigate(R.id.settings)
-                    }, 305)
+                    navigateDestinationFromHost(R.id.settings)
                 }
-
             }
 
             R.id.nav_favourites -> {
                 if (isValidDestination(R.id.favourites)) {
-                    Handler().postDelayed({
-                        Navigation.findNavController(this, R.id.nav_host_fragment)
-                            .navigate(R.id.favourites)
-                    }, 305)
-
+                    navigateDestinationFromHost(R.id.favourites)
                 }
-
             }
 
             R.id.nav_trash -> {
                 if (isValidDestination(R.id.trashFragment)) {
-                    Handler().postDelayed({
-                        Navigation.findNavController(this, R.id.nav_host_fragment)
-                            .navigate(R.id.trashFragment)
-                    }, 305)
+                    navigateDestinationFromHost(R.id.trashFragment)
                 }
-
             }
-
+            R.id.label -> {
+                navigateDestinationFromHost(R.id.labelFragment)
+            }
 
         }
         item.isChecked = true
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun navigateDestinationFromHost(toDestination: Int) {
+        Handler().postDelayed({
+            Navigation.findNavController(this, R.id.nav_host_fragment)
+                .navigate(toDestination)
+        }, 305)
     }
 
 
