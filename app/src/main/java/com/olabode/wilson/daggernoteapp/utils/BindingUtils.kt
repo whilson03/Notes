@@ -21,7 +21,7 @@ fun goneIfNotNull(view: View, it: Any?) {
 
 @BindingAdapter("favourite")
 fun ImageView.bindIcon(note: Note) {
-    if (note.id == 1) {
+    if (note.noteId.toInt() == 1) {
         setImageResource(R.drawable.ic_star_filled)
     } else {
         setImageResource(R.drawable.ic_star_border)

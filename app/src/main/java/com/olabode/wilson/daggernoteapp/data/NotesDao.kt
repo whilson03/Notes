@@ -45,6 +45,7 @@ interface NotesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: Note)
 
+
     // DELETE
     @Delete
     suspend fun deleteNote(note: Note)
@@ -55,12 +56,12 @@ interface NotesDao {
     @Query("DELETE FROM notes_table WHERE trash == 1")
     suspend fun emptyTrash()
 
-    @Query("SELECT COUNT(id) FROM notes_table WHERE trash = 0")
+    @Query("SELECT COUNT(noteId) FROM notes_table WHERE trash = 0")
     fun countNoteTable(): LiveData<Int>
 
-    @Query("SELECT COUNT(id) FROM notes_table WHERE favourite =  1 ")
+    @Query("SELECT COUNT(noteId) FROM notes_table WHERE favourite =  1 ")
     fun countFavouriteNotes(): LiveData<Int>
 
-    @Query("SELECT COUNT(id) FROM notes_table WHERE trash =  1 ")
+    @Query("SELECT COUNT(noteId) FROM notes_table WHERE trash =  1 ")
     fun countTrashNotes(): LiveData<Int>
 }

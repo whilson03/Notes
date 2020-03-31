@@ -1,5 +1,6 @@
 package com.olabode.wilson.daggernoteapp.di.main
 
+import com.olabode.wilson.daggernoteapp.labels.LabelFragment
 import com.olabode.wilson.daggernoteapp.ui.favourite.FavouritesFragment
 import com.olabode.wilson.daggernoteapp.ui.home.HomeFragment
 import com.olabode.wilson.daggernoteapp.ui.notes.NoteFragment
@@ -30,5 +31,9 @@ abstract class MainFragmentsBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeViewTrashNoteFragment(): ViewTrashNoteFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeLabelFragment(): LabelFragment
 
 }

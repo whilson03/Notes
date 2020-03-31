@@ -6,6 +6,7 @@ import androidx.room.TypeConverters
 import com.olabode.wilson.daggernoteapp.data.converters.Converters
 import com.olabode.wilson.daggernoteapp.models.Label
 import com.olabode.wilson.daggernoteapp.models.Note
+import com.olabode.wilson.daggernoteapp.models.NotesAndLabelCrossRef
 
 /**
  *   Created by OLABODE WILSON on 2020-03-03.
@@ -14,11 +15,14 @@ import com.olabode.wilson.daggernoteapp.models.Note
 @Database(
     entities = [
         Note::class,
-        Label::class
+        Label::class,
+        NotesAndLabelCrossRef::class
     ], version = 1, exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class NotesDatabase : RoomDatabase() {
     abstract fun noteDao(): NotesDao
+
+    abstract fun labelDao(): LabelDao
 
 }

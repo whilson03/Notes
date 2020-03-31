@@ -14,23 +14,23 @@ import kotlinx.android.parcel.Parcelize
 data class Label(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "labelId")
-    val labelId: Long,
+    val labelId: Long = 0,
     @ColumnInfo(name = "title")
     var title: String
 ) : Parcelable
 
 
-@Entity(primaryKeys = ["labelId", "id"])
+@Entity(primaryKeys = ["labelId", "noteId"])
 data class NotesAndLabelCrossRef(
     val labelId: Long,
-    val id: Long
+    val noteId: Long
 )
 
 
 data class NotesWithLabel(
     @Embedded val note: Note,
     @Relation(
-        parentColumn = "id",
+        parentColumn = "noteId",
         entityColumn = "labelId",
         associateBy = Junction(NotesAndLabelCrossRef::class)
     )
@@ -42,7 +42,7 @@ data class LabelsWithNote(
     @Embedded val label: Label,
     @Relation(
         parentColumn = "labelId",
-        entityColumn = "id",
+        entityColumn = "noteId",
         associateBy = Junction(NotesAndLabelCrossRef::class)
     )
     val notes: List<Note>

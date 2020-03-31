@@ -2,6 +2,7 @@ package com.olabode.wilson.daggernoteapp.di.main
 
 import androidx.lifecycle.ViewModel
 import com.olabode.wilson.daggernoteapp.di.annotations.ViewModelKey
+import com.olabode.wilson.daggernoteapp.labels.LabelViewModel
 import com.olabode.wilson.daggernoteapp.ui.favourite.FavouritesViewModel
 import com.olabode.wilson.daggernoteapp.ui.home.HomeViewModel
 import com.olabode.wilson.daggernoteapp.ui.notes.NoteViewModel
@@ -44,5 +45,10 @@ abstract class MainViewModelsModule {
     @Binds
     @ViewModelKey(ViewTrashNoteViewModel::class)
     abstract fun bindViewTrashNoteViewModel(viewModel: ViewTrashNoteViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(LabelViewModel::class)
+    abstract fun bindLabelViewModel(viewModel: LabelViewModel): ViewModel
 
 }
