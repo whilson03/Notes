@@ -25,4 +25,5 @@ abstract class NotesDatabase : RoomDatabase() {
 
     abstract fun labelDao(): LabelDao
 
+    abstract fun notesAndLabelDao(): NotesAndLabelDao
 }

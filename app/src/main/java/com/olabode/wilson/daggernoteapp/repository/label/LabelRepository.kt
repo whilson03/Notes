@@ -3,7 +3,6 @@ package com.olabode.wilson.daggernoteapp.repository.label
 import androidx.lifecycle.LiveData
 import com.olabode.wilson.daggernoteapp.data.LabelDao
 import com.olabode.wilson.daggernoteapp.models.Label
-import com.olabode.wilson.daggernoteapp.models.LabelsWithNote
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -15,10 +14,6 @@ import javax.inject.Singleton
 
 @Singleton
 class LabelRepository @Inject constructor(private val labelDao: LabelDao) : LabelRepo {
-
-    override fun getLabelsWithNote(): LiveData<List<LabelsWithNote>> {
-        return labelDao.getLabelsWithNote()
-    }
 
     override fun getAllLabels(): LiveData<List<Label>> {
         return labelDao.getAllLabels()

@@ -20,6 +20,7 @@ import com.olabode.wilson.daggernoteapp.models.Label
 class LabelListAdapter(val context: Context) :
     ListAdapter<Label, LabelListAdapter.LabelViewHolder>(LabelDiffCallBack()) {
 
+
     private var clickListener: OnItemClickListener? = null
     private var deleteListener: OnItemDeleteClickListener? = null
 

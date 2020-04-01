@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.annotation.NonNull
 import androidx.room.Room
 import com.olabode.wilson.daggernoteapp.data.LabelDao
+import com.olabode.wilson.daggernoteapp.data.NotesAndLabelDao
 import com.olabode.wilson.daggernoteapp.data.NotesDao
 import com.olabode.wilson.daggernoteapp.data.NotesDatabase
 import dagger.Module
@@ -26,13 +27,11 @@ class PersistenceModule {
         ).fallbackToDestructiveMigration().build()
     }
 
-
     @Singleton
     @Provides
     fun provideNotesDao(@NonNull notesDatabase: NotesDatabase): NotesDao {
         return notesDatabase.noteDao()
     }
-
 
     @Singleton
     @Provides
@@ -40,4 +39,9 @@ class PersistenceModule {
         return notesDatabase.labelDao()
     }
 
+    @Singleton
+    @Provides
+    fun provideNotesAndLabelCrossRef(@NonNull notesDatabase: NotesDatabase): NotesAndLabelDao {
+        return notesDatabase.notesAndLabelDao()
+    }
 }

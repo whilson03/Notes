@@ -1,9 +1,11 @@
 package com.olabode.wilson.daggernoteapp.di.repo
 
 import com.olabode.wilson.daggernoteapp.data.LabelDao
+import com.olabode.wilson.daggernoteapp.data.NotesAndLabelDao
 import com.olabode.wilson.daggernoteapp.data.NotesDao
 import com.olabode.wilson.daggernoteapp.repository.NotesRepository
 import com.olabode.wilson.daggernoteapp.repository.label.LabelRepository
+import com.olabode.wilson.daggernoteapp.repository.note_label.NoteAndLabelRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -18,9 +20,13 @@ class RepositoryModule {
     @Provides
     fun provideNoteRepository(notesDao: NotesDao) = NotesRepository(notesDao)
 
-
     @Singleton
     @Provides
     fun provideLabelRepository(labelDao: LabelDao) = LabelRepository(labelDao)
+
+    @Singleton
+    @Provides
+    fun provideNoteAndLabelRepository(notesAndLabelDao: NotesAndLabelDao) =
+        NoteAndLabelRepository(notesAndLabelDao)
 
 }
