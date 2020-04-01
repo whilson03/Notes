@@ -54,7 +54,10 @@ class NoteFragment : DaggerFragment() {
             binding.note.setText(it.body)
             viewModel.oldBody = it.body
             viewModel.oldTitle = it.title
+
         }
+
+
     }
 
 
