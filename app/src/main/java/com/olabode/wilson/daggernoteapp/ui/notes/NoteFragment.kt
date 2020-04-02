@@ -13,15 +13,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
-import com.google.android.material.chip.Chip
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.olabode.wilson.daggernoteapp.R
+import com.olabode.wilson.daggernoteapp.adapters.LabelChipListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.NoteFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -45,6 +43,7 @@ class NoteFragment : DaggerFragment() {
     ): View? {
         binding = NoteFragmentBinding.inflate(inflater, container, false)
         note = NoteFragmentArgs.fromBundle(arguments!!).note
+
         setHasOptionsMenu(true)
         setFont()
         return binding.root
@@ -53,21 +52,30 @@ class NoteFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, factory).get(NoteViewModel::class.java)
-        note?.let {
-            binding.title.setText(it.title)
-            binding.note.setText(it.body)
-            viewModel.oldBody = it.body
-            viewModel.oldTitle = it.title
+        val chipsAdapter = LabelChipListAdapter()
+        val recyclerView = binding.chipsRecyclerView
+        val layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        recyclerView.layoutManager = layoutManager
+
+        recyclerView.adapter = chipsAdapter
+
+        note?.let { note ->
+            binding.title.setText(note.title)
+            binding.note.setText(note.body)
+            viewModel.oldBody = note.body
+            viewModel.oldTitle = note.title
 
 
-            viewModel.addNoteToLabel(1, it.noteId)
+            viewModel.addNoteToLabel(1, note.noteId)
 
-            viewModel.getAllLabelsForNote(noteId = it.noteId).observe(viewLifecycleOwner,
-                androidx.lifecycle.Observer {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        it[0].labels.forEach {
-                            createChip(it.title)
-                        }
+
+            viewModel.getAllLabelsForNote(note.noteId).observe(
+                viewLifecycleOwner,
+                androidx.lifecycle.Observer { noteWithLabel ->
+                    noteWithLabel?.let {
+                        chipsAdapter.submitList(it[0].labels)
                     }
                 })
 
@@ -280,26 +288,11 @@ class NoteFragment : DaggerFragment() {
     }
 
     /**
-     * increase edit text size dynamically based on the specified size.
-     *
+     * increase edit text size dynamically based on the specified size
      * @param size
      */
     private fun setEditTextSize(size: Float) {
         binding.note.textSize = size
         binding.title.textSize = size + 2
     }
-
-
-    private fun createChip(title: String) {
-        val chip = Chip(context)
-        chip.text = title
-        // Make the chip clickable
-        chip.isClickable = false
-        chip.isCheckable = false
-
-        binding.chipGroup.addView(chip)
-
-    }
-
-
 }
