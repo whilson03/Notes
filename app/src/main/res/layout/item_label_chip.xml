@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="label"
+            type="com.olabode.wilson.daggernoteapp.models.Label" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/chipTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="6dp"
+            android:textSize="17sp"
+            tools:text="@{label.title}" />
+
+        <ImageButton
+            android:id="@+id/removeKeywordButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_toEndOf="@id/chipTextView"
+            android:background="@null"
+            app:srcCompat="@drawable/ic_cancel" />
+    </RelativeLayout>
+</layout>

@@ -13,11 +13,15 @@ import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
+import com.google.android.material.chip.Chip
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.databinding.NoteFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -54,6 +58,18 @@ class NoteFragment : DaggerFragment() {
             binding.note.setText(it.body)
             viewModel.oldBody = it.body
             viewModel.oldTitle = it.title
+
+
+            viewModel.addNoteToLabel(1, it.noteId)
+
+            viewModel.getAllLabelsForNote(noteId = it.noteId).observe(viewLifecycleOwner,
+                androidx.lifecycle.Observer {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        it[0].labels.forEach {
+                            createChip(it.title)
+                        }
+                    }
+                })
 
         }
 
@@ -271,6 +287,18 @@ class NoteFragment : DaggerFragment() {
     private fun setEditTextSize(size: Float) {
         binding.note.textSize = size
         binding.title.textSize = size + 2
+    }
+
+
+    private fun createChip(title: String) {
+        val chip = Chip(context)
+        chip.text = title
+        // Make the chip clickable
+        chip.isClickable = false
+        chip.isCheckable = false
+
+        binding.chipGroup.addView(chip)
+
     }
 
 

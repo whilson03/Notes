@@ -57,9 +57,13 @@ class HomeFragment : DaggerFragment() {
         binding = FragmentHomeBinding.inflate(inflater)
         homeViewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
 
+
+
         icon = ContextCompat.getDrawable(
-            Objects.requireNonNull<FragmentActivity>(activity), R.drawable.ic_delete
+            Objects.requireNonNull<FragmentActivity>(activity),
+            R.drawable.ic_delete
         )
+
         background = ColorDrawable(Color.TRANSPARENT)
 
         layoutManager = StaggeredGridLayoutManager(viewModeSpan, LinearLayoutManager.VERTICAL)
@@ -122,6 +126,9 @@ class HomeFragment : DaggerFragment() {
                 }
             }
         })
+
+
+
 
 
         setHasOptionsMenu(true)
@@ -319,6 +326,5 @@ class HomeFragment : DaggerFragment() {
             }
         }).attachToRecyclerView(binding.recyclerView)
     }
-
 
 }
