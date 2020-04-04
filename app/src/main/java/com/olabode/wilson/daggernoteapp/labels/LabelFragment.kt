@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.LabelListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.FragmentLabelBinding
 import com.olabode.wilson.daggernoteapp.models.Label
@@ -45,7 +44,7 @@ class LabelFragment : DaggerFragment() {
         })
 
         binding.save.setOnClickListener {
-            var labelTitle = binding.labelText.text.toString().trim()
+            val labelTitle = binding.labelText.text.toString().trim()
             if (labelTitle.isNotEmpty()) {
                 viewModel.insertLabel(Label(title = labelTitle))
                 binding.labelText.text?.clear()
@@ -57,7 +56,10 @@ class LabelFragment : DaggerFragment() {
 
         adapter.setDeleteClickListener(object : LabelListAdapter.OnItemDeleteClickListener {
             override fun onDeleteClicked(Label: Label) {
-                viewModel.deleteLabel(Label)
+
+                Toast.makeText(context!!, "Delete", Toast.LENGTH_SHORT)
+                    .show()
+                //viewModel.deleteLabel(Label)
             }
         })
 
@@ -67,24 +69,21 @@ class LabelFragment : DaggerFragment() {
                 Label: Label, editText: EditText, editIcon: ImageView,
                 deleteImageView: ImageView
             ) {
-                if (!editText.isEnabled) {
-                    editIcon.setImageResource(R.drawable.ic_check)
-                    deleteImageView.isEnabled = true
-                    deleteImageView.setImageResource(R.drawable.ic_delete)
-                    editText.isEnabled = true
-                    editText.requestFocus()
-                } else {
-                    if (editText.text.toString().trim().isNotEmpty()) {
-                        editText.isEnabled = false
-                        deleteImageView.isEnabled = false
-                        viewModel.updateLabel(Label)
-                        editIcon.setImageResource(R.drawable.ic_mode_edit)
-                        deleteImageView.setImageResource(R.drawable.ic_label)
-                    } else {
-                        Toast.makeText(context!!, "Field Cannot Be Blank", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
+                Toast.makeText(context!!, editText.text, Toast.LENGTH_SHORT)
+                    .show()
+
+
+//                if (!editText.isEnabled) {
+//                    editText.isEnabled = true
+//                    editText.requestFocus()
+//                } else {
+//                    if (editText.text.toString().trim().isNotEmpty()) {
+//                        viewModel.updateLabel(Label)
+//                    } else {
+//                        Toast.makeText(context!!, "Field Cannot Be Blank", Toast.LENGTH_SHORT)
+//                            .show()
+//                    }
+//                }
             }
         })
 

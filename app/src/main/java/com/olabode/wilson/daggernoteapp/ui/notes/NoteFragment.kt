@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.LabelChipListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.NoteFragmentBinding
+import com.olabode.wilson.daggernoteapp.labels.dialog.LabelDialog
+import com.olabode.wilson.daggernoteapp.models.Label
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
@@ -176,6 +178,12 @@ class NoteFragment : DaggerFragment() {
                 } else {
                     showToastMessage(getString(R.string.note_is_blank))
                 }
+            }
+
+            R.id.tag -> {
+                val dialog =
+                    LabelDialog(listOf(Label(1, "programming"), Label(1, "code")))
+                fragmentManager?.let { it1 -> dialog.show(it1, "NoticeDialogFragment") }
             }
 
         }

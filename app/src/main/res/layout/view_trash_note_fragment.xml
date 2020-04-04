@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.olabode.wilson.daggernoteapp.utils.LinedEditText
+            <EditText
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                 android:textStyle="bold" />
 
 
-            <com.olabode.wilson.daggernoteapp.utils.LinedEditText
+            <EditText
                 android:id="@+id/note"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
