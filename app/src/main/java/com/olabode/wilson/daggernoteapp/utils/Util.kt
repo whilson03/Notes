@@ -44,13 +44,8 @@ object Util {
      */
     fun getViewModeSpanCount(context: Context): Int {
         return when (isGridModeEnabled(context)) {
-            true -> {
-                2
-            }
-            else -> {
-                1
-            }
-
+            true -> 2
+            else -> 1
         }
     }
 

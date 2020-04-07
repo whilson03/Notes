@@ -27,6 +27,7 @@ class TrashDialog(val note: Note) : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
+            retainInstance = true
             // Use the Builder class for convenient dialog construction
             val builder = MaterialAlertDialogBuilder(it)
             builder.setTitle(getString(R.string.more))

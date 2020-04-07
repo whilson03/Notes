@@ -39,7 +39,7 @@ class ViewTrashNoteFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.note.setText(note.body)
+        binding.body.setText(note.body)
         binding.title.setText(note.title)
         viewModel = ViewModelProviders.of(this, factory).get(ViewTrashNoteViewModel::class.java)
 

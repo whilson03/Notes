@@ -13,9 +13,18 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@android:color/darker_gray"
-        android:layout_margin="4dp">
+        android:layout_margin="1dp"
+        android:background="@color/note_background_colour">
 
+        <ImageView
+            android:id="@+id/delete_label"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="@+id/edit"
+            app:layout_constraintEnd_toStartOf="@+id/edit"
+            app:layout_constraintTop_toTopOf="@+id/edit" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -24,7 +33,6 @@
             android:layout_marginEnd="4dp"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_label" />
@@ -38,36 +46,18 @@
             android:text="@{label.title}"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/edit"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/delete_label"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:layout_height="wrap_content"
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:textSize="20sp"
-            android:background="@null"
-            android:inputType="text"
-            android:maxLines="1"
-            android:text="@{label.title}"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/edit"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/edit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_height="match_parent"
+            android:padding="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/title"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_mode_edit" />
 

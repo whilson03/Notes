@@ -45,6 +45,7 @@ class TrashFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        retainInstance = true
         binding = TrashFragmentBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding.root

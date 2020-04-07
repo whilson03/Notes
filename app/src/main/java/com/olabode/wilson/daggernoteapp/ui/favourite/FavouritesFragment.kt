@@ -56,7 +56,7 @@ class FavouritesFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        retainInstance = true
         binding = FavouritesFragmentBinding.inflate(inflater, container, false)
         icon = ContextCompat.getDrawable(
             Objects.requireNonNull<FragmentActivity>(activity),

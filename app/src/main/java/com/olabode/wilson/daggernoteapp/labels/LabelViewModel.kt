@@ -25,7 +25,6 @@ class LabelViewModel @Inject constructor(private val labelRepository: LabelRepos
         }
     }
 
-
     override fun onCleared() {
         super.onCleared()
         job.cancel()

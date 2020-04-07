@@ -16,6 +16,9 @@ interface NotesAndLabelDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(join: NotesAndLabelCrossRef)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertMultipleLabelsAndNote(join: List<NotesAndLabelCrossRef>)
+
     @Transaction
     @Query("SELECT * FROM label WHERE labelId =:id")
     fun getNotesByLabel(id: Long): LiveData<List<LabelsWithNote>>

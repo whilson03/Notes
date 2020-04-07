@@ -155,7 +155,7 @@ class NoteListAdapter(
             }
 
             binding.favButton.setOnCheckedChangeListener { _, isChecked ->
-                // get the current note item position that is being toggled
+                // get the current body item position that is being toggled
                 val position = adapterPosition
                 if (isChecked) {
                     if (toggleListener != null && position != RecyclerView.NO_POSITION) {
@@ -228,7 +228,7 @@ class NoteListAdapter(
             }
 
             binding.favButton.setOnCheckedChangeListener { _, isChecked ->
-                // get the current note item position that is being toggled
+                // get the current body item position that is being toggled
                 val position = adapterPosition
                 if (isChecked) {
                     if (toggleListener != null && position != RecyclerView.NO_POSITION) {

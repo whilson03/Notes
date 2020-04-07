@@ -1,8 +1,11 @@
 package com.olabode.wilson.daggernoteapp.utils
 
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.models.Note
 
@@ -26,4 +29,13 @@ fun ImageView.bindIcon(note: Note) {
     } else {
         setImageResource(R.drawable.ic_star_border)
     }
+}
+
+
+fun Context.showToast(message: String) =
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+
+fun <T> MutableLiveData<T>.notifyObserver() {
+    this.value = this.value
 }

@@ -53,6 +53,7 @@ class HomeFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        retainInstance = true
         val viewModeSpan = Util.getViewModeSpanCount(context!!)
         binding = FragmentHomeBinding.inflate(inflater)
         homeViewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
@@ -109,7 +110,7 @@ class HomeFragment : DaggerFragment() {
 
         binding.fab.setOnClickListener { navigateToAddNewNote() }
 
-        //observe list of note from the view model
+        //observe list of body from the view model
         homeViewModel.getNotes().observe(viewLifecycleOwner, Observer {
             it?.let {
                 when (it) {

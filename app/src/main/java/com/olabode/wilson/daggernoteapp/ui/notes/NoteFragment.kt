@@ -35,16 +35,18 @@ class NoteFragment : DaggerFragment() {
     private lateinit var viewModel: NoteViewModel
     private lateinit var binding: NoteFragmentBinding
 
+
     @Inject
     lateinit var factory: ViewModelProviderFactory
-    private var note: Note? = null
+    private var noteToUpdate: Note? = null
+    private var newNote: Note? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = NoteFragmentBinding.inflate(inflater, container, false)
-        note = NoteFragmentArgs.fromBundle(arguments!!).note
+        noteToUpdate = NoteFragmentArgs.fromBundle(arguments!!).note
 
         setHasOptionsMenu(true)
         setFont()
@@ -54,23 +56,18 @@ class NoteFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, factory).get(NoteViewModel::class.java)
-        val chipsAdapter = LabelChipListAdapter()
-        val recyclerView = binding.chipsRecyclerView
-        val layoutManager =
+        binding.chipsRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val chipsAdapter = LabelChipListAdapter()
+        binding.chipsRecyclerView.adapter = chipsAdapter
 
-        recyclerView.layoutManager = layoutManager
 
-        recyclerView.adapter = chipsAdapter
-
-        note?.let { note ->
+        noteToUpdate?.let { note ->
             binding.title.setText(note.title)
-            binding.note.setText(note.body)
+            binding.body.setText(note.body)
             viewModel.oldBody = note.body
             viewModel.oldTitle = note.title
 
-
-            viewModel.addNoteToLabel(1, note.noteId)
 
 
             viewModel.getAllLabelsForNote(note.noteId).observe(
@@ -80,9 +77,7 @@ class NoteFragment : DaggerFragment() {
                         chipsAdapter.submitList(it[0].labels)
                     }
                 })
-
         }
-
 
     }
 
@@ -93,23 +88,20 @@ class NoteFragment : DaggerFragment() {
             true // default to enabled
         ) {
             override fun handleOnBackPressed() {
-                if (binding.note.text.toString().trim().isNotEmpty()) {
-                    if (note == null) {
+                if (binding.body.text.toString().trim().isNotEmpty()) {
+                    if (noteToUpdate == null) {
                         saveDraft()
                     } else {
                         if (viewModel.oldTitle.isNotEmpty() && viewModel.oldBody.isNotEmpty()) {
                             if (viewModel.oldTitle.trim() != binding.title.text.toString().trim()
-                                || viewModel.oldBody != binding.note.text.toString().trim()
+                                || viewModel.oldBody != binding.body.text.toString().trim()
                             ) {
-                                updateAsDraft(note!!)
+                                updateAsDraft(noteToUpdate!!)
                             }
                         }
-
                     }
-
                 }
                 viewModel.resetFields()
-
                 findNavController().popBackStack()
             }
         }
@@ -128,12 +120,12 @@ class NoteFragment : DaggerFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.save -> {
-                if (note == null) {
+                if (noteToUpdate == null) {
                     hidekeyboard()
                     performSave()
                 } else {
                     hidekeyboard()
-                    updateNote(note!!)
+                    updateNote(noteToUpdate!!)
                 }
                 return true
             }
@@ -142,22 +134,22 @@ class NoteFragment : DaggerFragment() {
                 if (validate()) {
                     shareNote(
                         binding.title.text.toString().trim(),
-                        binding.note.text.toString().trim()
+                        binding.body.text.toString().trim()
                     )
                     return true
                 }
             }
             android.R.id.home -> {
                 hidekeyboard()
-                if (binding.note.text.toString().trim().isNotEmpty()) {
-                    if (note == null) {
+                if (binding.body.text.toString().trim().isNotEmpty()) {
+                    if (noteToUpdate == null) {
                         saveDraft()
                     } else {
                         if (viewModel.oldTitle.isNotEmpty() && viewModel.oldBody.isNotEmpty()) {
                             if (viewModel.oldTitle.trim() != binding.title.text.toString().trim()
-                                || viewModel.oldBody != binding.note.text.toString().trim()
+                                || viewModel.oldBody != binding.body.text.toString().trim()
                             ) {
-                                updateAsDraft(note!!)
+                                updateAsDraft(noteToUpdate!!)
                                 Log.i("UP", "UPDATING")
                             }
                         }
@@ -166,13 +158,13 @@ class NoteFragment : DaggerFragment() {
             }
 
             R.id.copy_note -> {
-                if (binding.note.text.toString().trim().isNotEmpty()) {
+                if (binding.body.text.toString().trim().isNotEmpty()) {
                     if (binding.title.text.toString().trim().isEmpty()) {
                         binding.title.setText("")
                     }
                     copyToClipBoard(
                         binding.title.text.toString().trim(),
-                        binding.note.text.toString().trim()
+                        binding.body.text.toString().trim()
                     )
 
                 } else {
@@ -193,7 +185,7 @@ class NoteFragment : DaggerFragment() {
     private fun saveDraft() {
         val note = Note(
             title = if (binding.title.text.toString().isEmpty()) getString(R.string.no_title) else binding.title.text.toString(),
-            body = binding.note.text.toString(), dateCreated = Date(), dateLastUpdated = Date()
+            body = binding.body.text.toString(), dateCreated = Date(), dateLastUpdated = Date()
         )
         viewModel.saveNewNote(note)
     }
@@ -201,13 +193,13 @@ class NoteFragment : DaggerFragment() {
     private fun updateAsDraft(note: Note) {
         note.title =
             if (binding.title.text.toString().isEmpty()) getString(R.string.no_title) else binding.title.text.toString()
-        note.body = binding.note.text.toString()
+        note.body = binding.body.text.toString()
         note.dateLastUpdated = Date()
         viewModel.updateNote(note)
     }
 
     private fun validate(): Boolean {
-        if (binding.note.text.toString().trim().isNotEmpty()) {
+        if (binding.body.text.toString().trim().isNotEmpty()) {
             if (binding.title.text.toString().trim().isEmpty()) {
                 binding.title.setText(getString(R.string.no_title))
             }
@@ -219,13 +211,13 @@ class NoteFragment : DaggerFragment() {
     }
 
     private fun updateNote(note: Note) {
-        if (binding.note.text.toString().trim().isEmpty()) {
+        if (binding.body.text.toString().trim().isEmpty()) {
             showToastMessage(getString(R.string.blank_note_prompt))
             return
         } else {
             note.title =
                 if (binding.title.text.toString().isEmpty()) getString(R.string.no_title) else binding.title.text.toString()
-            note.body = binding.note.text.toString()
+            note.body = binding.body.text.toString()
             note.dateLastUpdated = Date()
 
             viewModel.updateNote(note)
@@ -236,13 +228,13 @@ class NoteFragment : DaggerFragment() {
     }
 
     private fun performSave() {
-        if (binding.note.text.toString().trim().isEmpty()) {
+        if (binding.body.text.toString().trim().isEmpty()) {
             showToastMessage(getString(R.string.blank_note_prompt))
             return
         } else {
             val note = Note(
                 title = if (binding.title.text.toString().isEmpty()) getString(R.string.no_title) else binding.title.text.toString(),
-                body = binding.note.text.toString(), dateCreated = Date(), dateLastUpdated = Date()
+                body = binding.body.text.toString(), dateCreated = Date(), dateLastUpdated = Date()
             )
             viewModel.saveNewNote(note)
 
@@ -300,7 +292,7 @@ class NoteFragment : DaggerFragment() {
      * @param size
      */
     private fun setEditTextSize(size: Float) {
-        binding.note.textSize = size
+        binding.body.textSize = size
         binding.title.textSize = size + 2
     }
 }

@@ -43,8 +43,10 @@ interface NotesDao {
 
     // CREATE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNote(note: Note)
+    suspend fun insertNote(note: Note): Long
 
+    @Query("SELECT * FROM notes_table WHERE noteId =:id")
+    suspend fun getNoteById(id: Long): Note
 
     // DELETE
     @Delete

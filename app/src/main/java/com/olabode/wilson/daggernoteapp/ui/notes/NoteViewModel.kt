@@ -7,6 +7,7 @@ import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.models.NotesAndLabelCrossRef
 import com.olabode.wilson.daggernoteapp.models.NotesWithLabel
 import com.olabode.wilson.daggernoteapp.repository.NotesRepository
+import com.olabode.wilson.daggernoteapp.repository.label.LabelRepository
 import com.olabode.wilson.daggernoteapp.repository.note_label.NoteAndLabelRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,11 +17,14 @@ import javax.inject.Inject
 
 class NoteViewModel @Inject constructor(
     private val repository: NotesRepository,
-    private val noteAndLabelRepository: NoteAndLabelRepository
+    private val noteAndLabelRepository: NoteAndLabelRepository,
+    private val labelRepository: LabelRepository
 ) : ViewModel() {
 
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
+    val allLabels = labelRepository.getAllLabels()
+
 
     var oldTitle: String = ""
     var oldBody: String = ""
