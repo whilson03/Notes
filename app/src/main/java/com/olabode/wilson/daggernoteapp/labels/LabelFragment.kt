@@ -60,6 +60,7 @@ class LabelFragment : DaggerFragment() {
                 override fun onSubmitLabel(label: Label, isNewLabel: Boolean) {
                     if (isNewLabel) {
                         viewModel.insertLabel(label)
+
                     }
                 }
             })
@@ -73,7 +74,7 @@ class LabelFragment : DaggerFragment() {
                     override fun onSubmitLabel(label: Label, isNewLabel: Boolean) {
                         if (!isNewLabel) {
                             viewModel.updateLabel(label)
-                            context?.showToast("Updatin")
+                            context?.showToast("Updating")
                         }
 
                     }

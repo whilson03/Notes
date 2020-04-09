@@ -13,6 +13,8 @@ import com.olabode.wilson.daggernoteapp.models.NotesWithLabel
 interface NoteAndLabelRepo {
     suspend fun insert(notesWithLabel: NotesAndLabelCrossRef)
 
+    suspend fun removeLabelFromNote(notesWithLabel: NotesAndLabelCrossRef)
+
     fun getNotesByLabel(id: Long): LiveData<List<LabelsWithNote>>
 
     fun getLabelsByNote(noteId: Long): LiveData<List<NotesWithLabel>>

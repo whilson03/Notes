@@ -14,7 +14,10 @@ import com.olabode.wilson.daggernoteapp.models.NotesWithLabel
 interface NotesAndLabelDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(join: NotesAndLabelCrossRef)
+    suspend fun insert(join: NotesAndLabelCrossRef)
+
+    @Delete
+    suspend fun delete(join: NotesAndLabelCrossRef)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMultipleLabelsAndNote(join: List<NotesAndLabelCrossRef>)

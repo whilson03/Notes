@@ -34,12 +34,12 @@ class NoteFragment : DaggerFragment() {
 
     private lateinit var viewModel: NoteViewModel
     private lateinit var binding: NoteFragmentBinding
-
+    private var labels: List<Label> = mutableListOf()
+    private var noteLabels: List<Label> = mutableListOf()
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
     private var noteToUpdate: Note? = null
-    private var newNote: Note? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,8 +77,22 @@ class NoteFragment : DaggerFragment() {
                         chipsAdapter.submitList(it[0].labels)
                     }
                 })
+
+            viewModel.getAllLabelsForNote(noteToUpdate!!.noteId)
+                .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                    it?.let {
+                        noteLabels = it[0].labels
+                    }
+                })
         }
 
+
+
+        viewModel.allLabels.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            it?.let {
+                labels = it
+            }
+        })
     }
 
 
@@ -173,13 +187,33 @@ class NoteFragment : DaggerFragment() {
             }
 
             R.id.tag -> {
-                val dialog =
-                    LabelDialog(listOf(Label(1, "programming"), Label(1, "code")))
-                fragmentManager?.let { it1 -> dialog.show(it1, "NoticeDialogFragment") }
+                performLabelAction()
             }
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun performLabelAction() {
+        val dialog =
+            LabelDialog(noteLabels, labels)
+        fragmentManager?.let { it1 -> dialog.show(it1, "LabelDialogFragment") }
+        dialog.setOnLabelActionListener(object : LabelDialog.LabelActionListener {
+
+            override fun onActionAddLabelToNote(label: Label) {
+                if (noteToUpdate != null) {
+                    viewModel.addNoteToLabel(label.labelId, noteToUpdate!!.noteId)
+                }
+
+            }
+
+            override fun onActionRemoveLabelFromNote(label: Label) {
+                if (noteToUpdate != null) {
+                    viewModel.removeNoteFromLabel(label.labelId, noteToUpdate!!.noteId)
+                }
+            }
+        })
+
     }
 
     private fun saveDraft() {

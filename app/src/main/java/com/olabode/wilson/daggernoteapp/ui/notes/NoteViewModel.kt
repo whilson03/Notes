@@ -53,6 +53,12 @@ class NoteViewModel @Inject constructor(
         }
     }
 
+    fun removeNoteFromLabel(labelId: Long, noteId: Long) {
+        uiScope.launch {
+            noteAndLabelRepository.removeLabelFromNote(NotesAndLabelCrossRef(labelId, noteId))
+        }
+    }
+
 
     fun updateNote(note: Note) {
         uiScope.launch {

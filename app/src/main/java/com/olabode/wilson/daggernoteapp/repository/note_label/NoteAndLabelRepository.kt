@@ -24,6 +24,12 @@ class NoteAndLabelRepository @Inject constructor(private val notesAndLabelDao: N
         }
     }
 
+    override suspend fun removeLabelFromNote(notesWithLabel: NotesAndLabelCrossRef) {
+        withContext(Dispatchers.IO) {
+            notesAndLabelDao.delete(notesWithLabel)
+        }
+    }
+
     override fun getNotesByLabel(id: Long): LiveData<List<LabelsWithNote>> {
         return notesAndLabelDao.getNotesByLabel(id)
     }

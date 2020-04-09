@@ -102,7 +102,8 @@ class TrashFragment : DaggerFragment() {
                     override fun onNoteOptionClick(note: Note, action: Util.ACTION) {
                         when (action) {
                             Util.ACTION.DELETE -> viewModel.deleteNote(note)
-                            Util.ACTION.RESTORE -> viewModel.removeFromTrash(note)
+                            else -> viewModel.removeFromTrash(note)
+
                         }
                     }
                 })

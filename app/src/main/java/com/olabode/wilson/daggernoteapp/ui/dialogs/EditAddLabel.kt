@@ -39,6 +39,7 @@ class EditAddLabel(val label: Label?) : AppCompatDialogFragment() {
                 binding.labelEditText.setText(label.title)
                 binding.textView.text = getString(R.string.edit_label)
             }
+
             binding.saveLabel.setOnClickListener {
                 if (label == null) {
                     if (isValidLabel()) {

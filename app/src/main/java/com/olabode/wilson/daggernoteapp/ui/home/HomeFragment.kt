@@ -101,7 +101,7 @@ class HomeFragment : DaggerFragment() {
                         when (action) {
                             Util.ACTION.SHARE -> shareNote(note.title, note.body)
                             Util.ACTION.DELETE -> homeViewModel.moveToTrash(note)
-                            Util.ACTION.COPY -> copyToClipBoard(note.title, note.body)
+                            else -> copyToClipBoard(note.title, note.body)
                         }
                     }
                 })

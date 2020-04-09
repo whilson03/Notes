@@ -17,6 +17,7 @@ data class Label(
     val labelId: Long = 0,
     @ColumnInfo(name = "title")
     var title: String
+
 ) : Parcelable
 
 
