@@ -7,11 +7,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/empty_label_state"
+            android:visibility="gone"
+            android:src="@drawable/empty_note_state"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".labels.LabelFragment">
+            tools:context=".ui.labels.LabelFragment">
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -35,6 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_add" />
+            app:srcCompat="@drawable/ic_tag" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

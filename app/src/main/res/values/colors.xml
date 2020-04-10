@@ -24,4 +24,7 @@
     <color name="note_text_line">#8B8A8A</color>
     <color name="menu_color">@android:color/black</color>
     <color name="icon_color">@color/colorPrimary</color>
+
+
+    <color name="icon">#0C0C0C</color>
 </resources>

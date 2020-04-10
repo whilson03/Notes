@@ -25,4 +25,5 @@
     <color name="icon_color">@color/colorPrimary</color>
     <color name="note_text_line">#474747</color>
 
+    <color name="icon">@android:color/white</color>
 </resources>

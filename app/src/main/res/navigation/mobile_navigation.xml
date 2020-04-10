@@ -18,6 +18,10 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_home_pop_including_mobile_navigation"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -33,6 +37,9 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/trashFragment" />
+        <action
+            android:id="@+id/action_trashFragment_to_nav_home"
+            app:popUpTo="@id/nav_home" />
     </fragment>
     <fragment
         android:id="@+id/favourites"
@@ -47,12 +54,19 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/favourites" />
+        <action
+            android:id="@+id/action_favourites_to_nav_home"
+            app:popUpTo="@id/nav_home" />
     </fragment>
     <fragment
         android:id="@+id/settings"
         android:name="com.olabode.wilson.daggernoteapp.ui.settings.Settings"
         android:label="Settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settings_to_nav_home"
+            app:popUpTo="@id/nav_home" />
+    </fragment>
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.olabode.wilson.daggernoteapp.ui.notes.NoteFragment"
@@ -76,6 +90,10 @@
     </fragment>
     <fragment
         android:id="@+id/labelFragment"
-        android:name="com.olabode.wilson.daggernoteapp.labels.LabelFragment"
-        android:label="Label" />
+        android:name="com.olabode.wilson.daggernoteapp.ui.labels.LabelFragment"
+        android:label="Manage Labels">
+        <action
+            android:id="@+id/action_labelFragment_to_nav_home"
+            app:popUpTo="@id/nav_home" />
+    </fragment>
 </navigation>

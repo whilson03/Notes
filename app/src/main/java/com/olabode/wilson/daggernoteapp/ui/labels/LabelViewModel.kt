@@ -1,4 +1,4 @@
-package com.olabode.wilson.daggernoteapp.labels
+package com.olabode.wilson.daggernoteapp.ui.labels
 
 import androidx.lifecycle.ViewModel
 import com.olabode.wilson.daggernoteapp.models.Label

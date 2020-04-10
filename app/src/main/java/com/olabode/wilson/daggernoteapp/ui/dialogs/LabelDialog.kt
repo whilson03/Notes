@@ -1,4 +1,4 @@
-package com.olabode.wilson.daggernoteapp.labels.dialog
+package com.olabode.wilson.daggernoteapp.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
@@ -46,7 +46,8 @@ class LabelDialog :
             val args = Bundle()
             args.putParcelableArrayList(CHECKED_ID_KEY, checkItemsId)
             args.putParcelableArrayList(LABELS_KEY, labels)
-            val fragment = LabelDialog()
+            val fragment =
+                LabelDialog()
             fragment.arguments = args
             return fragment
         }

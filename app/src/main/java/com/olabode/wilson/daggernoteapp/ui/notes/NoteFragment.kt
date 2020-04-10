@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.LabelChipListAdapter
 import com.olabode.wilson.daggernoteapp.databinding.NoteFragmentBinding
-import com.olabode.wilson.daggernoteapp.labels.dialog.LabelDialog
 import com.olabode.wilson.daggernoteapp.models.Label
 import com.olabode.wilson.daggernoteapp.models.Note
+import com.olabode.wilson.daggernoteapp.ui.dialogs.LabelDialog
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import java.util.*

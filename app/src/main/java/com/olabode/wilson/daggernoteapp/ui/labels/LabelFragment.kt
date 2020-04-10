@@ -1,4 +1,4 @@
-package com.olabode.wilson.daggernoteapp.labels
+package com.olabode.wilson.daggernoteapp.ui.labels
 
 
 import android.os.Bundle
@@ -42,6 +42,11 @@ class LabelFragment : DaggerFragment() {
         binding.labelRecycler.adapter = adapter
 
         viewModel.allLabels.observe(viewLifecycleOwner, Observer {
+            binding.emptyLabelState.visibility = if (it.isEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
             adapter.submitList(it)
         })
 
@@ -51,6 +56,8 @@ class LabelFragment : DaggerFragment() {
                 confirmDeleteDialog(label)
             }
         })
+
+
 
 
         binding.fab.setOnClickListener {
