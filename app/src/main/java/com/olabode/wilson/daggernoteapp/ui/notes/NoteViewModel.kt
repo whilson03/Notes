@@ -86,4 +86,10 @@ class NoteViewModel @Inject constructor(
         job.cancel()
         resetFields()
     }
+
+    fun delete(note: Note) {
+        uiScope.launch {
+            repository.deleteNote(note)
+        }
+    }
 }
