@@ -97,6 +97,7 @@
     <string name="deleted">Deleted</string>
     <string name="add_label">Add Label</string>
     <string name="label_name">Label Title</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Cancel</string>
     <string name="edit_label">Edit Label</string>
+    <string name="done_adding">Done</string>
 </resources>

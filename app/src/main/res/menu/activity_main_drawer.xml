@@ -26,7 +26,7 @@
         <menu>
             <item
                 android:id="@+id/label"
-                android:icon="@drawable/ic_label"
+                android:icon="@drawable/ic_tag"
                 android:title="@string/labels" />
         </menu>
     </item>

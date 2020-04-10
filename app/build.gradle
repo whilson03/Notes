@@ -18,6 +18,15 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
+
     }
     buildTypes {
         release {
@@ -64,10 +73,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
-//    // Coroutines
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
-
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
@@ -79,9 +84,7 @@ dependencies {
 
     // Material design components
     implementation "com.google.android.material:material:$version_material"
-
-    implementation 'io.github.manneohlund:smart-recycler-adapter:4.1.0'
-
+    
 
     //preference
     implementation 'androidx.preference:preference:1.1.0-alpha05'

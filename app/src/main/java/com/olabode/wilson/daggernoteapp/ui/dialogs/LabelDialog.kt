@@ -3,7 +3,6 @@ package com.olabode.wilson.daggernoteapp.ui.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import android.util.SparseBooleanArray
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olabode.wilson.daggernoteapp.adapters.LabelSelectionAdapter
@@ -34,7 +33,6 @@ class LabelDialog :
         fun onActionAddLabelToNote(label: Label)
         fun onActionRemoveLabelFromNote(label: Label)
     }
-
 
     companion object {
 
@@ -95,12 +93,10 @@ class LabelDialog :
             adapter.setOnItemClickListener(object : LabelSelectionAdapter.OnItemClickListener {
                 override fun onCheckLabel(label: Label) {
                     listener.onActionAddLabelToNote(label)
-                    Toast.makeText(context, "CHECKED", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onUnCheckLabel(label: Label) {
                     listener.onActionRemoveLabelFromNote(label)
-                    Toast.makeText(context, "UnChecked", Toast.LENGTH_SHORT).show()
                 }
             })
 

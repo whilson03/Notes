@@ -1,9 +1,7 @@
 package com.olabode.wilson.daggernoteapp.ui.dialogs
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olabode.wilson.daggernoteapp.R
@@ -39,6 +37,9 @@ class EditAddLabel(val label: Label?) : AppCompatDialogFragment() {
                 binding.labelEditText.setText(label.title)
                 binding.textView.text = getString(R.string.edit_label)
             }
+            if (label == null) {
+                binding.discard.text = getString(R.string.done_adding)
+            }
 
             binding.saveLabel.setOnClickListener {
                 if (label == null) {
@@ -70,12 +71,6 @@ class EditAddLabel(val label: Label?) : AppCompatDialogFragment() {
 
     private fun isValidLabel(): Boolean {
         return binding.labelEditText.text.toString().trim().isNotEmpty()
-    }
-
-    private fun hidekeyboard() {
-        val imm: InputMethodManager =
-            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
     }
 
 }
