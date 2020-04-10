@@ -10,6 +10,7 @@ import com.olabode.wilson.daggernoteapp.models.Note
 
 interface NoteRepo {
 
+
     fun getNotesByName(): LiveData<Result<List<Note>>>
 
     fun getNotesByLastModified(): LiveData<Result<List<Note>>>
@@ -34,7 +35,7 @@ interface NoteRepo {
 
     fun getTrashedNotesByDateAddedOlder(): LiveData<Result<List<Note>>>
 
-    suspend fun insertNote(note: Note)
+    suspend fun insertNote(note: Note): Long
 
     suspend fun updateNote(note: Note)
 
@@ -49,4 +50,6 @@ interface NoteRepo {
     suspend fun removeFromTrash(note: Note)
 
     suspend fun deleteAllFromTrash()
+
+    suspend fun getNoteById(id: Long): Note
 }

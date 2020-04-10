@@ -103,7 +103,6 @@ class TrashFragment : DaggerFragment() {
                         when (action) {
                             Util.ACTION.DELETE -> viewModel.deleteNote(note)
                             else -> viewModel.removeFromTrash(note)
-
                         }
                     }
                 })

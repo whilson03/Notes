@@ -1,8 +1,8 @@
 package com.olabode.wilson.daggernoteapp.ui.notes
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.olabode.wilson.daggernoteapp.models.LabelsWithNote
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.models.NotesAndLabelCrossRef
 import com.olabode.wilson.daggernoteapp.models.NotesWithLabel
@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class NoteViewModel @Inject constructor(
@@ -25,25 +26,33 @@ class NoteViewModel @Inject constructor(
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
     val allLabels = labelRepository.getAllLabels()
 
-
     var oldTitle: String = ""
     var oldBody: String = ""
+
+    lateinit var noteToUpdate: Note
+    var isNewNoteCreated: Boolean = false
+
+    private val _newNoteId = MutableLiveData<Long>()
+    val newNoteId: LiveData<Long>
+        get() = _newNoteId
+
+
+    var note = Note(
+        title = "", body = "", dateLastUpdated = Date(), dateCreated = Date()
+    )
 
 
     fun saveNewNote(note: Note) {
         uiScope.launch {
-            repository.insertNote(note)
+            val noteId = repository.insertNote(note)
+            _newNoteId.value = noteId
+            noteToUpdate = repository.getNoteById(noteId)
         }
     }
 
 
     fun getAllLabelsForNote(noteId: Long): LiveData<List<NotesWithLabel>> {
         return noteAndLabelRepository.getLabelsByNote(noteId)
-    }
-
-
-    fun getAllNotesForLabel(labelId: Long): LiveData<List<LabelsWithNote>> {
-        return noteAndLabelRepository.getNotesByLabel(labelId)
     }
 
 
@@ -69,10 +78,12 @@ class NoteViewModel @Inject constructor(
     fun resetFields() {
         oldTitle = ""
         oldBody = ""
+        isNewNoteCreated = false
     }
 
     override fun onCleared() {
         super.onCleared()
+        job.cancel()
         resetFields()
     }
 }

@@ -98,10 +98,8 @@ class NotesRepository @Inject constructor(
     }
 
 
-    override suspend fun insertNote(note: Note) {
-        withContext(Dispatchers.IO) {
-            notesDao.insertNote(note)
-        }
+    override suspend fun insertNote(note: Note): Long {
+        return withContext(Dispatchers.IO) { notesDao.insertNote(note) }
     }
 
 
@@ -152,6 +150,12 @@ class NotesRepository @Inject constructor(
 
     override suspend fun deleteAllFromTrash() {
         notesDao.emptyTrash()
+    }
+
+    override suspend fun getNoteById(id: Long): Note {
+        return withContext(Dispatchers.IO) {
+            notesDao.getNoteById(id)
+        }
     }
 
 
