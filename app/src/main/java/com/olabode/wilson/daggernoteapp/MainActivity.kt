@@ -50,10 +50,11 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
+        val topLevelDestinations = setOf(
+            R.id.nav_home, R.id.favourites, R.id.trashFragment, R.id.settings, R.id.labelFragment
+        )
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.favourites, R.id.trashFragment, R.id.settings
-            ), drawerLayout
+            topLevelDestinations, drawerLayout
         )
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
@@ -93,6 +94,19 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (topLevelDestinations.contains(destination.id)) {
+                drawerLayout.setDrawerLockMode(
+                    DrawerLayout.LOCK_MODE_UNLOCKED,
+                    GravityCompat.START
+                )
+            } else {
+                drawerLayout.setDrawerLockMode(
+                    DrawerLayout.LOCK_MODE_LOCKED_CLOSED,
+                    GravityCompat.START
+                )
+            }
+
+
             when (destination.id) {
                 R.id.noteFragment -> {
                     mAdView.visibility = View.GONE
@@ -162,7 +176,10 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                 }
             }
             R.id.label -> {
-                navigateDestinationFromHost(R.id.labelFragment)
+                if (isValidDestination(R.id.labelFragment)) {
+                    navigateDestinationFromHost(R.id.labelFragment)
+                }
+
             }
 
         }

@@ -182,6 +182,7 @@ class NoteFragment : DaggerFragment() {
             override fun onActionAddLabelToNote(label: Label) {
                 viewModel.addNoteToLabel(label.labelId, viewModel.noteToUpdate.noteId)
             }
+
             override fun onActionRemoveLabelFromNote(label: Label) {
                 viewModel.removeNoteFromLabel(label.labelId, viewModel.noteToUpdate.noteId)
             }
