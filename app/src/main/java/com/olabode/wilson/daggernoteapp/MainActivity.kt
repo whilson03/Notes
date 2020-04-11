@@ -99,23 +99,14 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                     DrawerLayout.LOCK_MODE_UNLOCKED,
                     GravityCompat.START
                 )
+                mAdView.visibility = View.VISIBLE
             } else {
                 drawerLayout.setDrawerLockMode(
                     DrawerLayout.LOCK_MODE_LOCKED_CLOSED,
                     GravityCompat.START
                 )
+                mAdView.visibility = View.GONE
             }
-
-
-            when (destination.id) {
-                R.id.noteFragment -> {
-                    mAdView.visibility = View.GONE
-                }
-                else -> {
-                    mAdView.visibility = View.VISIBLE
-                }
-            }
-
         }
 
     }
