@@ -97,7 +97,7 @@ class TrashFragment : DaggerFragment() {
             override fun onItemLongClick(note: Note, view: View) {
                 val dialog =
                     TrashDialog(note)
-                fragmentManager?.let { it1 -> dialog.show(it1, "TrashDialogFragment") }
+                parentFragmentManager.let { it1 -> dialog.show(it1, "TrashDialogFragment") }
                 dialog.setNoteDialogClickListener(object : TrashDialog.NoteDialogListener {
                     override fun onNoteOptionClick(note: Note, action: Util.ACTION) {
                         when (action) {

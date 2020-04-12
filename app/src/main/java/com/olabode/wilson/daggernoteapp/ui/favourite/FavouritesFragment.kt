@@ -120,7 +120,7 @@ class FavouritesFragment : DaggerFragment() {
         adapter.setLongListener(object : NoteListAdapter.OnItemLongClickListener {
             override fun onItemLongClick(note: Note, view: View) {
                 val dialog = NoteDialog(note)
-                fragmentManager?.let { it1 -> dialog.show(it1, "NoteDialogFragment") }
+                parentFragmentManager.let { it1 -> dialog.show(it1, "NoteDialogFragment") }
                 dialog.setNoteDialogClickListener(object : NoteDialog.NoteDialogListener {
                     override fun onNoteOptionClick(note: Note, action: Util.ACTION) {
                         when (action) {

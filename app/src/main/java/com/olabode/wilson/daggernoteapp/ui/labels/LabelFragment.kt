@@ -62,7 +62,7 @@ class LabelFragment : DaggerFragment() {
 
         binding.fab.setOnClickListener {
             val dialog = EditAddLabel(null)
-            fragmentManager?.let { fm -> dialog.show(fm, "AddLabel") }
+            parentFragmentManager.let { fm -> dialog.show(fm, "AddLabel") }
             dialog.setLabelDialogListener(object : EditAddLabel.LabelDialogListener {
                 override fun onSubmitLabel(label: Label, isNewLabel: Boolean) {
                     if (isNewLabel) {
@@ -76,7 +76,7 @@ class LabelFragment : DaggerFragment() {
         adapter.setOnItemClickListener(object : LabelListAdapter.OnItemClickListener {
             override fun onEditLabel(label: Label) {
                 val dialog = EditAddLabel(label)
-                fragmentManager?.let { fm -> dialog.show(fm, "AddLabel") }
+                parentFragmentManager.let { fm -> dialog.show(fm, "AddLabel") }
                 dialog.setLabelDialogListener(object : EditAddLabel.LabelDialogListener {
                     override fun onSubmitLabel(label: Label, isNewLabel: Boolean) {
                         if (!isNewLabel) {
