@@ -177,7 +177,7 @@ class NoteFragment : DaggerFragment() {
             currentNoteLabels as ArrayList<Label>,
             allLabels as ArrayList<Label>
         )
-        parentFragmentManager.let { it1 -> dialog.show(it1, "LabelDialogFragment") }
+        fragmentManager?.let { it1 -> dialog.show(it1, "LabelDialogFragment") }
         dialog.setOnLabelActionListener(object : LabelDialog.LabelActionListener {
             override fun onActionAddLabelToNote(label: Label) {
                 viewModel.addNoteToLabel(label.labelId, viewModel.noteToUpdate.noteId)
