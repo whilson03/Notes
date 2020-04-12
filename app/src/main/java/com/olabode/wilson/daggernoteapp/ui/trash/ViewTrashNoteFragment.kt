@@ -3,7 +3,7 @@ package com.olabode.wilson.daggernoteapp.ui.trash
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.databinding.ViewTrashNoteFragmentBinding
@@ -41,15 +41,13 @@ class ViewTrashNoteFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         binding.body.setText(note.body)
         binding.title.setText(note.title)
-        viewModel = ViewModelProviders.of(this, factory).get(ViewTrashNoteViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(ViewTrashNoteViewModel::class.java)
 
         binding.noteLayout.setOnClickListener {
             Toast.makeText(context, getString(R.string.trash_note_edit_prompt), Toast.LENGTH_SHORT)
                 .show()
 
         }
-
-
     }
 
 

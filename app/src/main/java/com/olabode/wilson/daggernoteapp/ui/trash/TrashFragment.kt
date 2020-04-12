@@ -6,7 +6,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -54,7 +54,7 @@ class TrashFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val viewModeSpan = Util.getViewModeSpanCount(context!!)
-        viewModel = ViewModelProviders.of(this, factory).get(TrashViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(TrashViewModel::class.java)
 
         layoutManager = StaggeredGridLayoutManager(viewModeSpan, LinearLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager

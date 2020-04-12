@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.LabelListAdapter
@@ -37,7 +37,7 @@ class LabelFragment : DaggerFragment() {
     ): View? {
         retainInstance = true
         binding = FragmentLabelBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProviders.of(this, factory).get(LabelViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(LabelViewModel::class.java)
         adapter = LabelListAdapter(context!!)
         binding.labelRecycler.adapter = adapter
 

@@ -15,7 +15,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,7 +56,7 @@ class HomeFragment : DaggerFragment() {
         retainInstance = true
         val viewModeSpan = Util.getViewModeSpanCount(context!!)
         binding = FragmentHomeBinding.inflate(inflater)
-        homeViewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
 
 
 

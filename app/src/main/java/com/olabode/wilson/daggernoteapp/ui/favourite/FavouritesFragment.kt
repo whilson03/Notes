@@ -14,7 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -72,7 +72,7 @@ class FavouritesFragment : DaggerFragment() {
 
         background = ColorDrawable(Color.TRANSPARENT)
 
-        viewModel = ViewModelProviders.of(this, factory).get(FavouritesViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(FavouritesViewModel::class.java)
 
 
         layoutManager = StaggeredGridLayoutManager(viewModeSpan, LinearLayoutManager.VERTICAL)
