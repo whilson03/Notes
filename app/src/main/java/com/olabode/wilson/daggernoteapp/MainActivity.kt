@@ -6,6 +6,9 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.BaseAdapter
+import android.widget.HeaderViewListAdapter
+import android.widget.ListView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -35,6 +38,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MobileAds.initialize(this) {}
@@ -59,46 +63,14 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
         navView.setNavigationItemSelectedListener(this)
-
         mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
 
-        mAdView.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                mAdView.visibility = View.VISIBLE
-            }
 
-            override fun onAdFailedToLoad(errorCode: Int) {
-                // Code to be executed when an ad request fails.
-                mAdView.visibility = View.GONE
-            }
-
-            override fun onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-            }
-
-            override fun onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-            }
-
-            override fun onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            override fun onAdClosed() {
-                // Code to be executed when the user is about to return
-                // to the app after tapping on an ad.
-            }
-        }
+        setUpAds()
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (topLevelDestinations.contains(destination.id)) {
-                drawerLayout.setDrawerLockMode(
-                    DrawerLayout.LOCK_MODE_UNLOCKED,
-                    GravityCompat.START
-                )
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.START)
                 mAdView.visibility = View.VISIBLE
             } else {
                 drawerLayout.setDrawerLockMode(
