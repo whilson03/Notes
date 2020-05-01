@@ -26,6 +26,15 @@ android {
                         "room.expandProjection": "true"]
             }
         }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
+        }
     }
     buildTypes {
         release {
@@ -82,5 +91,6 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.0-alpha05'
     //admob
     implementation 'com.google.android.gms:play-services-ads:19.0.1'
+
 
 }

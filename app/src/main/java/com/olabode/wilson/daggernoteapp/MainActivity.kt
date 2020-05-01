@@ -4,15 +4,14 @@ package com.olabode.wilson.daggernoteapp
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.BaseAdapter
-import android.widget.HeaderViewListAdapter
-import android.widget.ListView
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
@@ -25,14 +24,16 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.navigation.NavigationView
+import com.olabode.wilson.daggernoteapp.adapters.DrawerAdapter
 import com.olabode.wilson.daggernoteapp.databinding.ActivityMainBinding
+import com.olabode.wilson.daggernoteapp.models.DrawerItem
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
-class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : DaggerAppCompatActivity(), IMainActivity {
 
     lateinit var mAdView: AdView
 
@@ -40,18 +41,19 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
+    private lateinit var viewModel: MainActivityViewModel
+
+    private lateinit var adapter: DrawerAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MobileAds.initialize(this) {}
+        viewModel =
+            ViewModelProvider(this, factory).get(MainActivityViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        if (savedInstanceState == null) {
-            setFirstItemChecked()
-        }
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
@@ -59,17 +61,19 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
         val topLevelDestinations = setOf(
             R.id.nav_home, R.id.favourites, R.id.trashFragment, R.id.settings, R.id.labelFragment
+            , R.id.labeledNoteView
         )
         appBarConfiguration = AppBarConfiguration(
             topLevelDestinations, drawerLayout
         )
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
-        navView.setNavigationItemSelectedListener(this)
+
         mAdView = findViewById(R.id.adView)
 
 
         setUpAds()
+        performDrawerClicks()
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (topLevelDestinations.contains(destination.id)) {
@@ -88,6 +92,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
+        hideKeyBoard()
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
@@ -109,49 +114,21 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         super.onDestroy()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_home -> {
-                val navOptions = NavOptions.Builder()
-                    .setPopUpTo(R.id.mobile_navigation, true)
-                    .build()
-                if (isValidDestination(R.id.nav_home)) {
-                    Handler().postDelayed({
-                        Navigation.findNavController(this, R.id.nav_host_fragment).navigate(
-                            R.id.nav_home, null, navOptions
-                        )
-                    }, 305)
-                }
 
-            }
-            R.id.nav_settings -> {
-                if (isValidDestination(R.id.settings)) {
-                    navigateDestinationFromHost(R.id.settings)
-                }
-            }
+    /**
+     * navigation for labels that will be added to the navigation drawer
+     */
+    private fun navigateFromDynamicMenu(id: Int, title: String) {
+        if (isValidDestination(id)) {
+            Handler().postDelayed({
+                val args = bundleOf(
+                    "title" to title, "labelId" to id.toLong()
+                )
+                Navigation.findNavController(this, R.id.nav_host_fragment)
+                    .navigate(R.id.labeledNoteView, args)
 
-            R.id.nav_favourites -> {
-                if (isValidDestination(R.id.favourites)) {
-                    navigateDestinationFromHost(R.id.favourites)
-                }
-            }
-
-            R.id.nav_trash -> {
-                if (isValidDestination(R.id.trashFragment)) {
-                    navigateDestinationFromHost(R.id.trashFragment)
-                }
-            }
-            R.id.label -> {
-                if (isValidDestination(R.id.labelFragment)) {
-                    navigateDestinationFromHost(R.id.labelFragment)
-                }
-
-            }
-
+            }, 305)
         }
-        item.isChecked = true
-        drawerLayout.closeDrawer(GravityCompat.START)
-        return true
     }
 
     private fun navigateDestinationFromHost(toDestination: Int) {
@@ -161,14 +138,12 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         }, 305)
     }
 
-
     private fun isValidDestination(destination: Int): Boolean {
         return destination != Navigation.findNavController(
             this,
             R.id.nav_host_fragment
         ).currentDestination!!.id
     }
-
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -178,10 +153,72 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         }
     }
 
-
     private fun setFirstItemChecked() {
         val menu: Menu = nav_view.menu
         menu.findItem(R.id.nav_home).isChecked = true
+    }
+
+    override fun hideKeyBoard() {
+        if (currentFocus != null) {
+            val inputMethodManager =
+                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            try {
+                inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+
+    private fun performDrawerClicks() {
+        adapter.setOnItemClickListener(object : DrawerAdapter.OnItemClickListener {
+            override fun onItemClicked(drawerItem: DrawerItem) {
+                when (drawerItem.id) {
+                    R.id.nav_home -> {
+                        val navOptions = NavOptions.Builder()
+                            .setPopUpTo(R.id.mobile_navigation, true)
+                            .build()
+                        if (isValidDestination(R.id.nav_home)) {
+                            Handler().postDelayed({
+                                Navigation.findNavController(
+                                    this@MainActivity,
+                                    R.id.nav_host_fragment
+                                ).navigate(
+                                    R.id.nav_home, null, navOptions
+                                )
+                            }, 305)
+                        }
+                    }
+                    R.id.nav_settings -> {
+                        if (isValidDestination(R.id.settings)) {
+                            navigateDestinationFromHost(R.id.settings)
+                        }
+                    }
+
+                    R.id.nav_favourites -> {
+                        if (isValidDestination(R.id.favourites)) {
+                            navigateDestinationFromHost(R.id.favourites)
+                        }
+                    }
+
+                    R.id.nav_trash -> {
+                        if (isValidDestination(R.id.trashFragment)) {
+                            navigateDestinationFromHost(R.id.trashFragment)
+                        }
+                    }
+                    R.id.label -> {
+                        if (isValidDestination(R.id.labelFragment)) {
+                            navigateDestinationFromHost(R.id.labelFragment)
+                        }
+                    }
+
+                    else -> navigateFromDynamicMenu(drawerItem.id, drawerItem.title)
+                }
+                //item.isChecked = true
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+        })
     }
 }
 

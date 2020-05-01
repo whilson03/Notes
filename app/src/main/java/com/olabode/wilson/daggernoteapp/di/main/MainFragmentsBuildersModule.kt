@@ -3,6 +3,7 @@ package com.olabode.wilson.daggernoteapp.di.main
 import com.olabode.wilson.daggernoteapp.ui.favourite.FavouritesFragment
 import com.olabode.wilson.daggernoteapp.ui.home.HomeFragment
 import com.olabode.wilson.daggernoteapp.ui.labels.LabelFragment
+import com.olabode.wilson.daggernoteapp.ui.labelview.LabeledNoteView
 import com.olabode.wilson.daggernoteapp.ui.notes.NoteFragment
 import com.olabode.wilson.daggernoteapp.ui.trash.TrashFragment
 import com.olabode.wilson.daggernoteapp.ui.trash.ViewTrashNoteFragment
@@ -32,8 +33,10 @@ abstract class MainFragmentsBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeViewTrashNoteFragment(): ViewTrashNoteFragment
 
-
     @ContributesAndroidInjector
     abstract fun contributeLabelFragment(): LabelFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeLabelNoteFragment(): LabeledNoteView
 
 }

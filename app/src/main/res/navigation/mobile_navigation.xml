@@ -96,4 +96,20 @@
             android:id="@+id/action_labelFragment_to_nav_home"
             app:popUpTo="@id/nav_home" />
     </fragment>
+    <fragment
+        android:id="@+id/labeledNoteView"
+        android:name="com.olabode.wilson.daggernoteapp.ui.labelview.LabeledNoteView"
+        android:label="{title}"
+        tools:layout="@layout/fragment_labeled_note_view">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="labelId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_labeledNoteView_to_noteFragment"
+            app:destination="@id/noteFragment"
+            app:popUpTo="@id/labeledNoteView" />
+    </fragment>
 </navigation>
