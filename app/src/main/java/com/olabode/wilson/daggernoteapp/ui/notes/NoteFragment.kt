@@ -141,7 +141,6 @@ class NoteFragment : DaggerFragment() {
                 }
             }
             android.R.id.home -> {
-                hidekeyboard()
                 homeAction()
 
             }
