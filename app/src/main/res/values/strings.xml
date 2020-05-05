@@ -2,8 +2,6 @@
     <string name="app_name">Notes Keep</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -65,7 +63,7 @@
     <string name="nothing_in_trash">Nothing In Trash</string>
     <string name="note_icon">note icon</string>
     <string name="theme_dark">Dark Mode</string>
-    <string name="key_mode_dark">KEY_MODE_DARK</string>
+    <string name="key_mode_dark" translatable="false">KEY_MODE_DARK</string>
     <string name="search">Search</string>
     <string name="copy_text">Copy</string>
     <string name="more">More Options</string>
@@ -77,8 +75,8 @@
     <string name="text_copied">Copied</string>
     <string name="ad_unit_id" translatable="false">ca-app-pub-3647278513203920/5764849187</string>
     <string name="order">Order</string>
-    <string name="SHARED_PREF_DARK_MODE_KEY">mode</string>
-    <string name="SHARED_PREF_VIEW_MODE_RV">note_mode_view</string>
+    <string name="SHARED_PREF_DARK_MODE_KEY" translatable="false">mode</string>
+    <string name="SHARED_PREF_VIEW_MODE_RV" translatable="false">note_mode_view</string>
     <string name="note_is_blank">Cannot Copy Blank Note</string>
     <string name="date_added">Date Added</string>
     <string name="recent">Recent</string>
@@ -101,4 +99,8 @@
     <string name="edit_label">Edit Label</string>
     <string name="done_adding">Done</string>
     <string name="manage_labels">Manage Labels</string>
+    <string name="other_category">Others</string>
+    <string name="key_auto_empty_trash" translatable="false">Auto Empty Trash</string>
+    <string name="trash_setting_title">Clear Trash</string>
+    <string name="trash_summary">automatically clear trash after 30days</string>
 </resources>

@@ -90,5 +90,7 @@ dependencies {
     //admob
     implementation 'com.google.android.gms:play-services-ads:19.0.1'
 
+    implementation "androidx.work:work-runtime-ktx:$version_work"
+
 
 }

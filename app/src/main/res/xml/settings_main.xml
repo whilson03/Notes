@@ -21,6 +21,17 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/other_category">
+        <SwitchPreferenceCompat
+            android:key="@string/key_auto_empty_trash"
+            android:title="@string/trash_setting_title"
+            android:summary="@string/trash_summary"
+
+            />
+
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/about_text">
 
         <Preference

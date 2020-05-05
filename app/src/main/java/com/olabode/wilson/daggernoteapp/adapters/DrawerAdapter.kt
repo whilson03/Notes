@@ -31,6 +31,8 @@ class DrawerAdapter(val clickListener: DrawerClickListener) :
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
+    private var checkedPosition = 1
+
     fun addHeaderAndSubmitList(list: List<DrawerItem>?) {
         adapterScope.launch {
             val items = when (list) {
@@ -107,7 +109,6 @@ class DrawerAdapter(val clickListener: DrawerClickListener) :
                 )
                 return HeaderViewHolder(binding)
             }
-
         }
     }
 
