@@ -83,8 +83,6 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
-    // Material Navigation View Library
-    implementation 'com.shreyaspatil:MaterialNavigationView:1.2'
     // Material design components
     implementation "com.google.android.material:material:$version_material"
     //preference

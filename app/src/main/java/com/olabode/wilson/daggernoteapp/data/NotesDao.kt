@@ -65,4 +65,5 @@ interface NotesDao {
 
     @Query("SELECT COUNT(noteId) FROM notes_table WHERE trash =  1 ")
     fun countTrashNotes(): LiveData<Int>
+
 }

@@ -6,5 +6,6 @@ package com.olabode.wilson.daggernoteapp.models
 data class DrawerItem(
     val id: Int,
     val iconDrawable: Int,
-    val title: String
+    val title: String,
+    var isSelected: Boolean = false
 )

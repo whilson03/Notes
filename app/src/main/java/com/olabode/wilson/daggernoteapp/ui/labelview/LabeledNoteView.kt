@@ -108,7 +108,9 @@ class LabeledNoteView : DaggerFragment() {
         viewModel.getAllNotesForLabel(labelId).observe(viewLifecycleOwner,
             androidx.lifecycle.Observer {
                 it?.let {
-                    adapter.submitList(it[0].notes)
+                    adapter.submitList(it[0].notes.filter { note ->
+                        !note.isTrashItem
+                    })
                 }
             })
 

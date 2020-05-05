@@ -3,10 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="drawerItem"
+            type="com.olabode.wilson.daggernoteapp.models.DrawerItem" />
+
+        <variable
+            name="clickListener"
+            type="com.olabode.wilson.daggernoteapp.adapters.DrawerClickListener" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="?attr/selectableItemBackground"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:onClick="@{() -> clickListener.onClick(drawerItem)}">
 
         <ImageView
             android:id="@+id/icon"
@@ -19,6 +30,8 @@
             app:srcCompat="@drawable/ic_note" />
 
         <TextView
+            android:ellipsize="end"
+            android:maxLines="1"
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

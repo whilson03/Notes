@@ -3,7 +3,6 @@ package com.olabode.wilson.daggernoteapp
 
 import android.os.Bundle
 import android.os.Handler
-import android.view.Menu
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
@@ -25,11 +24,12 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.navigation.NavigationView
 import com.olabode.wilson.daggernoteapp.adapters.DrawerAdapter
+import com.olabode.wilson.daggernoteapp.adapters.DrawerClickListener
 import com.olabode.wilson.daggernoteapp.databinding.ActivityMainBinding
 import com.olabode.wilson.daggernoteapp.models.DrawerItem
+import com.olabode.wilson.daggernoteapp.utils.DrawerDivider
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
@@ -73,7 +73,8 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity {
 
 
         setUpAds()
-        performDrawerClicks()
+
+
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (topLevelDestinations.contains(destination.id)) {
@@ -114,7 +115,6 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity {
         super.onDestroy()
     }
 
-
     /**
      * navigation for labels that will be added to the navigation drawer
      */
@@ -153,11 +153,6 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity {
         }
     }
 
-    private fun setFirstItemChecked() {
-        val menu: Menu = nav_view.menu
-        menu.findItem(R.id.nav_home).isChecked = true
-    }
-
     override fun hideKeyBoard() {
         if (currentFocus != null) {
             val inputMethodManager =
@@ -170,55 +165,52 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity {
         }
     }
 
-
-    private fun performDrawerClicks() {
-        adapter.setOnItemClickListener(object : DrawerAdapter.OnItemClickListener {
-            override fun onItemClicked(drawerItem: DrawerItem) {
-                when (drawerItem.id) {
-                    R.id.nav_home -> {
-                        val navOptions = NavOptions.Builder()
-                            .setPopUpTo(R.id.mobile_navigation, true)
-                            .build()
-                        if (isValidDestination(R.id.nav_home)) {
-                            Handler().postDelayed({
-                                Navigation.findNavController(
-                                    this@MainActivity,
-                                    R.id.nav_host_fragment
-                                ).navigate(
-                                    R.id.nav_home, null, navOptions
-                                )
-                            }, 305)
-                        }
-                    }
-                    R.id.nav_settings -> {
-                        if (isValidDestination(R.id.settings)) {
-                            navigateDestinationFromHost(R.id.settings)
-                        }
-                    }
-
-                    R.id.nav_favourites -> {
-                        if (isValidDestination(R.id.favourites)) {
-                            navigateDestinationFromHost(R.id.favourites)
-                        }
-                    }
-
-                    R.id.nav_trash -> {
-                        if (isValidDestination(R.id.trashFragment)) {
-                            navigateDestinationFromHost(R.id.trashFragment)
-                        }
-                    }
-                    R.id.label -> {
-                        if (isValidDestination(R.id.labelFragment)) {
-                            navigateDestinationFromHost(R.id.labelFragment)
-                        }
-                    }
-
-                    else -> navigateFromDynamicMenu(drawerItem.id, drawerItem.title)
+    private fun performDrawerClicks(drawerItem: DrawerItem) {
+        when (drawerItem.id) {
+            R.id.nav_home -> {
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.mobile_navigation, true)
+                    .build()
+                if (isValidDestination(R.id.nav_home)) {
+                    Handler().postDelayed({
+                        Navigation.findNavController(
+                            this@MainActivity,
+                            R.id.nav_host_fragment
+                        ).navigate(
+                            R.id.nav_home, null, navOptions
+                        )
+                    }, 305)
                 }
-                //item.isChecked = true
-                drawerLayout.closeDrawer(GravityCompat.START)
             }
-        })
+            R.id.nav_settings -> {
+                if (isValidDestination(R.id.settings)) {
+                    navigateDestinationFromHost(R.id.settings)
+                }
+            }
+
+            R.id.nav_favourites -> {
+                if (isValidDestination(R.id.favourites)) {
+                    navigateDestinationFromHost(R.id.favourites)
+                }
+            }
+
+            R.id.nav_trash -> {
+                if (isValidDestination(R.id.trashFragment)) {
+                    navigateDestinationFromHost(R.id.trashFragment)
+                }
+            }
+            R.id.label -> {
+                if (isValidDestination(R.id.labelFragment)) {
+                    navigateDestinationFromHost(R.id.labelFragment)
+                }
+            }
+
+            else -> navigateFromDynamicMenu(drawerItem.id, drawerItem.title)
+        }
+        //item.isChecked = true
+        drawerLayout.closeDrawer(GravityCompat.START)
+
+
     }
 }
 
