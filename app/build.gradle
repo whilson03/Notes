@@ -92,5 +92,4 @@ dependencies {
 
     implementation "androidx.work:work-runtime-ktx:$version_work"
 
-
 }

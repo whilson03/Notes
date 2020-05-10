@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.adapters.callbacks.DrawerDiffCallBack
-
 import com.olabode.wilson.daggernoteapp.databinding.DrawerItemBinding
 import com.olabode.wilson.daggernoteapp.databinding.NavHeaderMainBinding
 import com.olabode.wilson.daggernoteapp.models.DrawerItem
@@ -25,13 +25,17 @@ private val ITEM_VIEW_TYPE_HEADER = 0
 private val ITEM_VIEW_TYPE_ITEM = 1
 
 
-class DrawerAdapter(val clickListener: DrawerClickListener) :
+class DrawerAdapter(val clickListener: OnDrawerItemClickListener) :
     ListAdapter<DataItem, RecyclerView.ViewHolder>(DrawerDiffCallBack()) {
 
 
+    interface OnDrawerItemClickListener {
+        fun onItemClicked(drawerItem: DrawerItem)
+    }
+
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    private var checkedPosition = 1
+
 
     fun addHeaderAndSubmitList(list: List<DrawerItem>?) {
         adapterScope.launch {
@@ -49,7 +53,14 @@ class DrawerAdapter(val clickListener: DrawerClickListener) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ITEM_VIEW_TYPE_HEADER -> HeaderViewHolder.from(parent)
-            ITEM_VIEW_TYPE_ITEM -> DrawerViewHolder.from(parent)
+            ITEM_VIEW_TYPE_ITEM -> {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = DrawerItemBinding.inflate(
+                    layoutInflater
+                    , parent, false
+                )
+                return DrawerViewHolder(binding)
+            }
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }
@@ -59,6 +70,8 @@ class DrawerAdapter(val clickListener: DrawerClickListener) :
             is DrawerViewHolder -> {
                 val dataItem = getItem(position) as DataItem.DrawerItems
                 holder.bind(dataItem.drawerItem, clickListener)
+                holder.binding.root.isSelected = dataItem.drawerItem.isSelected
+                holder.itemView.setBackgroundResource(if (dataItem.drawerItem.isSelected) R.color.ripple_color else android.R.color.transparent)
             }
         }
     }
@@ -71,28 +84,35 @@ class DrawerAdapter(val clickListener: DrawerClickListener) :
         }
     }
 
-
-    class DrawerViewHolder constructor(val binding: DrawerItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: DrawerItem, clickListener: DrawerClickListener) {
-            binding.drawerItem = item
-            binding.title.text = item.title
-            binding.icon.setImageResource(item.iconDrawable)
-            binding.clickListener = clickListener
-            binding.executePendingBindings()
+    fun setSelected(position: Int) {
+        adapterScope.launch {
+            for (i in 1 until currentList.size) {
+                (currentList[i] as DataItem.DrawerItems).drawerItem.isSelected = i == position
+            }
+            withContext(Dispatchers.Main) {
+                notifyDataSetChanged()
+            }
         }
 
 
-        companion object {
-            fun from(parent: ViewGroup): DrawerViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = DrawerItemBinding.inflate(
-                    layoutInflater
-                    , parent, false
-                )
-                return DrawerViewHolder(binding)
+    }
+
+
+    inner class DrawerViewHolder constructor(val binding: DrawerItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: DrawerItem, clickListener: OnDrawerItemClickListener) {
+            binding.title.text = item.title
+            binding.icon.setImageResource(item.iconDrawable)
+
+            binding.root.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    clickListener.onItemClicked(item)
+                    setSelected(adapterPosition)
+                }
             }
+
+            binding.executePendingBindings()
         }
     }
 
@@ -111,14 +131,7 @@ class DrawerAdapter(val clickListener: DrawerClickListener) :
             }
         }
     }
-
 }
-
-
-class DrawerClickListener(val clickListener: (drawerItem: DrawerItem) -> Unit) {
-    fun onClick(drawerItem: DrawerItem) = clickListener(drawerItem)
-}
-
 
 sealed class DataItem {
     data class DrawerItems(val drawerItem: DrawerItem) : DataItem() {

@@ -24,16 +24,15 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.navigation.NavigationView
 import com.olabode.wilson.daggernoteapp.adapters.DrawerAdapter
-import com.olabode.wilson.daggernoteapp.adapters.DrawerClickListener
 import com.olabode.wilson.daggernoteapp.databinding.ActivityMainBinding
 import com.olabode.wilson.daggernoteapp.models.DrawerItem
-import com.olabode.wilson.daggernoteapp.utils.DrawerDivider
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-class MainActivity : DaggerAppCompatActivity(), IMainActivity {
+class MainActivity : DaggerAppCompatActivity(), IMainActivity,
+    DrawerAdapter.OnDrawerItemClickListener {
 
     lateinit var mAdView: AdView
 
@@ -42,6 +41,7 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
     private lateinit var viewModel: MainActivityViewModel
+
 
     private lateinit var adapter: DrawerAdapter
 
@@ -135,7 +135,7 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity {
         Handler().postDelayed({
             Navigation.findNavController(this, R.id.nav_host_fragment)
                 .navigate(toDestination)
-        }, 305)
+        }, 316)
     }
 
     private fun isValidDestination(destination: Int): Boolean {
@@ -211,6 +211,10 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity {
         drawerLayout.closeDrawer(GravityCompat.START)
 
 
+    }
+
+    override fun onItemClicked(drawerItem: DrawerItem) {
+        performDrawerClicks(drawerItem)
     }
 }
 

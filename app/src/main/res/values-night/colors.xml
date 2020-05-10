@@ -24,6 +24,6 @@
 
     <color name="icon_color">@color/colorPrimary</color>
     <color name="note_text_line">#474747</color>
-    <color name="ripple_color">#f2f2f2</color>
+    <color name="ripple_color">@color/primaryLightColor</color>
     <color name="icon">@android:color/white</color>
 </resources>

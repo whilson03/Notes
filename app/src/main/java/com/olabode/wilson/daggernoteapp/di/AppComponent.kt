@@ -3,6 +3,7 @@ package com.olabode.wilson.daggernoteapp.di
 import android.app.Application
 import com.olabode.wilson.daggernoteapp.BaseApp
 import com.olabode.wilson.daggernoteapp.di.repo.RepositoryModule
+import com.olabode.wilson.daggernoteapp.di.work.WorkerModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -22,12 +23,12 @@ import javax.inject.Singleton
         PersistenceModule::class,
         ActivityBuildersModule::class,
         ViewModelFactoryModule::class,
-        RepositoryModule::class
+        RepositoryModule::class,
+        WorkerModule::class
 
     ]
 )
 interface AppComponent : AndroidInjector<BaseApp> {
-
 
     @Component.Builder
     interface Builder {
