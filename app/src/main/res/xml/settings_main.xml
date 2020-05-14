@@ -40,11 +40,6 @@
             android:title="@string/rate_text" />
 
         <Preference
-            android:icon="@drawable/ic_bug_report"
-            android:key="@string/key_bug_report"
-            android:title="@string/bug_report" />
-
-        <Preference
             android:key="@string/key_send_feedback"
             android:icon="@drawable/ic_feedback"
             android:title="@string/feedback" />

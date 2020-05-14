@@ -41,13 +41,13 @@ class Settings : PreferenceFragmentCompat() {
         }
 
 
-        val report = findPreference<Preference>(getString(R.string.key_bug_report))
-        report?.let {
-            it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                GoogleFeedbackUtils.bindFeedback(context!!)
-                true
-            }
-        }
+//        val report = findPreference<Preference>(getString(R.string.key_bug_report))
+//        report?.let {
+//            it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+//                GoogleFeedbackUtils.bindFeedback(context!!)
+//                true
+//            }
+//        }
 
         val feedback = findPreference<Preference>(getString(R.string.key_send_feedback))
         feedback?.let {
@@ -153,6 +153,11 @@ class Settings : PreferenceFragmentCompat() {
         val editor = preferences.edit()
         editor.putBoolean(getString(R.string.SHARED_PREF_DARK_MODE_KEY), isDark)
         editor.apply()
+    }
+
+
+    private fun setUpAutoEmptyTrash() {
+
     }
 
 }
