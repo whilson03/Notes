@@ -17,6 +17,12 @@ class ClearTrashWorker @Inject constructor(
     private val params: WorkerParameters,
     private val repo: NotesRepository
 ) : CoroutineWorker(appContext, params) {
+
+    companion object {
+        const val WORK_NAME = "ClearTrashWorker"
+    }
+
+
     override suspend fun doWork(): Result {
         repo.deleteAllFromTrash()
         return Result.success()
