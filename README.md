@@ -2,13 +2,13 @@
 Android Basic NotePad Application
 * Dependency Injection (Dagger android)
 * MVVM Architecture
-* Android JetPack(ROOM,LiveData,Navigation Component,Databinding etc...)
+* Android JetPack(ROOM,LiveData,Navigation Component,Databinding, WorkManager)
 * DataBinding
 * Coroutine
 * SafeArgs
 * Material Component
 * Dark Mode
-
+* Preference Fragment
 
 <div class="row">
   
