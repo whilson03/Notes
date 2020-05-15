@@ -12,7 +12,6 @@ import dagger.android.DaggerApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -27,7 +26,7 @@ class BaseApp : DaggerApplication() {
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
     private fun delayedInit() = applicationScope.launch {
-        setApplicationMode()
+
     }
 
     @Inject
@@ -43,21 +42,17 @@ class BaseApp : DaggerApplication() {
     }
 
 
-    private suspend fun setApplicationMode() {
-        withContext(Dispatchers.Main) {
+    private fun setApplicationMode() {
             if (isDarkMode()) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
-        }
     }
 
-    private suspend fun isDarkMode(): Boolean {
+    private fun isDarkMode(): Boolean {
         val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        return withContext(Dispatchers.IO) {
-            preferences.getBoolean(getString(R.string.SHARED_PREF_DARK_MODE_KEY), false)
-        }
+        return preferences.getBoolean(getString(R.string.SHARED_PREF_DARK_MODE_KEY), false)
     }
 
     private fun configureWorkManager() {
