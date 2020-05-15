@@ -13,24 +13,35 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.olabode.wilson.daggernoteapp.R
+import com.olabode.wilson.daggernoteapp.work.ClearTrashWorker
+import dagger.android.support.AndroidSupportInjection
+import java.util.concurrent.TimeUnit
 
 
 /**
  * A simple [Fragment] subclass.
  */
 class Settings : PreferenceFragmentCompat() {
+
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings_main, rootKey)
     }
 
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
 
         val ratePreference = findPreference<Preference>(getString(R.string.key_rate))
         ratePreference?.let {
@@ -75,6 +86,21 @@ class Settings : PreferenceFragmentCompat() {
         }
 
 
+        val clearTrash =
+            findPreference<SwitchPreferenceCompat>(getString(R.string.key_auto_empty_trash))
+        clearTrash?.let {
+            it.setOnPreferenceChangeListener { _, _ ->
+                if (!it.isChecked) {
+                    setupRecurringWork()
+                } else {
+                    WorkManager.getInstance(context!!)
+                        .cancelAllWorkByTag(ClearTrashWorker.WORK_NAME)
+                }
+                true
+            }
+
+        }
+
 
         return super.onCreateView(inflater, container, savedInstanceState)
 
@@ -117,6 +143,7 @@ class Settings : PreferenceFragmentCompat() {
 
     object GoogleFeedbackUtils {
         private val TAG = GoogleFeedbackUtils::class.java.simpleName
+
         /**
          * Binds the Google Feedback service.
          *
@@ -156,8 +183,15 @@ class Settings : PreferenceFragmentCompat() {
     }
 
 
-    private fun setUpAutoEmptyTrash() {
-
+    private fun setupRecurringWork() {
+        val repeatingRequest =
+            PeriodicWorkRequestBuilder<ClearTrashWorker>(1, TimeUnit.DAYS)
+                .build()
+        WorkManager.getInstance(activity!!).enqueueUniquePeriodicWork(
+            ClearTrashWorker.WORK_NAME,
+            ExistingPeriodicWorkPolicy.REPLACE,
+            repeatingRequest
+        )
     }
 
 }
