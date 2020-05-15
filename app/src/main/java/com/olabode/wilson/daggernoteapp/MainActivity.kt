@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
@@ -34,7 +35,7 @@ import javax.inject.Inject
 class MainActivity : DaggerAppCompatActivity(), IMainActivity,
     DrawerAdapter.OnDrawerItemClickListener {
 
-    lateinit var mAdView: AdView
+    private lateinit var mAdView: AdView
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -45,6 +46,11 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
 
     private lateinit var adapter: DrawerAdapter
 
+    private var currentCheckedDrawerPosition = 0
+
+
+    @Inject
+    lateinit var factory: ViewModelProviderFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +58,19 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
         viewModel =
             ViewModelProvider(this, factory).get(MainActivityViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        adapter = DrawerAdapter(this)
+        binding.drawerRecycler.adapter = adapter
+
+        // get the position that was clicked in the recyclerview
+        currentCheckedDrawerPosition =
+            savedInstanceState?.getInt(getString(R.string.KEY_DRAWER_POS)) ?: 0
+
+
+
+        Toast.makeText(this, currentCheckedDrawerPosition.toString(), Toast.LENGTH_SHORT).show()
+
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -89,6 +108,46 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
             }
         }
 
+        viewModel.allLabels.observe(this, Observer {
+            val list = viewModel.fixedNavItemsLiveData()
+            list[currentCheckedDrawerPosition].isSelected = true // set checked item in recyclerview
+            adapter.addHeaderAndSubmitList(list)
+        })
+
+    }
+
+    private fun setUpAds() {
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        mAdView.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                mAdView.visibility = View.VISIBLE
+            }
+
+            override fun onAdFailedToLoad(errorCode: Int) {
+                // Code to be executed when an ad request fails.
+                mAdView.visibility = View.GONE
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            override fun onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -207,14 +266,23 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
 
             else -> navigateFromDynamicMenu(drawerItem.id, drawerItem.title)
         }
-        //item.isChecked = true
+
         drawerLayout.closeDrawer(GravityCompat.START)
 
 
     }
 
-    override fun onItemClicked(drawerItem: DrawerItem) {
+
+    override fun onItemClicked(drawerItem: DrawerItem, position: Int) {
         performDrawerClicks(drawerItem)
+        currentCheckedDrawerPosition = position
+        Toast.makeText(this, currentCheckedDrawerPosition.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(getString(R.string.KEY_DRAWER_POS), currentCheckedDrawerPosition)
     }
 }
 

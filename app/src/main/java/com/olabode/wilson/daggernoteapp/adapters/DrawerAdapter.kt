@@ -30,7 +30,7 @@ class DrawerAdapter(val clickListener: OnDrawerItemClickListener) :
 
 
     interface OnDrawerItemClickListener {
-        fun onItemClicked(drawerItem: DrawerItem)
+        fun onItemClicked(drawerItem: DrawerItem, position: Int)
     }
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
@@ -107,7 +107,7 @@ class DrawerAdapter(val clickListener: OnDrawerItemClickListener) :
 
             binding.root.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    clickListener.onItemClicked(item)
+                    clickListener.onItemClicked(item, adapterPosition - 1)
                     setSelected(adapterPosition)
                 }
             }

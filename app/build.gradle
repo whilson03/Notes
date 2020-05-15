@@ -90,6 +90,11 @@ dependencies {
     //admob
     implementation 'com.google.android.gms:play-services-ads:19.0.1'
 
+    //work manager
     implementation "androidx.work:work-runtime-ktx:$version_work"
+
+    //drawer
+    implementation "com.mikepenz:materialdrawer:8.0.3"
+    implementation "androidx.annotation:annotation:1.1.0"
 
 }

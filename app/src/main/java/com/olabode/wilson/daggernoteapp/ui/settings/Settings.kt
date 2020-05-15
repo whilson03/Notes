@@ -185,7 +185,7 @@ class Settings : PreferenceFragmentCompat() {
 
     private fun setupRecurringWork() {
         val repeatingRequest =
-            PeriodicWorkRequestBuilder<ClearTrashWorker>(1, TimeUnit.DAYS)
+            PeriodicWorkRequestBuilder<ClearTrashWorker>(15, TimeUnit.MINUTES)
                 .build()
         WorkManager.getInstance(activity!!).enqueueUniquePeriodicWork(
             ClearTrashWorker.WORK_NAME,
