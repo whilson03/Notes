@@ -138,8 +138,8 @@ class LabeledNoteView : DaggerFragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
 //            R.id.sort_date_created -> {
 //                viewModel.filter(Util.SORT.DATE_CREATED)
 //            }
@@ -150,26 +150,26 @@ class LabeledNoteView : DaggerFragment() {
 //            R.id.sort_name -> {
 //                viewModel.filter(Util.SORT.NAME)
 //            }
-//
-//            R.id.note_view_mode -> {
-//                if (layoutManager.spanCount == 1) {
-//                    Util.setGridMode(context!!, true)
-//                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
-//                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_list)
-//                    adapter.notifyDataSetChanged()
-//                } else {
-//                    Util.setGridMode(context!!, false)
-//                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
-//                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_grid)
-//                    adapter.notifyDataSetChanged()
-//                }
-//
-//            }
-//
-//
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+
+            R.id.note_view_mode -> {
+                if (layoutManager.spanCount == 1) {
+                    Util.setGridMode(context!!, true)
+                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
+                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_list)
+                    adapter.notifyDataSetChanged()
+                } else {
+                    Util.setGridMode(context!!, false)
+                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
+                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_grid)
+                    adapter.notifyDataSetChanged()
+                }
+
+            }
+
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun scrollToTop() {
         binding.recyclerView.post { binding.recyclerView.smoothScrollToPosition(0) }

@@ -99,6 +99,7 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
             labelSubMenu.clear()
             it.forEach { l ->
                 labelSubMenu.add(0, l.labelId.toInt(), 0, l.title)
+
             }
         })
 
