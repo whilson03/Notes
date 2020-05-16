@@ -13,6 +13,11 @@ Android Basic NotePad Application
 
 
 
+<div> 
+<a href='https://play.google.com/store/apps/details?id=com.olabode.wilson.daggernoteapp&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="400" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+
+</div>
+
 
 <div class="row">
   
@@ -30,10 +35,6 @@ Android Basic NotePad Application
 <img src="screenshot/edit-dark.png" height="400" alt="screenshot"/>
 <img src="screenshot/settings-dark.png" height="400" alt="screenshot"/>
 <img src="screenshot/dark_home.png" height="400" alt="screenshot"/>
-</div>
-<div class="row col-md-8"> 
-<a href='https://play.google.com/store/apps/details?id=com.olabode.wilson.daggernoteapp&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
-
 </div>
 
 
