@@ -3,9 +3,10 @@ package com.olabode.wilson.daggernoteapp
 
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
@@ -24,16 +25,15 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.navigation.NavigationView
-import com.olabode.wilson.daggernoteapp.adapters.DrawerAdapter
 import com.olabode.wilson.daggernoteapp.databinding.ActivityMainBinding
-import com.olabode.wilson.daggernoteapp.models.DrawerItem
 import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
 class MainActivity : DaggerAppCompatActivity(), IMainActivity,
-    DrawerAdapter.OnDrawerItemClickListener {
+    NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mAdView: AdView
 
@@ -42,12 +42,6 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
     private lateinit var viewModel: MainActivityViewModel
-
-
-    private lateinit var adapter: DrawerAdapter
-
-    private var currentCheckedDrawerPosition = 0
-
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
@@ -58,25 +52,16 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
         viewModel =
             ViewModelProvider(this, factory).get(MainActivityViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        mAdView = findViewById(R.id.adView)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        val menu = navView.menu
+        val labelSubMenu = menu.addSubMenu(getString(R.string.labels))
 
-        adapter = DrawerAdapter(this)
-        binding.drawerRecycler.adapter = adapter
-
-        // get the position that was clicked in the recyclerview
-        currentCheckedDrawerPosition =
-            savedInstanceState?.getInt(getString(R.string.KEY_DRAWER_POS)) ?: 0
-
-
-
-        Toast.makeText(this, currentCheckedDrawerPosition.toString(), Toast.LENGTH_SHORT).show()
-
+        val navController = findNavController(R.id.nav_host_fragment)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
 
         val topLevelDestinations = setOf(
             R.id.nav_home, R.id.favourites, R.id.trashFragment, R.id.settings, R.id.labelFragment
@@ -88,10 +73,12 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
-        mAdView = findViewById(R.id.adView)
 
 
         setUpAds()
+        setFirstItemChecked()
+
+        navView.setNavigationItemSelectedListener(this)
 
 
 
@@ -109,9 +96,11 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
         }
 
         viewModel.allLabels.observe(this, Observer {
+            labelSubMenu.clear()
             val list = viewModel.fixedNavItemsLiveData()
-            list[currentCheckedDrawerPosition].isSelected = true // set checked item in recyclerview
-            adapter.addHeaderAndSubmitList(list)
+            it.forEach { l ->
+                labelSubMenu.add(0, l.labelId.toInt(), 0, l.title)
+            }
         })
 
     }
@@ -224,8 +213,9 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
         }
     }
 
-    private fun performDrawerClicks(drawerItem: DrawerItem) {
-        when (drawerItem.id) {
+
+    private fun performDrawerClicks(menuItem: MenuItem) {
+        when (menuItem.itemId) {
             R.id.nav_home -> {
                 val navOptions = NavOptions.Builder()
                     .setPopUpTo(R.id.mobile_navigation, true)
@@ -264,7 +254,7 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
                 }
             }
 
-            else -> navigateFromDynamicMenu(drawerItem.id, drawerItem.title)
+            else -> navigateFromDynamicMenu(menuItem.itemId, menuItem.title.toString())
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)
@@ -272,18 +262,16 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
 
     }
 
-
-    override fun onItemClicked(drawerItem: DrawerItem, position: Int) {
-        performDrawerClicks(drawerItem)
-        currentCheckedDrawerPosition = position
-        Toast.makeText(this, currentCheckedDrawerPosition.toString(), Toast.LENGTH_SHORT).show()
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        performDrawerClicks(item)
+        return true
     }
 
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(getString(R.string.KEY_DRAWER_POS), currentCheckedDrawerPosition)
+    private fun setFirstItemChecked() {
+        val menu: Menu = nav_view.menu
+        menu.findItem(R.id.nav_home).isChecked = true
     }
+
 }
 
 
