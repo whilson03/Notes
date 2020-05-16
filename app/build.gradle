@@ -63,7 +63,6 @@ dependencies {
 
 
     // dependency injection
-    //implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
@@ -92,9 +91,5 @@ dependencies {
 
     //work manager
     implementation "androidx.work:work-runtime-ktx:$version_work"
-
-    //drawer
-    implementation "com.mikepenz:materialdrawer:7.0.0"
-    implementation "androidx.annotation:annotation:1.1.0"
 
 }

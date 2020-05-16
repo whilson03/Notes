@@ -97,7 +97,6 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
 
         viewModel.allLabels.observe(this, Observer {
             labelSubMenu.clear()
-            val list = viewModel.fixedNavItemsLiveData()
             it.forEach { l ->
                 labelSubMenu.add(0, l.labelId.toInt(), 0, l.title)
             }
