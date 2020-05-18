@@ -150,23 +150,12 @@ class LabeledNoteView : DaggerFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main, menu)
+        inflater.inflate(R.menu.menu_label_view, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.sort_date_created -> {
-//                viewModel.filter(Util.SORT.DATE_CREATED)
-//            }
-//            R.id.sort_last_modified -> {
-//                viewModel.filter(Util.SORT.DATE_LAST_MODIFIED)
-//            }
-//
-//            R.id.sort_name -> {
-//                viewModel.filter(Util.SORT.NAME)
-//            }
-
             R.id.note_view_mode -> {
                 if (layoutManager.spanCount == 1) {
                     Util.setGridMode(context!!, true)
@@ -181,8 +170,6 @@ class LabeledNoteView : DaggerFragment() {
                 }
 
             }
-
-
         }
         return super.onOptionsItemSelected(item)
     }

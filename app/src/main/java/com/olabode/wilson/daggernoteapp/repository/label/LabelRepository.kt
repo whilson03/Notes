@@ -21,7 +21,9 @@ class LabelRepository @Inject constructor(private val labelDao: LabelDao) : Labe
 
     override suspend fun insertLabel(label: Label) {
         withContext(Dispatchers.IO) {
-            labelDao.insertLabel(label)
+            if (labelDao.checkLabelExist(label.title.toLowerCase()) == null) {
+                labelDao.insertLabel(label)
+            }
         }
     }
 

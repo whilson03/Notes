@@ -13,6 +13,9 @@ interface LabelDao {
     @Query("SELECT * FROM LABEL")
     fun getAllLabels(): LiveData<List<Label>>
 
+    @Query("SELECT * FROM  label WHERE LOWER(title)=:title LIMIT 1")
+    suspend fun checkLabelExist(title: String): Label?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLabel(label: Label)
 
