@@ -81,7 +81,7 @@ class LabelFragment : DaggerFragment() {
                     override fun onSubmitLabel(label: Label, isNewLabel: Boolean) {
                         if (!isNewLabel) {
                             viewModel.updateLabel(label)
-                            context?.showToast("Updating")
+                            context?.showToast(getString(R.string.updating_text))
                         }
 
                     }

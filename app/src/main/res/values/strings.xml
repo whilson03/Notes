@@ -105,4 +105,7 @@
     <string name="trash_summary">automatically empty trash after 30 days</string>
     <string name="KEY_DRAWER_POS" translatable="false">drawerPos</string>
     <string name="empty_label_dialog_text">There Are No Labels Yet.\n Add New Label ?</string>
+    <string name="no_notes_here">No Notes Here</string>
+    <string name="oops_no_labels_here">OOPS... No Labels Here</string>
+    <string name="updating_text">Updating</string>
 </resources>

@@ -94,7 +94,8 @@ class Settings : PreferenceFragmentCompat() {
                     setupRecurringWork()
                 } else {
                     WorkManager.getInstance(context!!)
-                        .cancelAllWorkByTag(ClearTrashWorker.WORK_NAME)
+                        .cancelUniqueWork(ClearTrashWorker.WORK_NAME)
+
                 }
                 true
             }

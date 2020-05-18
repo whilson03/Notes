@@ -12,6 +12,7 @@
     <color name="secondaryTextColor">#ffffff</color>
     <color name="dividerColor">#BDBDBD</color>
 
+    <color name="note_book_bg">#252424</color>
 
     <color name="note_background_colour">#474747</color>
     <color name="mediumYellow">#ffdf80</color>

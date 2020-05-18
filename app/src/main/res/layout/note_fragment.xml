@@ -11,8 +11,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:background="@color/note_book_bg"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+
             android:orientation="vertical">
 
 
@@ -25,7 +26,6 @@
                 android:background="@null"
                 android:hint="@string/title"
                 android:inputType="text"
-                android:maxLines="2"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:textSize="24sp"
@@ -42,7 +42,6 @@
                 android:layout_height="0dp"
                 android:background="@null"
                 android:gravity="top"
-
                 android:hint="@string/note"
                 android:inputType="textMultiLine"
                 android:paddingStart="8dp"
