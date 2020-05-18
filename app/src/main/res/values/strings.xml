@@ -108,4 +108,5 @@
     <string name="no_notes_here">No Notes Here</string>
     <string name="oops_no_labels_here">OOPS... No Labels Here</string>
     <string name="updating_text">Updating</string>
+    <string name="toast_no_labels">There Are No Labels, Add New Label</string>
 </resources>

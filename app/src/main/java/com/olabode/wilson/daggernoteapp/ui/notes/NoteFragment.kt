@@ -176,19 +176,21 @@ class NoteFragment : DaggerFragment() {
             currentNoteLabels as ArrayList<Label>,
             allLabels as ArrayList<Label>
         )
-        fragmentManager?.let { it1 -> dialog.show(it1, "LabelDialogFragment") }
-        dialog.setOnLabelActionListener(object : LabelDialog.LabelActionListener {
-            override fun onActionAddLabelToNote(label: Label) {
-                viewModel.addNoteToLabel(label.labelId, viewModel.noteToUpdate.noteId)
-            }
+        if (allLabels.isNotEmpty()) {
+            fragmentManager?.let { it1 -> dialog.show(it1, "LabelDialogFragment") }
+            dialog.setOnLabelActionListener(object : LabelDialog.LabelActionListener {
+                override fun onActionAddLabelToNote(label: Label) {
+                    viewModel.addNoteToLabel(label.labelId, viewModel.noteToUpdate.noteId)
+                }
 
-            override fun onActionRemoveLabelFromNote(label: Label) {
-                viewModel.removeNoteFromLabel(label.labelId, viewModel.noteToUpdate.noteId)
-            }
-        })
-
+                override fun onActionRemoveLabelFromNote(label: Label) {
+                    viewModel.removeNoteFromLabel(label.labelId, viewModel.noteToUpdate.noteId)
+                }
+            })
+        } else {
+            showToastMessage(getString(R.string.toast_no_labels))
+        }
     }
-
 
     private fun performSave(note: Note) {
         if (binding.body.text.toString().trim().isEmpty()) {
