@@ -40,6 +40,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:ellipsize="end"
                 android:transitionName="bodyView"
                 android:id="@+id/text_view_description"
                 android:layout_width="0dp"
@@ -47,7 +48,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:maxLines="8"
-                android:minLines="3"
+
                 android:paddingBottom="1dp"
                 android:text="@{note.body}"
                 android:textSize="14sp"
@@ -67,8 +68,7 @@
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-condensed-medium"
-                android:maxLength="25"
-                android:maxLines="3"
+                android:maxLines="2"
                 android:padding="2dp"
                 android:text="@{note.title}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
