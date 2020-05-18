@@ -65,7 +65,6 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
 
         val topLevelDestinations = setOf(
             R.id.nav_home, R.id.favourites, R.id.trashFragment, R.id.settings, R.id.labelFragment
-            , R.id.labeledNoteView
         )
         appBarConfiguration = AppBarConfiguration(
             topLevelDestinations, drawerLayout
@@ -167,6 +166,7 @@ class MainActivity : DaggerAppCompatActivity(), IMainActivity,
      * navigation for labels that will be added to the navigation drawer
      */
     private fun navigateFromDynamicMenu(id: Int, title: String) {
+
         if (isValidDestination(id)) {
             Handler().postDelayed({
                 val args = bundleOf(

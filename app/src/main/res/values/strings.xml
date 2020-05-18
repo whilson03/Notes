@@ -104,4 +104,5 @@
     <string name="trash_setting_title">Clear Trash</string>
     <string name="trash_summary">automatically empty trash after 30 days</string>
     <string name="KEY_DRAWER_POS" translatable="false">drawerPos</string>
+    <string name="empty_label_dialog_text">There Are No Labels Yet.\n Add New Label ?</string>
 </resources>
