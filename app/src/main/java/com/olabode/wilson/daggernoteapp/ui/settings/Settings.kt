@@ -13,7 +13,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
-import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.olabode.wilson.daggernoteapp.R
@@ -93,8 +92,8 @@ class Settings : PreferenceFragmentCompat() {
                 if (!it.isChecked) {
                     setupRecurringWork()
                 } else {
-                    WorkManager.getInstance(context!!)
-                        .cancelUniqueWork(ClearTrashWorker.WORK_NAME)
+                    WorkManager.getInstance(activity!!)
+                        .cancelAllWorkByTag(ClearTrashWorker.WORK_NAME)
 
                 }
                 true
@@ -186,13 +185,10 @@ class Settings : PreferenceFragmentCompat() {
 
     private fun setupRecurringWork() {
         val repeatingRequest =
-            PeriodicWorkRequestBuilder<ClearTrashWorker>(15, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<ClearTrashWorker>(30, TimeUnit.DAYS)
+                .addTag(ClearTrashWorker.WORK_NAME)
                 .build()
-        WorkManager.getInstance(activity!!).enqueueUniquePeriodicWork(
-            ClearTrashWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.REPLACE,
-            repeatingRequest
-        )
+        WorkManager.getInstance(activity!!).enqueue(repeatingRequest)
     }
 
 }
