@@ -3,16 +3,19 @@ package com.olabode.wilson.daggernoteapp.models
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import java.util.*
+
 
 /**
  *   Created by OLABODE WILSON on 2020-03-03.
  */
 
 @Parcelize
-@Entity(tableName = "notes_table")
+
+@Entity(tableName = "notes_table", indices = [Index("noteId")])
 data class Note(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "noteId")

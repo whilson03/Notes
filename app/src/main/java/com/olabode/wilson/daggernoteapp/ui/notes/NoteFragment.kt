@@ -176,20 +176,19 @@ class NoteFragment : DaggerFragment() {
             currentNoteLabels as ArrayList<Label>,
             allLabels as ArrayList<Label>
         )
-        if (allLabels.isNotEmpty()) {
-            fragmentManager?.let { it1 -> dialog.show(it1, "LabelDialogFragment") }
-            dialog.setOnLabelActionListener(object : LabelDialog.LabelActionListener {
-                override fun onActionAddLabelToNote(label: Label) {
-                    viewModel.addNoteToLabel(label.labelId, viewModel.noteToUpdate.noteId)
-                }
 
-                override fun onActionRemoveLabelFromNote(label: Label) {
-                    viewModel.removeNoteFromLabel(label.labelId, viewModel.noteToUpdate.noteId)
-                }
-            })
-        } else {
-            showToastMessage(getString(R.string.toast_no_labels))
-        }
+        fragmentManager?.let { it1 -> dialog.show(it1, "LabelDialogFragment") }
+        dialog.setOnLabelActionListener(object : LabelDialog.LabelActionListener {
+            override fun onActionAddLabelToNote(label: Label) {
+                viewModel.addNoteToLabel(label.labelId, viewModel.noteToUpdate.noteId)
+            }
+
+            override fun onActionRemoveLabelFromNote(label: Label) {
+                viewModel.removeNoteFromLabel(label.labelId, viewModel.noteToUpdate.noteId)
+            }
+
+        })
+
     }
 
     private fun performSave(note: Note) {
@@ -300,5 +299,6 @@ class NoteFragment : DaggerFragment() {
         }
         viewModel.resetFields()
     }
+
 
 }

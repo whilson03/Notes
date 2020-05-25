@@ -17,6 +17,7 @@
         android:background="@color/note_background_colour">
 
         <ImageView
+            android:background="?attr/selectableItemBackground"
             android:id="@+id/delete_label"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -52,6 +53,7 @@
 
 
         <ImageView
+            android:background="?attr/selectableItemBackground"
             android:id="@+id/edit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

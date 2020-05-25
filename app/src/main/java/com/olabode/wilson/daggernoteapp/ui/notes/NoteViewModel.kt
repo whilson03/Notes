@@ -92,4 +92,6 @@ class NoteViewModel @Inject constructor(
             repository.deleteNote(note)
         }
     }
+
+
 }

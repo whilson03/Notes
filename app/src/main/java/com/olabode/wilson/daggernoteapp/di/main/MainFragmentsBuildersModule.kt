@@ -1,5 +1,6 @@
 package com.olabode.wilson.daggernoteapp.di.main
 
+import com.olabode.wilson.daggernoteapp.ui.dialogs.LabelDialog
 import com.olabode.wilson.daggernoteapp.ui.favourite.FavouritesFragment
 import com.olabode.wilson.daggernoteapp.ui.home.HomeFragment
 import com.olabode.wilson.daggernoteapp.ui.labels.LabelFragment
@@ -43,5 +44,8 @@ abstract class MainFragmentsBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSettingsFragment(): Settings
+
+    @ContributesAndroidInjector
+    abstract fun contributeLabelDialogFragment(): LabelDialog
 
 }

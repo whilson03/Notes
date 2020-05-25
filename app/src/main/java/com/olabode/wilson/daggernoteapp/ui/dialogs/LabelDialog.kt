@@ -2,19 +2,24 @@ package com.olabode.wilson.daggernoteapp.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.SparseBooleanArray
-import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olabode.wilson.daggernoteapp.adapters.LabelSelectionAdapter
 import com.olabode.wilson.daggernoteapp.databinding.LabelDialogBinding
 import com.olabode.wilson.daggernoteapp.models.Label
+import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
+import dagger.android.support.DaggerAppCompatDialogFragment
+import javax.inject.Inject
 
 
 /**
  *   Created by OLABODE WILSON on 2020-04-02.
  */
 class LabelDialog :
-    AppCompatDialogFragment() {
+    DaggerAppCompatDialogFragment() {
 
     private lateinit var binding: LabelDialogBinding
 
@@ -22,7 +27,14 @@ class LabelDialog :
 
     private lateinit var checkItemsIdList: ArrayList<Label>
 
-    private lateinit var labels: ArrayList<Label>
+    private lateinit var adapter: LabelSelectionAdapter
+
+    @Inject
+    lateinit var factory: ViewModelProviderFactory
+
+    private lateinit var viewModel: LabelDialogViewModel
+
+    private lateinit var labels: MutableList<Label>
     private val checkedIds = SparseBooleanArray()
 
     fun setOnLabelActionListener(listener: LabelActionListener) {
@@ -68,11 +80,21 @@ class LabelDialog :
             checkItemsIdList.forEach { l -> checkedIds.put(l.labelId.toInt(), true) }
 
         }
+        viewModel = ViewModelProvider(this, factory).get(LabelDialogViewModel::class.java)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(CHECKED_ID_KEY, checkItemsIdList as ArrayList<out Label>)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.allLabels.observe(this, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
     }
 
 
@@ -85,7 +107,7 @@ class LabelDialog :
             binding = LabelDialogBinding.inflate(inflater)
 
 
-            val adapter = LabelSelectionAdapter(context!!, checkedIds)
+            adapter = LabelSelectionAdapter(context!!, checkedIds)
             binding.labelRecycler.adapter = adapter
 
             adapter.submitList(labels)
@@ -99,6 +121,14 @@ class LabelDialog :
                     listener.onActionRemoveLabelFromNote(label)
                 }
             })
+
+            binding.save.setOnClickListener {
+                val title = binding.addLabelEditText.text.toString().trim()
+                if (!TextUtils.isEmpty(title)) {
+                    viewModel.saveLabel(title)
+                    binding.addLabelEditText.setText("")
+                }
+            }
 
             builder.setView(binding.root)
                 .setCancelable(false)
