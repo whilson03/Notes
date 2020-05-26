@@ -34,11 +34,9 @@ class BaseApp : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        if (isDarkMode()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
+        setApplicationMode()
+        configureWorkManager()
+        delayedInit()
     }
 
 
