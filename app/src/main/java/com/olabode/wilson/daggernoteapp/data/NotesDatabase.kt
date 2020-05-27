@@ -17,7 +17,7 @@ import com.olabode.wilson.daggernoteapp.models.NotesAndLabelCrossRef
         Note::class,
         Label::class,
         NotesAndLabelCrossRef::class
-    ], version = 1, exportSchema = false
+    ], version = 2, exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class NotesDatabase : RoomDatabase() {

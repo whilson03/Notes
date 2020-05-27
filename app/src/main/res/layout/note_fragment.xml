@@ -3,69 +3,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_view"
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:background="@color/note_book_bg"
         android:layout_width="match_parent"
-        android:fillViewport="true"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chips_recycler_view"
             android:layout_width="match_parent"
-            android:background="@color/note_book_bg"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_label_chip" />
 
 
-            <EditText
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:layout_below="@id/chips_recycler_view">
 
-                android:id="@+id/title"
-                android:layout_marginTop="1dp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:background="@null"
-                android:hint="@string/title"
-                android:inputType="text"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:transitionName="titleView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chips_recycler_view" />
+                android:orientation="vertical">
 
 
-            <EditText
-                android:id="@+id/body"
-                android:overScrollMode="always"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:minHeight="100dp"
-                android:background="@null"
-                android:gravity="top"
-                android:hint="@string/note"
-                android:inputType="textMultiLine"
-                android:padding="8dp"
-                android:transitionName="bodyView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title"
-                app:layout_constraintVertical_bias="0.0" />
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:background="@null"
+                    android:hint="@string/title"
+                    android:inputType="text"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:transitionName="titleView" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/chips_recycler_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="2"
-                tools:listitem="@layout/item_label_chip" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-
+                <EditText
+                    android:id="@+id/body"
+                    android:overScrollMode="always"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="@string/note"
+                    android:inputType="textMultiLine"
+                    android:padding="8dp"
+                    android:transitionName="bodyView" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 </layout>
