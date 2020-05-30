@@ -7,7 +7,9 @@ import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.biometric.BiometricManager
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -41,6 +43,56 @@ class Settings : PreferenceFragmentCompat() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val biometricManager = BiometricManager.from(context!!)
+
+        val fingerprint =
+            findPreference<SwitchPreferenceCompat>(getString(R.string.key_fingerprint))
+
+        when (biometricManager.canAuthenticate()) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                fingerprint?.let {
+                    it.setOnPreferenceChangeListener { _, _ ->
+                        if (!it.isChecked) {
+                            setFingerPrint(true)
+                        } else {
+                            setFingerPrint(false)
+                        }
+                        true
+                    }
+                }
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                fingerprint?.let { it.isEnabled = false }
+            }
+        }
+
+
+        fingerprint?.let { switch ->
+            switch.setOnPreferenceClickListener {
+                when (biometricManager.canAuthenticate()) {
+                    BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                        Toast.makeText(
+                            context, getString(R.string.text_enable_fingerprint_prompt),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        switch.isChecked = false
+                    }
+                    BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
+                    BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                        Toast.makeText(
+                            context, getString(
+                                R.string
+                                    .fingerprint_compatibility_prompt
+                            ), Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                true
+            }
+        }
+
 
         val ratePreference = findPreference<Preference>(getString(R.string.key_rate))
         ratePreference?.let {
@@ -58,6 +110,7 @@ class Settings : PreferenceFragmentCompat() {
 //                true
 //            }
 //        }
+
 
         val feedback = findPreference<Preference>(getString(R.string.key_send_feedback))
         feedback?.let {
@@ -179,6 +232,13 @@ class Settings : PreferenceFragmentCompat() {
         val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = preferences.edit()
         editor.putBoolean(getString(R.string.SHARED_PREF_DARK_MODE_KEY), isDark)
+        editor.apply()
+    }
+
+    private fun setFingerPrint(isFingerPrintEnable: Boolean) {
+        val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = preferences.edit()
+        editor.putBoolean(getString(R.string.SHARED_PREF_FINGERPRINT), isFingerPrintEnable)
         editor.apply()
     }
 

@@ -110,7 +110,10 @@
     <string name="updating_text">Updating</string>
     <string name="toast_no_labels">There Are No Labels, Add New Label</string>
     <string name="privacy">Privacy</string>
-    <string name="key_fingerprint">fingerprint</string>
+    <string name="key_fingerprint" translatable="false">fingerprint</string>
     <string name="title_fingerprint">Fingerprint</string>
     <string name="fingerprint_summary">Authenticate with Fingerprint</string>
+    <string name="text_enable_fingerprint_prompt">Enabled Fingerprint in Settings</string>
+    <string name="fingerprint_compatibility_prompt">Device Not Compatible</string>
+    <string name="SHARED_PREF_FINGERPRINT" translatable="false">FingerAuthentication</string>
 </resources>
