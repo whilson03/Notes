@@ -5,7 +5,6 @@
     <PreferenceCategory android:title="@string/theme_text">
 
         <SwitchPreferenceCompat
-
             android:key="@string/key_mode_dark"
             android:title="@string/theme_dark" />
 
@@ -21,29 +20,29 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/privacy">
+        <SwitchPreferenceCompat
+            android:icon="@drawable/ic_fingerprint"
+            android:key="@string/key_fingerprint"
+            android:title="@string/title_fingerprint"
+            android:summary="@string/fingerprint_summary" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/other_category">
         <SwitchPreferenceCompat
             android:key="@string/key_auto_empty_trash"
             android:title="@string/trash_setting_title"
-            android:summary="@string/trash_summary"
-
-            />
-
-
+            android:summary="@string/trash_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/about_text">
-
         <Preference
             android:key="@string/key_rate"
             android:icon="@drawable/ic_star_filled"
             android:title="@string/rate_text" />
-
         <Preference
             android:key="@string/key_send_feedback"
             android:icon="@drawable/ic_feedback"
             android:title="@string/feedback" />
-
     </PreferenceCategory>
-
 </PreferenceScreen>

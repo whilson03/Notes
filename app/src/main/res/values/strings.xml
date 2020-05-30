@@ -109,4 +109,8 @@
     <string name="oops_no_labels_here">OOPS... No Labels Here</string>
     <string name="updating_text">Updating</string>
     <string name="toast_no_labels">There Are No Labels, Add New Label</string>
+    <string name="privacy">Privacy</string>
+    <string name="key_fingerprint">fingerprint</string>
+    <string name="title_fingerprint">Fingerprint</string>
+    <string name="fingerprint_summary">Authenticate with Fingerprint</string>
 </resources>
