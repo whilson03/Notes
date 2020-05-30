@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -20,6 +22,7 @@ import androidx.work.WorkManager
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.work.ClearTrashWorker
 import dagger.android.support.AndroidSupportInjection
+import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
 
@@ -27,6 +30,10 @@ import java.util.concurrent.TimeUnit
  * A simple [Fragment] subclass.
  */
 class Settings : PreferenceFragmentCompat() {
+
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -43,23 +50,64 @@ class Settings : PreferenceFragmentCompat() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val biometricManager = BiometricManager.from(context!!)
 
+        val biometricManager = BiometricManager.from(context!!)
         val fingerprint =
             findPreference<SwitchPreferenceCompat>(getString(R.string.key_fingerprint))
+
+        executor = ContextCompat.getMainExecutor(context)
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
+                    super.onAuthenticationError(errorCode, errString)
+                    fingerprint?.isChecked = false
+                }
+
+                override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
+                    super.onAuthenticationSucceeded(result)
+                    setFingerPrint(true)
+                    Toast.makeText(
+                        context,
+                        getString(R.string.auth_success), Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    setFingerPrint(false)
+                    fingerprint?.isChecked = false
+                    Toast.makeText(
+                        context, getString(R.string.auth_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+
 
         when (biometricManager.canAuthenticate()) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 fingerprint?.let {
                     it.setOnPreferenceChangeListener { _, _ ->
                         if (!it.isChecked) {
-                            setFingerPrint(true)
-                        } else {
-                            setFingerPrint(false)
+                            promptInfo = BiometricPrompt.PromptInfo.Builder()
+                                .setTitle(getString(R.string.auth_noteskeep))
+                                .setSubtitle(getString(R.string.biometric_prompt_subtitle))
+                                .setNegativeButtonText(getString(R.string.cancel))
+                                .build()
+                            biometricPrompt.authenticate(promptInfo)
                         }
                         true
                     }
                 }
+            }
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                fingerprint?.let { it.isChecked = false }
             }
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
@@ -80,6 +128,7 @@ class Settings : PreferenceFragmentCompat() {
                     }
                     BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
                     BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                        switch.isChecked = false
                         Toast.makeText(
                             context, getString(
                                 R.string
@@ -101,15 +150,6 @@ class Settings : PreferenceFragmentCompat() {
                 true
             }
         }
-
-
-//        val report = findPreference<Preference>(getString(R.string.key_bug_report))
-//        report?.let {
-//            it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-//                GoogleFeedbackUtils.bindFeedback(context!!)
-//                true
-//            }
-//        }
 
 
         val feedback = findPreference<Preference>(getString(R.string.key_send_feedback))
@@ -235,20 +275,20 @@ class Settings : PreferenceFragmentCompat() {
         editor.apply()
     }
 
-    private fun setFingerPrint(isFingerPrintEnable: Boolean) {
-        val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = preferences.edit()
-        editor.putBoolean(getString(R.string.SHARED_PREF_FINGERPRINT), isFingerPrintEnable)
-        editor.apply()
-    }
-
-
     private fun setupRecurringWork() {
         val repeatingRequest =
             PeriodicWorkRequestBuilder<ClearTrashWorker>(30, TimeUnit.DAYS)
                 .addTag(ClearTrashWorker.WORK_NAME)
                 .build()
         WorkManager.getInstance(activity!!).enqueue(repeatingRequest)
+    }
+
+
+    private fun setFingerPrint(isFingerPrintEnable: Boolean) {
+        val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = preferences.edit()
+        editor.putBoolean(getString(R.string.SHARED_PREF_FINGERPRINT), isFingerPrintEnable)
+        editor.apply()
     }
 
 }

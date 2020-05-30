@@ -116,4 +116,35 @@
     <string name="text_enable_fingerprint_prompt">Enabled Fingerprint in Settings</string>
     <string name="fingerprint_compatibility_prompt">Device Not Compatible</string>
     <string name="SHARED_PREF_FINGERPRINT" translatable="false">FingerAuthentication</string>
+    <string name="title_prompt">Access NotesKeep</string>
+    <string name="biometric_prompt_subtitle">Access using your biometric credential</string>
+    <string name="cancel">Cancel</string>
+    <string name="auth_noteskeep">Authenticate NotesKeep</string>
+    <string name="auth_success">Authentication succeeded!</string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="login">Login</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="basic_protection">Basic Protection</string>
+    <string name="key_password_protection">password_protection</string>
+    <string name="password_hint">Password Hint</string>
+    <string name="hint_key">password_hint_key</string>
+    <string name="enabled">enabled</string>
+    <string name="disabled">disabled</string>
+    <string name="noteskeep">NotesKeep !</string>
+    <string name="password">Password</string>
+    <string name="enter">Enter</string>
+    <string name="blank_field_prompt">Field Cannot Be Blank</string>
 </resources>

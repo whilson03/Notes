@@ -22,10 +22,24 @@
 
     <PreferenceCategory android:title="@string/privacy">
         <SwitchPreferenceCompat
+            app:key="@string/key_password_protection"
+            app:summaryOff="@string/disabled"
+            app:summaryOn="@string/enabled"
+            app:title="Password Protection" />
+
+        <SwitchPreferenceCompat
+            app:dependency="@string/key_password_protection"
+            app:key="@string/hint_key"
+            app:summaryOff="@string/disabled"
+            app:title="@string/password_hint" />
+
+        <SwitchPreferenceCompat
+            app:dependency="@string/key_password_protection"
             android:icon="@drawable/ic_fingerprint"
             android:key="@string/key_fingerprint"
             android:title="@string/title_fingerprint"
             android:summary="@string/fingerprint_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/other_category">
