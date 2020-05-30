@@ -92,4 +92,7 @@ dependencies {
     //work manager
     implementation "androidx.work:work-runtime-ktx:$version_work"
 
+    // biometric
+    implementation 'androidx.biometric:biometric:1.0.1'
+
 }
