@@ -14,20 +14,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
+            tools:visibility="visible"
             android:layout_gravity="center">
 
             <ImageView
                 android:src="@drawable/empty_state_labels"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="120dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
 
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textStyle="italic|bold"
+                android:textStyle="bold|italic"
+                android:layout_marginTop="8dp"
                 android:text="@string/oops_no_labels_here" />
         </LinearLayout>
 

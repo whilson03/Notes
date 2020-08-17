@@ -15,4 +15,6 @@
     <color name="colorOnSurface">#000000</color>
     <color name="colorOnError">#FFFFFF</color>
 
+    <color name="popUpTextColor">#000000</color>
+    <color name="popUpBg">#FFFFFF</color>
 </resources>

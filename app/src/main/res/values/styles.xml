@@ -15,6 +15,17 @@
         <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="colorOnError">@color/colorOnError</item>
         <item name="android:statusBarColor">@color/statusBarColor</item>
+        <item name="android:textColorSecondary">#FFFFFF</item>
+    </style>
+
+
+    <style name="NotesCard">
+        <item name="cardElevation">8dp</item>
+        <item name="android:layout_marginStart">2dp</item>
+        <item name="android:layout_marginEnd">2dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="cornerRadius">8dp</item>
     </style>
 
 
@@ -30,6 +41,9 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:textColor">@color/popUpTextColor</item>
+        <item name="background">@color/popUpBg</item>
+    </style>
 
 </resources>

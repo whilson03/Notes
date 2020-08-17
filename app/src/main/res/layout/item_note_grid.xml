@@ -19,10 +19,7 @@
         android:id="@+id/note_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:foreground="?selectableItemBackground"
-        android:layout_margin="2dp"
-        app:cardCornerRadius="12dp">
+        style="@style/NotesCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
 

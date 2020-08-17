@@ -59,7 +59,7 @@
     <string name="theme_text"><![CDATA[Theme & UI]]></string>
     <string name="key_font_size">FONT_SIZE</string>
     <string name="add_new_note">Add New Note</string>
-    <string name="add_new_favourite">Favourite Notes</string>
+    <string name="add_new_favourite">Favourites</string>
     <string name="nothing_in_trash">Nothing In Trash</string>
     <string name="note_icon">note icon</string>
     <string name="theme_dark">Dark Mode</string>
@@ -106,7 +106,7 @@
     <string name="KEY_DRAWER_POS" translatable="false">drawerPos</string>
     <string name="empty_label_dialog_text">There Are No Labels Yet.\n Add New Label ?</string>
     <string name="no_notes_here">No Notes Here</string>
-    <string name="oops_no_labels_here">OOPS... No Labels Here</string>
+    <string name="oops_no_labels_here">No Labels</string>
     <string name="updating_text">Updating</string>
     <string name="toast_no_labels">There Are No Labels, Add New Label</string>
     <string name="privacy">Privacy</string>
