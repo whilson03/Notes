@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="label"
             type="com.olabode.wilson.daggernoteapp.models.Label" />
@@ -13,12 +14,11 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_margin="1dp"
-        android:background="@color/note_background_colour">
+        android:layout_margin="1dp">
 
         <ImageView
-            android:background="?attr/selectableItemBackground"
             android:id="@+id/delete_label"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="12dp"
@@ -53,8 +53,8 @@
 
 
         <ImageView
-            android:background="?attr/selectableItemBackground"
             android:id="@+id/edit"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="12dp"

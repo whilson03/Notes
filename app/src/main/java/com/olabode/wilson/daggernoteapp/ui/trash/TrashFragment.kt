@@ -129,7 +129,7 @@ class TrashFragment : DaggerFragment() {
 
 
     private fun confirmDeleteDialog() {
-        MaterialAlertDialogBuilder(context)
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.trash_dialog_title))
             .setMessage(getString(R.string.trash_dialog_message))
             .setPositiveButton(getString(R.string.confirm_yes)) { _, _ ->

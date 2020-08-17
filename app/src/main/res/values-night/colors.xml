@@ -1,30 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryDark">#c79100</color>
-    <color name="primaryLightColor">#fff350</color>
+    <color name="colorPrimary">#ffc107</color>
+    <color name="colorPrimaryVariant">#c79100</color>
+    <color name="colorSecondary">#ff9800</color>
+    <color name="colorSecondaryVariant">#c66900</color>
+    <color name="statusBarColor">#000000</color>
 
-    <color name="secondaryColor">#ffca39</color>
-    <color name="secondaryLightColor">#fffd6d</color>
-    <color name="secondaryDarkColor">#c89a00</color>
-
-    <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#ffffff</color>
-    <color name="dividerColor">#BDBDBD</color>
-
-    <color name="note_book_bg">#252424</color>
-
-    <color name="note_background_colour">#474747</color>
-    <color name="mediumYellow">#ffdf80</color>
-    <color name="darkYellow">#ffd24d</color>
-    <color name="lightGrey">#d9d9d9</color>
-    <color name="darkGrey">#a2a2a2</color>
-    <color name="black">#000</color>
-    <color name="white">#ffffff</color>
-    <color name="menu_color">@android:color/white</color>
-
-    <color name="icon_color">@color/colorPrimary</color>
-    <color name="note_text_line">#474747</color>
-    <color name="ripple_color">@color/primaryLightColor</color>
-    <color name="icon">@android:color/white</color>
+    <color name="background">#121212</color>
+    <color name="colorSurface">#121212</color>
+    <color name="colorError">#CF6679</color>
+    <color name="colorOnPrimary">#000000</color>
+    <color name="colorOnSecondary">#000000</color>
+    <color name="colorOnBackground">#FFFFFF</color>
+    <color name="colorOnSurface">#FFFFFF</color>
+    <color name="colorOnError">#000000</color>
 </resources>

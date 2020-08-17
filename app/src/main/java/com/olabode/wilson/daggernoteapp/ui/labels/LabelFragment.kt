@@ -94,7 +94,7 @@ class LabelFragment : DaggerFragment() {
     }
 
     private fun confirmDeleteDialog(label: Label) {
-        MaterialAlertDialogBuilder(context)
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.delete_label))
             .setMessage(getString(R.string.delete_label_message))
             .setPositiveButton(getString(R.string.yes)) { _, _ ->
