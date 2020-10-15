@@ -29,7 +29,8 @@ class LabelSelectionAdapter(val context: Context, val itemStateArray: SparseBool
     }
 
     override fun onCreateViewHolder(
-        parent: ViewGroup, viewType: Int
+        parent: ViewGroup,
+        viewType: Int
     ): LabelSelectionAdapterViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemSelectNoteLabelBinding
@@ -66,8 +67,4 @@ class LabelSelectionAdapter(val context: Context, val itemStateArray: SparseBool
             binding.executePendingBindings()
         }
     }
-
 }
-
-
-

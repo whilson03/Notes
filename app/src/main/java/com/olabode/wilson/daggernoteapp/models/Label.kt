@@ -8,7 +8,6 @@ import kotlinx.android.parcel.Parcelize
  *   Created by OLABODE WILSON on 2020-03-29.
  */
 
-
 @Parcelize
 @Entity
 data class Label(
@@ -20,13 +19,11 @@ data class Label(
 
 ) : Parcelable
 
-
 @Entity(primaryKeys = ["labelId", "noteId"])
 data class NotesAndLabelCrossRef(
     val labelId: Long,
     val noteId: Long
 )
-
 
 data class NotesWithLabel(
     @Embedded val note: Note,
@@ -37,7 +34,6 @@ data class NotesWithLabel(
     )
     val labels: List<Label>
 )
-
 
 data class LabelsWithNote(
     @Embedded val label: Label,

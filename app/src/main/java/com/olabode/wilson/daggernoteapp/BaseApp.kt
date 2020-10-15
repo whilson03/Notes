@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 /**
  *   Created by OLABODE WILSON on 2020-03-03.
  */
@@ -25,9 +24,7 @@ class BaseApp : DaggerApplication() {
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
-    private fun delayedInit() = applicationScope.launch {
-
-    }
+    private fun delayedInit() = applicationScope.launch {}
 
     @Inject
     lateinit var workerFactory: AppWorkerFactory
@@ -39,13 +36,12 @@ class BaseApp : DaggerApplication() {
         delayedInit()
     }
 
-
     private fun setApplicationMode() {
-            if (isDarkMode()) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
+        if (isDarkMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     private fun isDarkMode(): Boolean {
@@ -59,5 +55,4 @@ class BaseApp : DaggerApplication() {
             .build()
         WorkManager.initialize(this, config)
     }
-
 }

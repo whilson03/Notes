@@ -37,7 +37,6 @@ class TrashViewModel @Inject constructor(private val repository: NotesRepository
         }
     }
 
-
     private fun sortNotes(sort: Util.SORT): LiveData<Result<List<Note>>> {
         return when (sort) {
             Util.SORT.DATE_ADDED_TO_TRASH_RECENT -> {
@@ -49,7 +48,6 @@ class TrashViewModel @Inject constructor(private val repository: NotesRepository
         }
     }
 
-
     fun filter(filter: Util.SORT) {
         _sortOrder.value = filter
     }
@@ -59,7 +57,6 @@ class TrashViewModel @Inject constructor(private val repository: NotesRepository
             repository.deleteAllFromTrash()
         }
     }
-
 
     fun deleteNote(note: Note) {
         uiScope.launch {
@@ -73,5 +70,4 @@ class TrashViewModel @Inject constructor(private val repository: NotesRepository
             repository.removeFromTrash(note)
         }
     }
-
 }

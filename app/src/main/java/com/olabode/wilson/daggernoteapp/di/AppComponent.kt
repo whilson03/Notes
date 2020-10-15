@@ -18,15 +18,15 @@ import javax.inject.Singleton
 @Component(
 
     modules =
-    [
-        AndroidSupportInjectionModule::class,
-        PersistenceModule::class,
-        ActivityBuildersModule::class,
-        ViewModelFactoryModule::class,
-        RepositoryModule::class,
-        WorkerModule::class
+        [
+            AndroidSupportInjectionModule::class,
+            PersistenceModule::class,
+            ActivityBuildersModule::class,
+            ViewModelFactoryModule::class,
+            RepositoryModule::class,
+            WorkerModule::class
 
-    ]
+        ]
 )
 interface AppComponent : AndroidInjector<BaseApp> {
 
@@ -36,6 +36,5 @@ interface AppComponent : AndroidInjector<BaseApp> {
         fun application(application: Application): Builder
 
         fun build(): AppComponent
-
     }
 }

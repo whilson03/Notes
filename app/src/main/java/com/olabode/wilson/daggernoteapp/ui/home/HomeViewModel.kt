@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-
 class HomeViewModel @Inject constructor(private val repository: NotesRepository) : ViewModel() {
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
@@ -35,13 +34,11 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
         _sortOrder.value = SORT.DATE_CREATED
     }
 
-
     fun getNotes(): LiveData<Result<List<Note>>> {
         return Transformations.switchMap(sortOrder) {
             sortNotes(it)
         }
     }
-
 
     private fun sortNotes(sort: SORT): LiveData<Result<List<Note>>> {
         return when (sort) {
@@ -67,7 +64,6 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
         }
     }
 
-
     fun moveToTrash(note: Note) {
         uiScope.launch {
             note.trashedDate = Date()
@@ -90,5 +86,4 @@ class HomeViewModel @Inject constructor(private val repository: NotesRepository)
     fun filter(filter: SORT) {
         _sortOrder.value = filter
     }
-
 }

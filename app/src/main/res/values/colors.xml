@@ -14,7 +14,7 @@
     <color name="colorOnBackground">#000000</color>
     <color name="colorOnSurface">#000000</color>
     <color name="colorOnError">#FFFFFF</color>
-
     <color name="popUpTextColor">#000000</color>
     <color name="popUpBg">#FFFFFF</color>
+    <color name="notes_bg_light">#ffffb3</color>
 </resources>

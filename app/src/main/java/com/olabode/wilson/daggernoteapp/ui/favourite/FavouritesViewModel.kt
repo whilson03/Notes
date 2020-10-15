@@ -20,7 +20,6 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
-
     private val favNotesOrderByName = repository.getFavNotesByName()
 
     private val favNoteByLastModified = repository.getFavNotesByLastModified()
@@ -36,13 +35,11 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
         _sortOrder.value = Util.SORT.DATE_CREATED
     }
 
-
     fun getAllFavouriteNotes(): LiveData<Result<List<Note>>> {
         return Transformations.switchMap(sortOrder) {
             sortNotes(it)
         }
     }
-
 
     private fun sortNotes(sort: Util.SORT): LiveData<Result<List<Note>>> {
         return when (sort) {
@@ -60,7 +57,6 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
             }
         }
     }
-
 
     fun filter(filter: Util.SORT) {
         _sortOrder.value = filter
@@ -95,5 +91,4 @@ class FavouritesViewModel @Inject constructor(private val repository: NotesRepos
         super.onCleared()
         job.cancel()
     }
-
 }

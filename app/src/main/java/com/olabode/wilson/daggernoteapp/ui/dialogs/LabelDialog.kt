@@ -14,7 +14,6 @@ import com.olabode.wilson.daggernoteapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatDialogFragment
 import javax.inject.Inject
 
-
 /**
  *   Created by OLABODE WILSON on 2020-04-02.
  */
@@ -51,7 +50,8 @@ class LabelDialog :
         private const val CHECKED_ID_KEY = "checkid"
         private const val LABELS_KEY = "labels"
         fun newInstance(
-            checkItemsId: ArrayList<Label>? = null, labels: ArrayList<Label>
+            checkItemsId: ArrayList<Label>? = null,
+            labels: ArrayList<Label>
         ): LabelDialog {
             val args = Bundle()
             args.putParcelableArrayList(CHECKED_ID_KEY, checkItemsId)
@@ -65,20 +65,19 @@ class LabelDialog :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) { //not restart
+        if (savedInstanceState == null) { // not restart
             val args = arguments ?: throw IllegalArgumentException("Bundle args required")
             checkItemsIdList =
                 args.getParcelableArrayList<Label>(CHECKED_ID_KEY) as ArrayList<Label>
             labels = args.getParcelableArrayList<Label>(LABELS_KEY) as ArrayList<Label>
 
             checkItemsIdList.forEach { l -> checkedIds.put(l.labelId.toInt(), true) }
-        } else { //restart
+        } else { // restart
             checkItemsIdList =
                 savedInstanceState.getParcelableArrayList<Label>(CHECKED_ID_KEY) as ArrayList<Label>
             val args = arguments ?: throw IllegalArgumentException("Bundle args required")
             labels = args.getParcelableArrayList<Label>(LABELS_KEY) as ArrayList<Label>
             checkItemsIdList.forEach { l -> checkedIds.put(l.labelId.toInt(), true) }
-
         }
         viewModel = ViewModelProvider(this, factory).get(LabelDialogViewModel::class.java)
     }
@@ -90,13 +89,15 @@ class LabelDialog :
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.allLabels.observe(this, Observer {
-            it?.let {
-                adapter.submitList(it)
+        viewModel.allLabels.observe(
+            this,
+            Observer {
+                it?.let {
+                    adapter.submitList(it)
+                }
             }
-        })
+        )
     }
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -106,21 +107,22 @@ class LabelDialog :
             val inflater = requireActivity().layoutInflater
             binding = LabelDialogBinding.inflate(inflater)
 
-
-            adapter = LabelSelectionAdapter(context!!, checkedIds)
+            adapter = LabelSelectionAdapter(requireContext(), checkedIds)
             binding.labelRecycler.adapter = adapter
 
             adapter.submitList(labels)
 
-            adapter.setOnItemClickListener(object : LabelSelectionAdapter.OnItemClickListener {
-                override fun onCheckLabel(label: Label) {
-                    listener.onActionAddLabelToNote(label)
-                }
+            adapter.setOnItemClickListener(
+                object : LabelSelectionAdapter.OnItemClickListener {
+                    override fun onCheckLabel(label: Label) {
+                        listener.onActionAddLabelToNote(label)
+                    }
 
-                override fun onUnCheckLabel(label: Label) {
-                    listener.onActionRemoveLabelFromNote(label)
+                    override fun onUnCheckLabel(label: Label) {
+                        listener.onActionRemoveLabelFromNote(label)
+                    }
                 }
-            })
+            )
 
             binding.save.setOnClickListener {
                 val title = binding.addLabelEditText.text.toString().trim()
@@ -133,11 +135,6 @@ class LabelDialog :
             builder.setView(binding.root)
                 .setCancelable(false)
                 .create()
-
-
         } ?: throw IllegalStateException("Activity cannot be null")
     }
-
-
 }
-

@@ -19,5 +19,4 @@ abstract class ActivityBuildersModule {
         ]
     )
     abstract fun contributeMainActivity(): MainActivity
-
 }

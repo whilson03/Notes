@@ -1,6 +1,5 @@
 package com.olabode.wilson.daggernoteapp.adapters
 
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import com.olabode.wilson.daggernoteapp.databinding.ItemNoteBinding
 import com.olabode.wilson.daggernoteapp.databinding.ItemNoteGridBinding
 import com.olabode.wilson.daggernoteapp.models.Note
 import com.olabode.wilson.daggernoteapp.utils.Util
-
 
 /**
  *   Created by OLABODE WILSON on 2020-03-03.
@@ -53,15 +51,17 @@ class NoteListAdapter(
         return when (viewType) {
             ViewType.GRID.ordinal -> {
                 val binding = ItemNoteGridBinding.inflate(
-                    layoutInflater
-                    , parent, false
+                    layoutInflater,
+                    parent,
+                    false
                 )
                 NoteGridViewHolder(binding)
             }
             else -> {
                 val binding = ItemNoteBinding.inflate(
-                    layoutInflater
-                    , parent, false
+                    layoutInflater,
+                    parent,
+                    false
                 )
                 NoteViewHolder(binding)
             }
@@ -89,7 +89,6 @@ class NoteListAdapter(
         }
     }
 
-
     fun getNoteAt(position: Int): Note {
         return getItem(position)
     }
@@ -109,10 +108,8 @@ class NoteListAdapter(
         fun onItemLongClick(note: Note, view: View)
     }
 
-
     inner class NoteViewHolder constructor(val binding: ItemNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
 
         fun bind(item: Note) {
             binding.note = item
@@ -135,8 +132,6 @@ class NoteListAdapter(
 
             binding.favButton.isChecked = item.isFavourite
 
-
-
             binding.favButton.setOnClickListener {
                 if (getNoteAt(adapterPosition).isFavourite) {
                     Toast.makeText(
@@ -150,7 +145,6 @@ class NoteListAdapter(
                         context.getString(R.string.added_fav),
                         Toast.LENGTH_SHORT
                     ).show()
-                    
                 }
             }
 
@@ -182,8 +176,7 @@ class NoteListAdapter(
         }
     }
 
-
-    //grid
+    // grid
 
     inner class NoteGridViewHolder constructor(val binding: ItemNoteGridBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -209,7 +202,6 @@ class NoteListAdapter(
 
             binding.favButton.isChecked = item.isFavourite
 
-
             binding.favButton.setOnClickListener {
                 if (getNoteAt(adapterPosition).isFavourite) {
                     Toast.makeText(
@@ -223,7 +215,6 @@ class NoteListAdapter(
                         context.getString(R.string.added_fav),
                         Toast.LENGTH_SHORT
                     ).show()
-
                 }
             }
 
@@ -241,7 +232,6 @@ class NoteListAdapter(
                 }
             }
 
-
             binding.root.setOnLongClickListener {
                 val position = adapterPosition
                 if (longListener != null && position != RecyclerView.NO_POSITION) {
@@ -252,10 +242,5 @@ class NoteListAdapter(
             }
             binding.executePendingBindings()
         }
-
-
     }
-
-
 }
-

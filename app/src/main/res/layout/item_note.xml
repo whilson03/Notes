@@ -17,6 +17,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/note_item"
+        app:cardBackgroundColor="@color/notes_bg_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/NotesCard">
@@ -36,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{note.title}"
                 android:ellipsize="end"
+                android:textColor="#000000"
                 android:maxLines="1"
                 android:padding="4dp"
                 android:textSize="20sp"
@@ -46,8 +48,9 @@
                 tools:text="@string/title" />
 
             <TextView
+
+                android:textColor="#000000"
                 android:id="@+id/text_view_description"
-                style="@style/TextAppearance.MaterialComponents.Caption"
                 android:ellipsize="end"
                 android:transitionName="bodyView"
                 android:layout_width="0dp"
@@ -66,6 +69,7 @@
                 tools:text="description" />
 
             <TextView
+                android:textColor="#000000"
                 android:id="@+id/note_date"
                 android:layout_width="0dp"
                 android:layout_marginBottom="3dp"

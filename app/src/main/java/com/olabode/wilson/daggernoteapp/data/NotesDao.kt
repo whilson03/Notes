@@ -8,7 +8,6 @@ import com.olabode.wilson.daggernoteapp.models.Note
  *   Created by OLABODE WILSON on 2020-03-03.
  */
 
-
 @Dao
 interface NotesDao {
 
@@ -30,17 +29,14 @@ interface NotesDao {
     @Query("SELECT * FROM notes_table WHERE favourite == 1 AND trash == 0 ORDER BY created_date  DESC")
     fun getFavNotesByDateCreated(): LiveData<List<Note>>
 
-
     @Query("SELECT * FROM notes_table WHERE trash == 1")
     fun getTrashedNotes(): LiveData<List<Note>>
-
 
     @Query("SELECT * FROM notes_table WHERE trash == 1 ORDER BY date_trashed ASC")
     fun getTrashedNotesByDateAddedRecent(): LiveData<List<Note>>
 
     @Query("SELECT * FROM notes_table WHERE trash == 1 ORDER BY date_trashed DESC")
     fun getTrashedNotesByDateAddedOlder(): LiveData<List<Note>>
-
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: Note): Long
@@ -65,5 +61,4 @@ interface NotesDao {
 
     @Query("SELECT COUNT(noteId) FROM notes_table WHERE trash =  1 ")
     fun countTrashNotes(): LiveData<Int>
-
 }

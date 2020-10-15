@@ -68,9 +68,7 @@ class EditAddLabel(val label: Label?) : AppCompatDialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-
     private fun isValidLabel(): Boolean {
         return binding.labelEditText.text.toString().trim().isNotEmpty()
     }
-
 }

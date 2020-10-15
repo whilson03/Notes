@@ -21,7 +21,6 @@ fun goneIfNotNull(view: View, it: Any?) {
     view.visibility = if (it != null) View.GONE else View.VISIBLE
 }
 
-
 @BindingAdapter("favourite")
 fun ImageView.bindIcon(note: Note) {
     if (note.noteId.toInt() == 1) {
@@ -31,10 +30,8 @@ fun ImageView.bindIcon(note: Note) {
     }
 }
 
-
 fun Context.showToast(message: String) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
 
 fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value

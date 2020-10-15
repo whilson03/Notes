@@ -45,7 +45,6 @@ class LabelNoteViewModel @Inject constructor(
         }
     }
 
-
     fun undoMoveToTrash(note: Note) {
         uiScope.launch {
             note.trashedDate = null
@@ -53,11 +52,8 @@ class LabelNoteViewModel @Inject constructor(
         }
     }
 
-
     override fun onCleared() {
         super.onCleared()
         job.cancel()
     }
-
-
 }

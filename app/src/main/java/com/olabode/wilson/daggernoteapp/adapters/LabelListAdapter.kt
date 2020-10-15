@@ -13,7 +13,6 @@ import com.olabode.wilson.daggernoteapp.models.Label
  *   Created by OLABODE WILSON on 2020-03-31.
  */
 
-
 class LabelListAdapter(val context: Context) :
     ListAdapter<Label, LabelListAdapter.LabelViewHolder>(LabelDiffCallBack()) {
 
@@ -36,12 +35,12 @@ class LabelListAdapter(val context: Context) :
         fun onDeleteClicked(label: Label)
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LabelViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemLabelBinding.inflate(
-            layoutInflater
-            , parent, false
+            layoutInflater,
+            parent,
+            false
         )
         return LabelViewHolder(binding)
     }
@@ -50,8 +49,6 @@ class LabelListAdapter(val context: Context) :
         val item = getItem(position)
         holder.bind(item)
     }
-
-
 
     inner class LabelViewHolder constructor(val binding: ItemLabelBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -72,8 +69,4 @@ class LabelListAdapter(val context: Context) :
             binding.executePendingBindings()
         }
     }
-
-
 }
-
-

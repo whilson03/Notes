@@ -28,5 +28,4 @@ class RepositoryModule {
     @Provides
     fun provideNoteAndLabelRepository(notesAndLabelDao: NotesAndLabelDao) =
         NoteAndLabelRepository(notesAndLabelDao)
-
 }

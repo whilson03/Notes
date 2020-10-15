@@ -1,6 +1,5 @@
 package com.olabode.wilson.daggernoteapp.ui.settings
 
-
 import android.content.*
 import android.net.Uri
 import android.os.*
@@ -25,7 +24,6 @@ import dagger.android.support.AndroidSupportInjection
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -34,7 +32,6 @@ class Settings : PreferenceFragmentCompat() {
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
-
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings_main, rootKey)
@@ -51,12 +48,14 @@ class Settings : PreferenceFragmentCompat() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val biometricManager = BiometricManager.from(context!!)
+        val biometricManager = BiometricManager.from(requireContext())
         val fingerprint =
             findPreference<SwitchPreferenceCompat>(getString(R.string.key_fingerprint))
 
         executor = ContextCompat.getMainExecutor(context)
-        biometricPrompt = BiometricPrompt(this, executor,
+        biometricPrompt = BiometricPrompt(
+            this,
+            executor,
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(
                     errorCode: Int,
@@ -73,7 +72,8 @@ class Settings : PreferenceFragmentCompat() {
                     setFingerPrint(true)
                     Toast.makeText(
                         context,
-                        getString(R.string.auth_success), Toast.LENGTH_SHORT
+                        getString(R.string.auth_success),
+                        Toast.LENGTH_SHORT
                     )
                         .show()
                 }
@@ -83,12 +83,13 @@ class Settings : PreferenceFragmentCompat() {
                     setFingerPrint(false)
                     fingerprint?.isChecked = false
                     Toast.makeText(
-                        context, getString(R.string.auth_failed),
+                        context,
+                        getString(R.string.auth_failed),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            })
-
+            }
+        )
 
         when (biometricManager.canAuthenticate()) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
@@ -115,13 +116,13 @@ class Settings : PreferenceFragmentCompat() {
             }
         }
 
-
         fingerprint?.let { switch ->
             switch.setOnPreferenceClickListener {
                 when (biometricManager.canAuthenticate()) {
                     BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                         Toast.makeText(
-                            context, getString(R.string.text_enable_fingerprint_prompt),
+                            context,
+                            getString(R.string.text_enable_fingerprint_prompt),
                             Toast.LENGTH_SHORT
                         ).show()
                         switch.isChecked = false
@@ -130,10 +131,12 @@ class Settings : PreferenceFragmentCompat() {
                     BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
                         switch.isChecked = false
                         Toast.makeText(
-                            context, getString(
+                            context,
+                            getString(
                                 R.string
                                     .fingerprint_compatibility_prompt
-                            ), Toast.LENGTH_SHORT
+                            ),
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -142,15 +145,13 @@ class Settings : PreferenceFragmentCompat() {
             }
         }
 
-
         val ratePreference = findPreference<Preference>(getString(R.string.key_rate))
         ratePreference?.let {
             it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                rate(context!!)
+                rate(requireContext())
                 true
             }
         }
-
 
         val feedback = findPreference<Preference>(getString(R.string.key_send_feedback))
         feedback?.let {
@@ -159,7 +160,6 @@ class Settings : PreferenceFragmentCompat() {
                 true
             }
         }
-
 
         val darkMode = findPreference<SwitchPreferenceCompat>(getString(R.string.key_mode_dark))
         darkMode?.let {
@@ -177,7 +177,6 @@ class Settings : PreferenceFragmentCompat() {
             }
         }
 
-
         val clearTrash =
             findPreference<SwitchPreferenceCompat>(getString(R.string.key_auto_empty_trash))
         clearTrash?.let {
@@ -185,20 +184,15 @@ class Settings : PreferenceFragmentCompat() {
                 if (!it.isChecked) {
                     setupRecurringWork()
                 } else {
-                    WorkManager.getInstance(activity!!)
+                    WorkManager.getInstance(requireContext())
                         .cancelAllWorkByTag(ClearTrashWorker.WORK_NAME)
-
                 }
                 true
             }
-
         }
 
-
         return super.onCreateView(inflater, container, savedInstanceState)
-
     }
-
 
     private fun rate(context: Context) {
         val uri: Uri = Uri.parse("market://details?id=" + context.packageName)
@@ -209,8 +203,8 @@ class Settings : PreferenceFragmentCompat() {
         // to taken back to our application, we need to add following flags to intent.
         goToMarket.addFlags(
             Intent.FLAG_ACTIVITY_NO_HISTORY or
-                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
-                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK
         )
         try {
             context.startActivity(goToMarket)
@@ -224,7 +218,6 @@ class Settings : PreferenceFragmentCompat() {
         }
     }
 
-
     private fun sendFeedback() {
         val intent =
             Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "whilson03@gmail.com"))
@@ -232,7 +225,6 @@ class Settings : PreferenceFragmentCompat() {
         intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.dear) + "")
         startActivity(Intent.createChooser(intent, getString(R.string.text_feedback)))
     }
-
 
     object GoogleFeedbackUtils {
         private val TAG = GoogleFeedbackUtils::class.java.simpleName
@@ -267,7 +259,6 @@ class Settings : PreferenceFragmentCompat() {
         }
     }
 
-
     private fun setMode(isDark: Boolean) {
         val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = preferences.edit()
@@ -280,9 +271,8 @@ class Settings : PreferenceFragmentCompat() {
             PeriodicWorkRequestBuilder<ClearTrashWorker>(30, TimeUnit.DAYS)
                 .addTag(ClearTrashWorker.WORK_NAME)
                 .build()
-        WorkManager.getInstance(activity!!).enqueue(repeatingRequest)
+        WorkManager.getInstance(requireActivity()).enqueue(repeatingRequest)
     }
-
 
     private fun setFingerPrint(isFingerPrintEnable: Boolean) {
         val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -290,5 +280,4 @@ class Settings : PreferenceFragmentCompat() {
         editor.putBoolean(getString(R.string.SHARED_PREF_FINGERPRINT), isFingerPrintEnable)
         editor.apply()
     }
-
 }

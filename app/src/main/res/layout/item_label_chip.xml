@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
-        <variable
+
+    <variable
             name="label"
             type="com.olabode.wilson.daggernoteapp.models.Label" />
     </data>
@@ -13,9 +15,10 @@
         android:layout_margin="5dp">
 
         <TextView
+            android:id="@+id/chipTextView"
+            android:textColor="#FFFFFF"
             android:padding="6dp"
             android:background="@drawable/rounded"
-            android:id="@+id/chipTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

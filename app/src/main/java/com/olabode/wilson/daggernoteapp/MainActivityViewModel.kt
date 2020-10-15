@@ -7,7 +7,7 @@ import javax.inject.Inject
 /**
  *   Created by OLABODE WILSON on 4/11/20.
  */
-class MainActivityViewModel @Inject constructor(private val labelRepository: LabelRepository) :
+class MainActivityViewModel @Inject constructor(labelRepository: LabelRepository) :
     ViewModel() {
     val allLabels = labelRepository.getAllLabels()
 }

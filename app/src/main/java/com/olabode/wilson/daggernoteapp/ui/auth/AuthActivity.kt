@@ -22,12 +22,10 @@ class AuthActivity : AppCompatActivity() {
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private lateinit var binding: ActivityAuthBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_auth)
-
 
         val preferences: SharedPreferences = PreferenceManager
             .getDefaultSharedPreferences(this)
@@ -35,7 +33,9 @@ class AuthActivity : AppCompatActivity() {
             .getBoolean(getString(R.string.SHARED_PREF_FINGERPRINT), false)
 
         executor = ContextCompat.getMainExecutor(this)
-        biometricPrompt = BiometricPrompt(this, executor,
+        biometricPrompt = BiometricPrompt(
+            this,
+            executor,
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(
                     errorCode: Int,
@@ -44,7 +44,8 @@ class AuthActivity : AppCompatActivity() {
                     super.onAuthenticationError(errorCode, errString)
                     Toast.makeText(
                         this@AuthActivity,
-                        "Authentication error: $errString", Toast.LENGTH_SHORT
+                        "Authentication error: $errString",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
 
@@ -56,11 +57,12 @@ class AuthActivity : AppCompatActivity() {
                     finish()
                     Toast.makeText(
                         this@AuthActivity,
-                        "Authentication succeeded!", Toast.LENGTH_SHORT
+                        "Authentication succeeded!",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
-
-            })
+            }
+        )
 
         if (!isFingerPrintEnabled) {
             startActivity(Intent(this, MainActivity::class.java))
@@ -75,7 +77,6 @@ class AuthActivity : AppCompatActivity() {
             if (isFingerPrintEnabled) {
                 showBiometricPrompt()
             } else {
-
             }
         }
 
@@ -90,14 +91,12 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun isValidCredential(): Boolean {
-        //TODO implemnent password as alternative for fingerprint
+        // TODO implemnent password as alternative for fingerprint
         return true
     }
-
 
     private fun showBiometricPrompt() {
         promptInfo = BiometricPrompt.PromptInfo.Builder()

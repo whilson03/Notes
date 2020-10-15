@@ -25,7 +25,6 @@ abstract class MainFragmentsBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeFavouriteFragment(): FavouritesFragment
 
-
     @ContributesAndroidInjector
     abstract fun contributeTrashFragment(): TrashFragment
 
@@ -41,11 +40,9 @@ abstract class MainFragmentsBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeLabelNoteFragment(): LabeledNoteView
 
-
     @ContributesAndroidInjector
     abstract fun contributeSettingsFragment(): Settings
 
     @ContributesAndroidInjector
     abstract fun contributeLabelDialogFragment(): LabelDialog
-
 }

@@ -42,7 +42,8 @@ class TrashFragment : DaggerFragment() {
     private lateinit var adapter: NoteListAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         retainInstance = true
@@ -53,67 +54,71 @@ class TrashFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val viewModeSpan = Util.getViewModeSpanCount(context!!)
+        val viewModeSpan = Util.getViewModeSpanCount(requireContext())
         viewModel = ViewModelProvider(this, factory).get(TrashViewModel::class.java)
 
         layoutManager = StaggeredGridLayoutManager(viewModeSpan, LinearLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager
-        adapter = NoteListAdapter(context!!, layoutManager)
+        adapter = NoteListAdapter(requireContext(), layoutManager)
         binding.recyclerView.addItemDecoration(NoteItemDecoration(2))
         binding.recyclerView.adapter = adapter
 
-
-        viewModel.getTrashedNotes().observe(viewLifecycleOwner, Observer {
-            it?.let {
-                when (it) {
-                    is Result.Success -> {
-                        hideEmptyState()
-                        adapter.submitList(it.data)
-                        scrollToTop()
-                    }
-                    is Result.Empty -> {
-                        showEmptyState()
-                        // submit empty list to the adapter
-                        adapter.submitList(emptyList<Note>())
+        viewModel.getTrashedNotes().observe(
+            viewLifecycleOwner,
+            Observer {
+                it?.let {
+                    when (it) {
+                        is Result.Success -> {
+                            hideEmptyState()
+                            adapter.submitList(it.data)
+                            scrollToTop()
+                        }
+                        is Result.Empty -> {
+                            showEmptyState()
+                            // submit empty list to the adapter
+                            adapter.submitList(emptyList<Note>())
+                        }
                     }
                 }
             }
-        })
+        )
 
-
-
-
-        adapter.setOnItemClickListener(object : NoteListAdapter.OnItemClickListener {
-            override fun onItemClick(note: Note, titleView: TextView, bodyView: TextView) {
-                findNavController().navigate(
-                    TrashFragmentDirections.actionTrashFragmentToViewTrashNoteFragment(
-                        note
+        adapter.setOnItemClickListener(
+            object : NoteListAdapter.OnItemClickListener {
+                override fun onItemClick(note: Note, titleView: TextView, bodyView: TextView) {
+                    findNavController().navigate(
+                        TrashFragmentDirections.actionTrashFragmentToViewTrashNoteFragment(
+                            note
+                        )
                     )
-                )
+                }
             }
-        })
+        )
 
-        adapter.setLongListener(object : NoteListAdapter.OnItemLongClickListener {
-            override fun onItemLongClick(note: Note, view: View) {
-                val dialog =
-                    TrashDialog(note)
-                fragmentManager?.let { it1 -> dialog.show(it1, "TrashDialogFragment") }
-                dialog.setNoteDialogClickListener(object : TrashDialog.NoteDialogListener {
-                    override fun onNoteOptionClick(note: Note, action: Util.ACTION) {
-                        when (action) {
-                            Util.ACTION.DELETE -> viewModel.deleteNote(note)
-                            else -> viewModel.removeFromTrash(note)
+        adapter.setLongListener(
+            object : NoteListAdapter.OnItemLongClickListener {
+                override fun onItemLongClick(note: Note, view: View) {
+                    val dialog =
+                        TrashDialog(note)
+                    fragmentManager?.let { it1 -> dialog.show(it1, "TrashDialogFragment") }
+                    dialog.setNoteDialogClickListener(
+                        object : TrashDialog.NoteDialogListener {
+                            override fun onNoteOptionClick(note: Note, action: Util.ACTION) {
+                                when (action) {
+                                    Util.ACTION.DELETE -> viewModel.deleteNote(note)
+                                    else -> viewModel.removeFromTrash(note)
+                                }
+                            }
                         }
-                    }
-                })
+                    )
+                }
             }
-        })
+        )
     }
 
     private fun scrollToTop() {
         binding.recyclerView.post { binding.recyclerView.smoothScrollToPosition(0) }
     }
-
 
     private fun showEmptyState() {
         binding.emptyTrashIcon.visibility = View.VISIBLE
@@ -127,7 +132,6 @@ class TrashFragment : DaggerFragment() {
         deleteMenu?.isVisible = true
     }
 
-
     private fun confirmDeleteDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.trash_dialog_title))
@@ -140,7 +144,6 @@ class TrashFragment : DaggerFragment() {
                 getString(R.string.confirm_no)
             ) { _, _ -> }.show()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.trash_menu, menu)
@@ -164,15 +167,14 @@ class TrashFragment : DaggerFragment() {
 
             R.id.note_view_mode -> {
                 if (layoutManager.spanCount == 1) {
-                    Util.setGridMode(context!!, true)
-                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
-                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_list)
+                    Util.setGridMode(requireContext(), true)
+                    layoutManager.spanCount = Util.getViewModeSpanCount(requireContext())
+                    item.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_view_list)
                 } else {
-                    Util.setGridMode(context!!, false)
-                    layoutManager.spanCount = Util.getViewModeSpanCount(context!!)
-                    item.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_view_grid)
+                    Util.setGridMode(requireContext(), false)
+                    layoutManager.spanCount = Util.getViewModeSpanCount(requireContext())
+                    item.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_view_grid)
                 }
-
             }
         }
         return super.onOptionsItemSelected(item)

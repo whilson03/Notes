@@ -17,4 +17,3 @@ abstract class WorkerModule {
     @WorkerKey(ClearTrashWorker::class)
     abstract fun bindClearTrashWorker(factory: ClearTrashWorker.Factory): ChildWorkerFactory
 }
-

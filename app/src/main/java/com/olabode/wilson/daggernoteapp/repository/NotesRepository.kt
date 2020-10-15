@@ -11,7 +11,6 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 /**
  *   Created by OLABODE WILSON on 2020-03-03.
  */
@@ -27,13 +26,11 @@ class NotesRepository @Inject constructor(
         }
     }
 
-
     override fun getNotesByLastModified(): LiveData<Result<List<Note>>> {
         return notesDao.getNotesByLastModified().map {
             checkEmptyStatus(it)
         }
     }
-
 
     override fun getNotesByDateCreated(): LiveData<Result<List<Note>>> {
         return notesDao.getNotesByDateCreated().map {
@@ -41,13 +38,11 @@ class NotesRepository @Inject constructor(
         }
     }
 
-
     override fun getFavNotesByName(): LiveData<Result<List<Note>>> {
         return notesDao.getFavNotesByName().map {
             checkEmptyStatus(it)
         }
     }
-
 
     override fun getFavNotesByLastModified(): LiveData<Result<List<Note>>> {
         return notesDao.getFavNotesByLastModified().map {
@@ -55,13 +50,11 @@ class NotesRepository @Inject constructor(
         }
     }
 
-
     override fun getFavNotesByDateCreated(): LiveData<Result<List<Note>>> {
         return notesDao.getFavNotesByDateCreated().map {
             checkEmptyStatus(it)
         }
     }
-
 
     override fun getAllTrashNotes(): LiveData<Result<List<Note>>> {
         return notesDao.getTrashedNotes().map {
@@ -69,13 +62,11 @@ class NotesRepository @Inject constructor(
         }
     }
 
-
     override fun getAllTrashedNotesByDateAddedRecent(): LiveData<Result<List<Note>>> {
         return notesDao.getTrashedNotesByDateAddedRecent().map {
             checkEmptyStatus(it)
         }
     }
-
 
     override fun getTrashedNotesByDateAddedOlder(): LiveData<Result<List<Note>>> {
         return notesDao.getTrashedNotesByDateAddedOlder().map {
@@ -87,21 +78,17 @@ class NotesRepository @Inject constructor(
         return notesDao.countNoteTable()
     }
 
-
     override fun getAllFavouriteNotesCount(): LiveData<Int> {
         return notesDao.countFavouriteNotes()
     }
-
 
     override fun getAllTrashItemsCount(): LiveData<Int> {
         return notesDao.countTrashNotes()
     }
 
-
     override suspend fun insertNote(note: Note): Long {
         return withContext(Dispatchers.IO) { notesDao.insertNote(note) }
     }
-
 
     override suspend fun updateNote(note: Note) {
         withContext(Dispatchers.IO) {
@@ -109,13 +96,11 @@ class NotesRepository @Inject constructor(
         }
     }
 
-
     override suspend fun deleteNote(note: Note) {
         withContext(Dispatchers.IO) {
             notesDao.deleteNote(note)
         }
     }
-
 
     override suspend fun addToFavourite(note: Note) {
         withContext(Dispatchers.IO) {
@@ -124,7 +109,6 @@ class NotesRepository @Inject constructor(
         }
     }
 
-
     override suspend fun removeFromFavourite(note: Note) {
         withContext(Dispatchers.IO) {
             note.isFavourite = false
@@ -132,14 +116,12 @@ class NotesRepository @Inject constructor(
         }
     }
 
-
     override suspend fun addToTrash(note: Note) {
         withContext(Dispatchers.IO) {
             note.isTrashItem = true
             notesDao.upDateNote(note)
         }
     }
-
 
     override suspend fun removeFromTrash(note: Note) {
         withContext(Dispatchers.IO) {
@@ -158,12 +140,10 @@ class NotesRepository @Inject constructor(
         }
     }
 
-
     private fun checkEmptyStatus(it: List<Note>): Result<List<Note>> {
         return when (it.isNotEmpty()) {
             true -> Success(it)
             false -> Result.Empty
         }
     }
-
 }

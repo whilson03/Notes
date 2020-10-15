@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.olabode.wilson.daggernoteapp.R
@@ -24,7 +25,6 @@ import dagger.android.support.DaggerFragment
 import java.util.*
 import javax.inject.Inject
 
-
 class NoteFragment : DaggerFragment() {
 
     companion object {
@@ -37,11 +37,13 @@ class NoteFragment : DaggerFragment() {
     private lateinit var binding: NoteFragmentBinding
     private var allLabels: List<Label> = mutableListOf()
     private var currentNoteLabels: List<Label> = mutableListOf()
+    private val args by navArgs<NoteFragmentArgs>()
 
     private var currentNote: Note? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = NoteFragmentBinding.inflate(inflater, container, false)
@@ -58,9 +60,7 @@ class NoteFragment : DaggerFragment() {
         val chipsAdapter = LabelChipListAdapter()
         binding.chipsRecyclerView.adapter = chipsAdapter
 
-
-
-        currentNote = NoteFragmentArgs.fromBundle(arguments!!).note
+        currentNote = args.note
 
         if (currentNote == null && !viewModel.isNewNoteCreated) {
             viewModel.saveNewNote(viewModel.note)
@@ -78,29 +78,34 @@ class NoteFragment : DaggerFragment() {
                         currentNoteLabels = it[0].labels
                         chipsAdapter.submitList(it[0].labels)
                     }
-                })
+                }
+            )
         }
 
-
-        viewModel.allLabels.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            it?.let { allLabels = it }
-        })
-
-
-        viewModel.newNoteId.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            it?.let {
-                viewModel.getAllLabelsForNote(it).observe(
-                    viewLifecycleOwner,
-                    androidx.lifecycle.Observer { noteWithLabel ->
-                        noteWithLabel?.let { l ->
-                            currentNoteLabels = l[0].labels
-                            chipsAdapter.submitList(l[0].labels)
-                        }
-                    })
+        viewModel.allLabels.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                it?.let { allLabels = it }
             }
-        })
-    }
+        )
 
+        viewModel.newNoteId.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                it?.let {
+                    viewModel.getAllLabelsForNote(it).observe(
+                        viewLifecycleOwner,
+                        androidx.lifecycle.Observer { noteWithLabel ->
+                            noteWithLabel?.let { l ->
+                                currentNoteLabels = l[0].labels
+                                chipsAdapter.submitList(l[0].labels)
+                            }
+                        }
+                    )
+                }
+            }
+        )
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -113,11 +118,10 @@ class NoteFragment : DaggerFragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(
-            this,  // LifecycleOwner
+            this, // LifecycleOwner
             callback
         )
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -142,7 +146,6 @@ class NoteFragment : DaggerFragment() {
             }
             android.R.id.home -> {
                 homeAction()
-
             }
 
             R.id.copy_note -> {
@@ -164,11 +167,9 @@ class NoteFragment : DaggerFragment() {
                 hidekeyboard()
                 performLabelAction()
             }
-
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     private fun performLabelAction() {
         hidekeyboard()
@@ -177,18 +178,18 @@ class NoteFragment : DaggerFragment() {
             allLabels as ArrayList<Label>
         )
 
-        fragmentManager?.let { it1 -> dialog.show(it1, "LabelDialogFragment") }
-        dialog.setOnLabelActionListener(object : LabelDialog.LabelActionListener {
-            override fun onActionAddLabelToNote(label: Label) {
-                viewModel.addNoteToLabel(label.labelId, viewModel.noteToUpdate.noteId)
+        parentFragmentManager.let { it1 -> dialog.show(it1, "LabelDialogFragment") }
+        dialog.setOnLabelActionListener(
+            object : LabelDialog.LabelActionListener {
+                override fun onActionAddLabelToNote(label: Label) {
+                    viewModel.addNoteToLabel(label.labelId, viewModel.noteToUpdate.noteId)
+                }
+
+                override fun onActionRemoveLabelFromNote(label: Label) {
+                    viewModel.removeNoteFromLabel(label.labelId, viewModel.noteToUpdate.noteId)
+                }
             }
-
-            override fun onActionRemoveLabelFromNote(label: Label) {
-                viewModel.removeNoteFromLabel(label.labelId, viewModel.noteToUpdate.noteId)
-            }
-
-        })
-
+        )
     }
 
     private fun performSave(note: Note) {
@@ -207,7 +208,6 @@ class NoteFragment : DaggerFragment() {
         }
     }
 
-
     private fun showToastMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
@@ -224,7 +224,6 @@ class NoteFragment : DaggerFragment() {
         return false
     }
 
-
     private fun setUpNote(note: Note) {
         binding.title.setText(note.title)
         binding.body.setText(note.body)
@@ -233,12 +232,13 @@ class NoteFragment : DaggerFragment() {
     private fun setFont() {
         val preferences =
             PreferenceManager.getDefaultSharedPreferences(context)
-        when (val fontSize =
-            preferences.getString(getString(R.string.key_font_size), "0")!!.toInt()) {
+        when (
+            val fontSize =
+                preferences.getString(getString(R.string.key_font_size), "0")!!.toInt()
+        ) {
             14 -> setEditTextSize(fontSize.toFloat())
             20 -> setEditTextSize(fontSize.toFloat())
             28 -> setEditTextSize(fontSize.toFloat())
-
         }
     }
 
@@ -251,7 +251,6 @@ class NoteFragment : DaggerFragment() {
         binding.title.textSize = size + 2
     }
 
-
     private fun copyToClipBoard(title: String, body: String) {
         val copy = title + "\n" + body
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -260,11 +259,10 @@ class NoteFragment : DaggerFragment() {
         Toast.makeText(context, getString(R.string.text_copied), Toast.LENGTH_SHORT).show()
     }
 
-
     private fun hidekeyboard() {
         val imm: InputMethodManager =
             activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
     private fun shareNote(title: String, body: String) {
@@ -274,15 +272,12 @@ class NoteFragment : DaggerFragment() {
         intent.putExtra(Intent.EXTRA_SUBJECT, title)
         intent.putExtra(Intent.EXTRA_TEXT, message)
         startActivity(Intent.createChooser(intent, getString(R.string.share_chooser_text)))
-
     }
-
 
     private fun homeAction() {
         if (viewModel.isNewNoteCreated) {
             if (binding.body.text.toString().trim().isEmpty()) {
                 viewModel.delete(viewModel.noteToUpdate)
-
             } else {
                 viewModel.noteToUpdate.body = binding.body.text.toString().trim()
                 viewModel.noteToUpdate.title =
@@ -299,6 +294,4 @@ class NoteFragment : DaggerFragment() {
         }
         viewModel.resetFields()
     }
-
-
 }

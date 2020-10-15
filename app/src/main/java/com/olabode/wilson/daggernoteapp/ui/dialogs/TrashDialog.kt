@@ -1,7 +1,6 @@
 package com.olabode.wilson.daggernoteapp.ui.dialogs
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -32,15 +31,14 @@ class TrashDialog(val note: Note) : AppCompatDialogFragment() {
             val builder = MaterialAlertDialogBuilder(it)
             builder.setTitle(getString(R.string.more))
                 .setItems(
-                    R.array.trash_options,
-                    DialogInterface.OnClickListener { _, which ->
-                        listener.onNoteOptionClick(note, getAction(which))
-                        dismiss()
-                    })
+                    R.array.trash_options
+                ) { _, which ->
+                    listener.onNoteOptionClick(note, getAction(which))
+                    dismiss()
+                }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
-
 
     private fun getAction(index: Int) = when (index) {
         0 -> Util.ACTION.DELETE

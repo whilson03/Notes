@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.olabode.wilson.daggernoteapp.R
 import com.olabode.wilson.daggernoteapp.databinding.ViewTrashNoteFragmentBinding
 import com.olabode.wilson.daggernoteapp.models.Note
@@ -21,17 +22,19 @@ class ViewTrashNoteFragment : DaggerFragment() {
     private lateinit var viewModel: ViewTrashNoteViewModel
     private lateinit var binding: ViewTrashNoteFragmentBinding
     private lateinit var note: Note
+    private val args by navArgs<ViewTrashNoteFragmentArgs>()
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = ViewTrashNoteFragmentBinding.inflate(inflater, container, false)
 
-        note = ViewTrashNoteFragmentArgs.fromBundle(arguments!!).note
+        note = args.note
         setHasOptionsMenu(true)
 
         return binding.root
@@ -46,16 +49,13 @@ class ViewTrashNoteFragment : DaggerFragment() {
         binding.noteLayout.setOnClickListener {
             Toast.makeText(context, getString(R.string.trash_note_edit_prompt), Toast.LENGTH_SHORT)
                 .show()
-
         }
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.view_trash_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -72,6 +72,4 @@ class ViewTrashNoteFragment : DaggerFragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 }

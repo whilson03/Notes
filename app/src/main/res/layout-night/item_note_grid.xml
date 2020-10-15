@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="formatter"
+            type="com.olabode.wilson.daggernoteapp.utils.Util" />
+
+        <variable
+            name="note"
+            type="com.olabode.wilson.daggernoteapp.models.Note" />
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/note_item"
+        style="@style/NotesCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/text_view_description"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:ellipsize="end"
+                android:transitionName="bodyView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:maxLines="8"
+                android:paddingBottom="1dp"
+                android:text="@{note.body}"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/note_date"
+                app:layout_constraintEnd_toEndOf="@+id/note_date"
+                app:layout_constraintStart_toStartOf="@+id/text_view_title"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_title"
+                tools:text="description" />
+
+            <TextView
+                android:id="@+id/text_view_title"
+                android:transitionName="titleView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:maxLines="2"
+                android:padding="2dp"
+                android:text="@{note.title}"
+                android:textSize="20sp"
+                android:textStyle="italic|bold"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/favButton"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/favButton"
+                tools:text="@string/title" />
+
+            <TextView
+                android:id="@+id/note_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-light"
+                android:maxLines="2"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_view_title"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_description"
+                tools:text="Date" />
+
+            <ToggleButton
+                android:id="@+id/favButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/toggle_image"
+                android:padding="1dp"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

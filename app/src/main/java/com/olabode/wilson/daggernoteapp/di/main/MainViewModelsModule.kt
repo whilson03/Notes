@@ -19,7 +19,6 @@ import dagger.multibindings.IntoMap
  *   Created by OLABODE WILSON on 2020-03-03.
  */
 
-
 @Module
 abstract class MainViewModelsModule {
 
@@ -28,12 +27,10 @@ abstract class MainViewModelsModule {
     @ViewModelKey(HomeViewModel::class)
     abstract fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
 
-
     @IntoMap
     @Binds
     @ViewModelKey(FavouritesViewModel::class)
     abstract fun bindFavouriteViewModel(viewModel: FavouritesViewModel): ViewModel
-
 
     @IntoMap
     @Binds
@@ -45,12 +42,10 @@ abstract class MainViewModelsModule {
     @ViewModelKey(NoteViewModel::class)
     abstract fun bindNoteViewModel(viewModel: NoteViewModel): ViewModel
 
-
     @IntoMap
     @Binds
     @ViewModelKey(ViewTrashNoteViewModel::class)
     abstract fun bindViewTrashNoteViewModel(viewModel: ViewTrashNoteViewModel): ViewModel
-
 
     @IntoMap
     @Binds
@@ -71,5 +66,4 @@ abstract class MainViewModelsModule {
     @Binds
     @ViewModelKey(LabelDialogViewModel::class)
     abstract fun bindLabelDialogViewModel(viewModel: LabelDialogViewModel): ViewModel
-
 }

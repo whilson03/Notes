@@ -31,11 +31,13 @@ class NoteDialog(val note: Note) : AppCompatDialogFragment() {
             // Use the Builder class for convenient dialog construction
             val builder = MaterialAlertDialogBuilder(it)
             builder.setTitle(getString(R.string.more))
-                .setItems(R.array.more_options,
+                .setItems(
+                    R.array.more_options,
                     DialogInterface.OnClickListener { _, which ->
                         listener.onNoteOptionClick(note, getAction(which))
                         dismiss()
-                    })
+                    }
+                )
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
@@ -45,5 +47,4 @@ class NoteDialog(val note: Note) : AppCompatDialogFragment() {
         1 -> Util.ACTION.DELETE
         else -> Util.ACTION.COPY
     }
-
 }

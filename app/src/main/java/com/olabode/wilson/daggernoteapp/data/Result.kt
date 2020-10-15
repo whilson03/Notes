@@ -35,4 +35,3 @@ val Result<*>.succeeded
 
 val Result<*>.empty
     get() = this is Result.Empty
-

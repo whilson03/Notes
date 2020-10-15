@@ -13,15 +13,14 @@ import javax.inject.Provider
  *   Created by OLABODE WILSON on 5/5/20.
  */
 class ClearTrashWorker @Inject constructor(
-    private val appContext: Context,
-    private val params: WorkerParameters,
+    appContext: Context,
+    params: WorkerParameters,
     private val repo: NotesRepository
 ) : CoroutineWorker(appContext, params) {
 
     companion object {
         const val WORK_NAME = "ClearTrashWorker"
     }
-
 
     override suspend fun doWork(): Result {
         repo.deleteAllFromTrash()
@@ -39,17 +38,15 @@ class ClearTrashWorker @Inject constructor(
             )
         }
     }
-
 }
 
 interface ChildWorkerFactory {
     fun create(appContext: Context, params: WorkerParameters): ListenableWorker
 }
 
-
 class AppWorkerFactory @Inject constructor(
     private val workerFactories: Map<Class<out ListenableWorker>,
-            @JvmSuppressWildcards Provider<ChildWorkerFactory>>
+        @JvmSuppressWildcards Provider<ChildWorkerFactory>>
 ) : WorkerFactory() {
     override fun createWorker(
         appContext: Context,

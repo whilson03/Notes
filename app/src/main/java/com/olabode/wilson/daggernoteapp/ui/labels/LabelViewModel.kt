@@ -18,7 +18,6 @@ class LabelViewModel @Inject constructor(private val labelRepository: LabelRepos
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
     val allLabels = labelRepository.getAllLabels()
 
-
     fun insertLabel(label: Label) {
         uiScope.launch {
             labelRepository.insertLabel(label)
@@ -40,7 +39,5 @@ class LabelViewModel @Inject constructor(private val labelRepository: LabelRepos
         uiScope.launch {
             labelRepository.deleteLabel(label)
         }
-
     }
-
 }

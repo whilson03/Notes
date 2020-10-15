@@ -9,7 +9,6 @@ import com.olabode.wilson.daggernoteapp.models.NotesWithLabel
  *   Created by OLABODE WILSON on 2020-04-01.
  */
 
-
 interface NoteAndLabelRepo {
     suspend fun insert(notesWithLabel: NotesAndLabelCrossRef)
 

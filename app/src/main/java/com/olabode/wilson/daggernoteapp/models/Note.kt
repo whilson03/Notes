@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-
 /**
  *   Created by OLABODE WILSON on 2020-03-03.
  */

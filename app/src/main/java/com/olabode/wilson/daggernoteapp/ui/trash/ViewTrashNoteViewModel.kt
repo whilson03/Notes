@@ -14,7 +14,6 @@ class ViewTrashNoteViewModel @Inject constructor(private val repository: NotesRe
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
-
     fun removeFromTrash(note: Note) {
         uiScope.launch {
             note.trashedDate = null
@@ -27,5 +26,4 @@ class ViewTrashNoteViewModel @Inject constructor(private val repository: NotesRe
             repository.deleteNote(note)
         }
     }
-
 }

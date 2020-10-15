@@ -19,7 +19,7 @@ import javax.inject.Inject
 class NoteViewModel @Inject constructor(
     private val repository: NotesRepository,
     private val noteAndLabelRepository: NoteAndLabelRepository,
-    private val labelRepository: LabelRepository
+    labelRepository: LabelRepository
 ) : ViewModel() {
 
     private val job = Job()
@@ -36,11 +36,12 @@ class NoteViewModel @Inject constructor(
     val newNoteId: LiveData<Long>
         get() = _newNoteId
 
-
     var note = Note(
-        title = "", body = "", dateLastUpdated = Date(), dateCreated = Date()
+        title = "",
+        body = "",
+        dateLastUpdated = Date(),
+        dateCreated = Date()
     )
-
 
     fun saveNewNote(note: Note) {
         uiScope.launch {
@@ -50,11 +51,9 @@ class NoteViewModel @Inject constructor(
         }
     }
 
-
     fun getAllLabelsForNote(noteId: Long): LiveData<List<NotesWithLabel>> {
         return noteAndLabelRepository.getLabelsByNote(noteId)
     }
-
 
     fun addNoteToLabel(labelId: Long, noteId: Long) {
         uiScope.launch {
@@ -67,7 +66,6 @@ class NoteViewModel @Inject constructor(
             noteAndLabelRepository.removeLabelFromNote(NotesAndLabelCrossRef(labelId, noteId))
         }
     }
-
 
     fun updateNote(note: Note) {
         uiScope.launch {
@@ -92,6 +90,4 @@ class NoteViewModel @Inject constructor(
             repository.deleteNote(note)
         }
     }
-
-
 }
